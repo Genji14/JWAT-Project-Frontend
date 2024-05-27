@@ -2,8 +2,7 @@ import { DOMAIN_NAME } from "@/lib/utils/constants/SettingSystem";
 import axios, { type Method } from "axios";
 
 axios.interceptors.request.use(async (config) => {
-    // const session = await getSession();
-    // config.headers.Authorization = session?.access_token || '';
+    config.headers.Authorization = localStorage.access_token || '';
     return config;
 });
 
