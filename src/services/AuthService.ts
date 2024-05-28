@@ -1,12 +1,15 @@
-import { IUserLogin } from "@/types";
+import { IUserSignIn } from "@/types/interfaces";
 import { BaseService } from "./BaseService";
+import { AUTH_ENDPOINTS } from "@/lib/utils/constants/EndPoints";
 
 class AuthService extends BaseService {
     constructor() {
         super();
     }
 
-    login = (userLogin: IUserLogin) => this.post("/auth/login/", userLogin);
+    signIn = (userLogin: IUserSignIn) => {
+        return this.post(AUTH_ENDPOINTS.SIGN_IN, userLogin);
+    };
 }
 
 export const authService = new AuthService();

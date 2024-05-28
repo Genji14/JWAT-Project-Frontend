@@ -8,7 +8,7 @@ export interface ErrorResponse extends Error {
     };
 }
 
-export interface IUserLogin {
+export interface IUserSignIn {
     username: string;
     password: string;
 }
