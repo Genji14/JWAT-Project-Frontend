@@ -1,11 +1,17 @@
-import DashBoardLayout from "@/components/layouts/DashBoard";
-import Link from "next/link";
-
+import { Button } from "@/components/ui/button";
+import { PackagePlus } from "lucide-react";
 
 export default function Home() {
   return (
-    <DashBoardLayout>
-      <Link href="/projects" className="text-4xl font-bold ">Whereas recognition of the inherent dignity</Link>
-    </DashBoardLayout>
+    <>
+      <div className="flex items-center justify-between">
+        <h2 className="font-bold text-2xl uppercase">My projects</h2>
+        <Button className="gap-2">
+          <PackagePlus className="w-4 h-4" />
+          <span>New Project</span>
+        </Button>
+      </div>
+
+    </>
   );
 }

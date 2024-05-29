@@ -17,14 +17,14 @@ const ProfileMenu = () => {
             <PopoverContent side='bottom' align='end' className="flex flex-col p-2 gap-1 w-64">
                 <Button variant="ghost" className="justify-start gap-2 px-3 py-1.5 h-fit">
                     <UserRoundCog className="w-4 h-4" />
-                    <span>Chỉnh sửa thông tin</span>
+                    <span>Edit profile</span>
                 </Button>
                 <div className="px-2">
                     <Separator />
                 </div>
                 <Button variant="ghost" className="justify-start gap-2 px-3 py-1.5 h-fit">
                     <LogOut className="w-4 h-4" />
-                    <span>Đăng xuất</span>
+                    <span>Sign out</span>
                 </Button>
             </PopoverContent>
         </Popover>
