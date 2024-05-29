@@ -2,7 +2,7 @@ import Header from '@/components/general/Header';
 import SideBar from '@/components/general/Sidebar';
 import { useExpandedStore } from '@/hooks/zustand';
 import { cn } from '@/lib/utils';
-import { FONT_POPPINS } from '@/lib/utils/constants/SettingSystem';
+import { FONT_POPPINS } from '@/lib/constants/SettingSystem';
 import React, { FC, PropsWithChildren } from 'react';
 
 type IDashBoardLayoutProps = PropsWithChildren<{

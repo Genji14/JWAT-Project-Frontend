@@ -1,6 +1,6 @@
 import { IUserSignIn } from "@/types/interfaces";
 import { BaseService } from "./BaseService";
-import { AUTH_ENDPOINTS } from "@/lib/utils/constants/EndPoints";
+import { AUTH_ENDPOINTS } from "@/lib/constants/EndPoints";
 
 class AuthService extends BaseService {
     constructor() {

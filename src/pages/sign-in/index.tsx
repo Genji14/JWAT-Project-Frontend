@@ -1,6 +1,6 @@
 import SignInForm from '@/components/pages/SignIn/SignInForm';
 import { cn } from '@/lib/utils';
-import { FONT_POPPINS } from '@/lib/utils/constants/SettingSystem';
+import { FONT_POPPINS } from '@/lib/constants/SettingSystem';
 import { NextPage } from 'next';
 import React from 'react'
 
