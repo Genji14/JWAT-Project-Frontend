@@ -1,22 +1,41 @@
-import { authService } from "@/services/AuthService"
-import { IUserSignIn } from "@/types/interfaces"
-import { useMutation } from "@tanstack/react-query"
+import { authService } from '@/services/AuthService'
+import { userService } from '@/services/UserService'
+import { ICreateUserForm, IUserSignIn } from '@/types/interfaces'
+import { useMutation } from '@tanstack/react-query'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
 
 export const useSignIn = () => {
+    const router = useRouter()
+
     const { mutateAsync, isPending } = useMutation({
         mutationFn: async (form: IUserSignIn) => {
-            await authService.signIn(form);
+            const res = await authService.signIn(form)
+            return res.data
         },
-        onSuccess() {
-
+        onSuccess(data) {
+            Cookies.set('accessToken', data.accessToken);
+            Cookies.set('refreshToken', data.refreshToken);
+            router.push('/');
         },
-        onError() {
-            alert("Lỗi");
-        }
     })
 
     return {
         mutateSignIn: mutateAsync,
-        isPendingSignIn: isPending
+        isPendingSignIn: isPending,
+    }
+}
+
+export const useCreateUser = () => {
+    const { mutateAsync, isPending, isSuccess } = useMutation({
+        mutationFn: async (form: ICreateUserForm) => {
+            await userService.createUser(form);
+        }
+    })
+
+    return {
+        mutateCreateUser: mutateAsync,
+        isPendingCreateUser: isPending,
+        isSuccessCreateUser: isSuccess
     }
 }

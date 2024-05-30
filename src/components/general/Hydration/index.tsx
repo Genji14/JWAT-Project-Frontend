@@ -1,19 +1,17 @@
-import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
+import React, { FC, PropsWithChildren, useEffect, useState } from 'react'
 
 type IHydrationProps = PropsWithChildren<{
-    children: React.ReactNode;
-}>;
+    children: React.ReactNode
+}>
 
 const Hydration: FC<IHydrationProps> = ({ children }) => {
-
-    const [isMounted, setIsMounted] = useState(false);
+    const [isMounted, setIsMounted] = useState(false)
 
     useEffect(() => {
-        setIsMounted(true);
-    }, []);
+        setIsMounted(true)
+    }, [])
 
-    return isMounted ? <>{children}</> : null;
+    return isMounted ? <>{children}</> : null
+}
 
-};
-
-export default Hydration;
+export default Hydration

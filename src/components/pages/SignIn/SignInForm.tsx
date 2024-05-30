@@ -1,75 +1,87 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from "@hookform/resolvers/zod"
+import { zodResolver } from '@hookform/resolvers/zod'
 import { IUserSignIn } from '@/types/interfaces'
 import { loginSchema } from '@/lib/schemas'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
+import { LoaderButton } from '@/components/general/LoaderButton'
 import { Input } from '@/components/ui/input'
 import { CircleUser, KeyRound } from 'lucide-react'
 import { useSignIn } from '@/hooks/mutation'
+import { toast } from 'sonner'
+import { AUTH_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 
 const SignInForm: React.FC = () => {
-
     const loginForm = useForm<IUserSignIn>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
-            username: "",
-            password: ""
-        }
+            username: '',
+            password: '',
+        },
     })
 
-    const { isPendingSignIn, mutateSignIn } = useSignIn();
+    const { isPendingSignIn, mutateSignIn } = useSignIn()
 
     async function onSubmit(values: IUserSignIn) {
-        await mutateSignIn(values);
+        await mutateSignIn(values).catch((ex) => {
+            if (ex.response.status === 401 || ex.response.status === 400) {
+                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.BAD_REQUEST);
+            }
+        });
     }
 
     return (
         <Form {...loginForm}>
-            <form onSubmit={loginForm.handleSubmit(onSubmit)} className="space-y-6 mt-6">
+            <form
+                onSubmit={loginForm.handleSubmit(onSubmit)}
+                className='mt-6 space-y-6'
+            >
                 <FormField
                     control={loginForm.control}
-                    name="username"
+                    name='username'
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
                                     {...field}
-                                    className="border-0 border-b rounded-none "
-                                    icon={<CircleUser className="w-5 h-5" />}
+                                    className='rounded-none border-0 border-b '
+                                    icon={<CircleUser className='h-5 w-5' />}
                                     line={true}
                                     placeholder='Enter your username'
-                                    type="text"
-                                    disabled={isPendingSignIn} />
+                                    type='text'
+                                    disabled={isPendingSignIn}
+                                />
                             </FormControl>
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={loginForm.control}
-                    name="password"
+                    name='password'
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
                                 <Input
                                     {...field}
-                                    className="border-0 border-b rounded-none pl-0"
-                                    icon={<KeyRound className="w-5 h-5" />}
+                                    className='rounded-none border-0 border-b pl-0'
+                                    icon={<KeyRound className='h-5 w-5' />}
                                     line={true}
                                     placeholder='********'
-                                    type="password"
-                                    disabled={isPendingSignIn} />
+                                    type='password'
+                                    disabled={isPendingSignIn}
+                                />
                             </FormControl>
                         </FormItem>
                     )}
                 />
-                <div className="flex justify-end">
-                    <Button type="submit" className="h-fit" disabled={isPendingSignIn}>Continue</Button>
+                <div className='flex justify-end'>
+                    <LoaderButton isLoading={isPendingSignIn}>
+                        Continue
+                    </LoaderButton>
                 </div>
             </form>
         </Form>
     )
 }
 
-export default SignInForm;
+export default SignInForm

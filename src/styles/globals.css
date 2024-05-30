@@ -48,7 +48,3 @@
     --ring: 224.3 76.3% 48%;
   }
 }
-
-.calendar-header > div {
-  @apply col-span-2 text-center;
-}
