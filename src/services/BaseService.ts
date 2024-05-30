@@ -3,8 +3,9 @@ import axios, { type Method } from 'axios'
 import Cookies from 'js-cookie'
 
 axios.interceptors.request.use(async (config) => {
-    config.headers.Authorization = Cookies.get('accessToken') ?
-        `Bearer ${Cookies.get('accessToken')}` : ''
+    config.headers.Authorization = Cookies.get('accessToken')
+        ? `Bearer ${Cookies.get('accessToken')}`
+        : ''
     return config
 })
 

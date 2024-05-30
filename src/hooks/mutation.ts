@@ -14,9 +14,9 @@ export const useSignIn = () => {
             return res.data
         },
         onSuccess(data) {
-            Cookies.set('accessToken', data.accessToken);
-            Cookies.set('refreshToken', data.refreshToken);
-            router.push('/');
+            Cookies.set('accessToken', data.accessToken)
+            Cookies.set('refreshToken', data.refreshToken)
+            router.push('/')
         },
     })
 
@@ -29,13 +29,13 @@ export const useSignIn = () => {
 export const useCreateUser = () => {
     const { mutateAsync, isPending, isSuccess } = useMutation({
         mutationFn: async (form: ICreateUserForm) => {
-            await userService.createUser(form);
-        }
+            await userService.createUser(form)
+        },
     })
 
     return {
         mutateCreateUser: mutateAsync,
         isPendingCreateUser: isPending,
-        isSuccessCreateUser: isSuccess
+        isSuccessCreateUser: isSuccess,
     }
 }

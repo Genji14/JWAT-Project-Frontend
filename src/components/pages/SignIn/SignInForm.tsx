@@ -25,9 +25,9 @@ const SignInForm: React.FC = () => {
     async function onSubmit(values: IUserSignIn) {
         await mutateSignIn(values).catch((ex) => {
             if (ex.response.status === 401 || ex.response.status === 400) {
-                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.BAD_REQUEST);
+                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.BAD_REQUEST)
             }
-        });
+        })
     }
 
     return (

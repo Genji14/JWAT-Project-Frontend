@@ -8,7 +8,7 @@ class UserService extends BaseService {
     }
 
     createUser = (form: ICreateUserForm) => {
-        return this.post(USER_ENDPOINTS.CREATE_USER, form);
+        return this.post(USER_ENDPOINTS.CREATE_USER, form)
     }
 }
 

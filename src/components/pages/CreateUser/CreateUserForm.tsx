@@ -37,10 +37,11 @@ import { CalendarIcon } from 'lucide-react'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { HttpStatusCode } from 'axios'
 
 const CreateUserForm = () => {
-
-    const { mutateCreateUser, isPendingCreateUser, isSuccessCreateUser } = useCreateUser();
+    const { mutateCreateUser, isPendingCreateUser, isSuccessCreateUser } =
+        useCreateUser()
     const expanded = useExpandedStore((state) => state.expanded)
     const createUserForm = useForm<ICreateUserForm>({
         resolver: zodResolver(createUserSchema),
@@ -58,19 +59,23 @@ const CreateUserForm = () => {
     })
 
     async function onSubmit(values: ICreateUserForm) {
-        await mutateCreateUser(values).catch(() => {
-            toast.error(USER_RESPONSE_MESSAGE.CREATE.BAD_REQUEST);
-        });
+        await mutateCreateUser(values).catch((ex) => {
+            if (ex.response.status === HttpStatusCode.Conflict) {
+                createUserForm.setError('username', {
+                    message: USER_RESPONSE_MESSAGE.CREATE.CONFLICT,
+                })
+            } else {
+                toast.error(USER_RESPONSE_MESSAGE.CREATE.BAD_REQUEST)
+            }
+        })
     }
 
     useEffect(() => {
         if (isSuccessCreateUser) {
-            createUserForm.reset();
-            toast.success(USER_RESPONSE_MESSAGE.CREATE.SUCCESS);
+            createUserForm.reset()
+            toast.success(USER_RESPONSE_MESSAGE.CREATE.SUCCESS)
         }
     }, [isSuccessCreateUser])
-
-
 
     return (
         <StyledCard
@@ -82,7 +87,7 @@ const CreateUserForm = () => {
             <Form {...createUserForm}>
                 <form
                     onSubmit={createUserForm.handleSubmit(onSubmit)}
-                    className='space-y-4 xl:space-y-0 xl:grid xl:gap-4 xl:grid-cols-3'
+                    className='space-y-4 xl:grid xl:grid-cols-3 xl:gap-4 xl:space-y-0'
                 >
                     <FormField
                         control={createUserForm.control}
@@ -193,7 +198,7 @@ const CreateUserForm = () => {
                                                     className={cn(
                                                         'w-full text-left font-normal',
                                                         !field.value &&
-                                                        'text-muted-foreground'
+                                                            'text-muted-foreground'
                                                     )}
                                                 >
                                                     {field.value ? (
@@ -224,7 +229,7 @@ const CreateUserForm = () => {
                                                 disabled={(date) =>
                                                     date > new Date() ||
                                                     date <
-                                                    new Date('1900-01-01')
+                                                        new Date('1900-01-01')
                                                 }
                                                 initialFocus
                                             />
@@ -343,7 +348,11 @@ const CreateUserForm = () => {
                         )}
                     />
 
-                    <LoaderButton isLoading={isPendingCreateUser} type='submit' className='col-start-3 mt-6' >
+                    <LoaderButton
+                        isLoading={isPendingCreateUser}
+                        type='submit'
+                        className='col-start-3 mt-6'
+                    >
                         Complete Create
                     </LoaderButton>
                 </form>

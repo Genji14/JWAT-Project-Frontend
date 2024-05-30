@@ -10,7 +10,7 @@ const SideBar = () => {
     return (
         <aside
             className={cn(
-                'fixed bottom-0 left-0 z-20 h-[calc(100vh-4.5rem)]  w-fit overflow-hidden transition-all hidden xl:block',
+                'fixed bottom-0 left-0 z-20 hidden  h-[calc(100vh-4.5rem)] w-fit overflow-hidden transition-all xl:block',
                 expanded && 'w-96'
             )}
         >
