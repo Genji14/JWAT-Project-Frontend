@@ -1,3 +1,4 @@
+import { LoaderButton } from '@/components/general/LoaderButton'
 import StyledCard from '@/components/general/StyledCard'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -23,20 +24,25 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
+import { useCreateUser } from '@/hooks/mutation'
 import { useExpandedStore } from '@/hooks/zustand'
 import { createUserSchema } from '@/lib/schemas'
+import { USER_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 import { cn } from '@/lib/utils'
 import { Gender, UserRole } from '@/types/enums'
 import { ICreateUserForm } from '@/types/interfaces'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 const CreateUserForm = () => {
+
+    const { mutateCreateUser, isPendingCreateUser, isSuccessCreateUser } = useCreateUser();
     const expanded = useExpandedStore((state) => state.expanded)
-    const createForm = useForm<ICreateUserForm>({
+    const createUserForm = useForm<ICreateUserForm>({
         resolver: zodResolver(createUserSchema),
         defaultValues: {
             fullName: '',
@@ -52,23 +58,34 @@ const CreateUserForm = () => {
     })
 
     async function onSubmit(values: ICreateUserForm) {
-        console.log(values)
+        await mutateCreateUser(values).catch(() => {
+            toast.error(USER_RESPONSE_MESSAGE.CREATE.BAD_REQUEST);
+        });
     }
+
+    useEffect(() => {
+        if (isSuccessCreateUser) {
+            createUserForm.reset();
+            toast.success(USER_RESPONSE_MESSAGE.CREATE.SUCCESS);
+        }
+    }, [isSuccessCreateUser])
+
+
 
     return (
         <StyledCard
             className={cn(
-                'container mt-8 w-full p-10 transition-all',
-                !expanded && '2xl:w-[calc(100%-24rem)]'
+                'mx-auto mt-8 w-full p-10 transition-all',
+                !expanded && 'xl:w-[calc(100%-24rem)]'
             )}
         >
-            <Form {...createForm}>
+            <Form {...createUserForm}>
                 <form
-                    onSubmit={createForm.handleSubmit(onSubmit)}
-                    className='grid gap-4 2xl:grid-cols-3'
+                    onSubmit={createUserForm.handleSubmit(onSubmit)}
+                    className='space-y-4 xl:space-y-0 xl:grid xl:gap-4 xl:grid-cols-3'
                 >
                     <FormField
-                        control={createForm.control}
+                        control={createUserForm.control}
                         name='fullName'
                         render={({ field }) => (
                             <FormItem>
@@ -86,10 +103,10 @@ const CreateUserForm = () => {
                         )}
                     />
                     <FormField
-                        control={createForm.control}
+                        control={createUserForm.control}
                         name='address'
                         render={({ field }) => (
-                            <FormItem className='col-span-2'>
+                            <FormItem className='xl:col-span-2'>
                                 <FormLabel className='text-base font-semibold text-foreground'>
                                     Address
                                 </FormLabel>
@@ -105,7 +122,7 @@ const CreateUserForm = () => {
                     />
 
                     <FormField
-                        control={createForm.control}
+                        control={createUserForm.control}
                         name='phoneNumber'
                         render={({ field }) => (
                             <FormItem>
@@ -124,7 +141,7 @@ const CreateUserForm = () => {
                     />
 
                     <FormField
-                        control={createForm.control}
+                        control={createUserForm.control}
                         name='gender'
                         render={({ field }) => (
                             <FormItem>
@@ -160,7 +177,7 @@ const CreateUserForm = () => {
                     />
 
                     <FormField
-                        control={createForm.control}
+                        control={createUserForm.control}
                         name='dob'
                         render={({ field }) => (
                             <FormItem>
@@ -220,10 +237,10 @@ const CreateUserForm = () => {
                     />
 
                     <FormField
-                        control={createForm.control}
+                        control={createUserForm.control}
                         name='email'
                         render={({ field }) => (
-                            <FormItem className='col-span-3'>
+                            <FormItem className='2xl:col-span-3'>
                                 <FormLabel className='text-base font-semibold text-foreground'>
                                     Employee Email
                                 </FormLabel>
@@ -242,7 +259,7 @@ const CreateUserForm = () => {
                         )}
                     />
                     <FormField
-                        control={createForm.control}
+                        control={createUserForm.control}
                         name='roles'
                         render={({ field }) => (
                             <FormItem>
@@ -285,7 +302,7 @@ const CreateUserForm = () => {
                         )}
                     />
                     <FormField
-                        control={createForm.control}
+                        control={createUserForm.control}
                         name='username'
                         render={({ field }) => (
                             <FormItem>
@@ -307,7 +324,7 @@ const CreateUserForm = () => {
                     />
 
                     <FormField
-                        control={createForm.control}
+                        control={createUserForm.control}
                         name='password'
                         render={({ field }) => (
                             <FormItem>
@@ -325,9 +342,10 @@ const CreateUserForm = () => {
                             </FormItem>
                         )}
                     />
-                    <Button type='submit' className='col-start-3 mt-6'>
+
+                    <LoaderButton isLoading={isPendingCreateUser} type='submit' className='col-start-3 mt-6' >
                         Complete Create
-                    </Button>
+                    </LoaderButton>
                 </form>
             </Form>
         </StyledCard>

@@ -58,11 +58,10 @@ export const createUserSchema = z.object({
         invalid_type_error:
             'Gender must be one of the following values: MALE, FEMALE, OTHER',
     }),
-    dob: z
-        .date({
-            required_error: 'Date of birth is required',
-            invalid_type_error: 'Date of birth must be a valid date',
-        }),
+    dob: z.date({
+        required_error: 'Date of birth is required',
+        invalid_type_error: 'Date of birth must be a valid date',
+    }),
     address: z
         .string({
             required_error: "Employee's address is required",

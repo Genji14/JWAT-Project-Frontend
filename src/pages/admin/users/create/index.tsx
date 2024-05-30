@@ -7,7 +7,7 @@ const CreateUserPage: NextPage = () => {
     return (
         <>
             <Head key='createUser'>
-                <title>Create New User</title>
+                <title>Create New User - Sharing Knowledge</title>
             </Head>
             <h2 className='text-2xl font-bold uppercase'>Create New User</h2>
             <span className='text-muted-foreground'>

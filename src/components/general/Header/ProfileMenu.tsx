@@ -11,13 +11,21 @@ import { Separator } from '@/components/ui/separator'
 import Hydration from '../Hydration'
 import Cookies from 'js-cookie'
 import { JwtPayload, jwtDecode } from 'jwt-decode'
-
+import { useRouter } from 'next/navigation'
 
 const ProfileMenu = () => {
+    const router = useRouter()
 
     useEffect(() => {
-        console.log(jwtDecode<JwtPayload>(Cookies.get("accessToken")!));
+        if (Cookies.get('accessToken'))
+            console.log(jwtDecode<JwtPayload>(Cookies.get('accessToken')!))
     }, [])
+
+    const handleLogOut = () => {
+        Cookies.remove('accessToken')
+        Cookies.remove('refreshToken')
+        router.push('/sign-in')
+    }
 
     return (
         <Hydration>
@@ -46,6 +54,7 @@ const ProfileMenu = () => {
                     <Button
                         variant='ghost'
                         className='h-fit justify-start gap-2 px-3 py-1.5'
+                        onClick={handleLogOut}
                     >
                         <LogOut className='h-4 w-4' />
                         <span>Sign out</span>
@@ -53,7 +62,6 @@ const ProfileMenu = () => {
                 </PopoverContent>
             </Popover>
         </Hydration>
-
     )
 }
 

@@ -4,11 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { IUserSignIn } from '@/types/interfaces'
 import { loginSchema } from '@/lib/schemas'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
-import { Button } from '@/components/ui/button'
+import { LoaderButton } from '@/components/general/LoaderButton'
 import { Input } from '@/components/ui/input'
 import { CircleUser, KeyRound } from 'lucide-react'
 import { useSignIn } from '@/hooks/mutation'
 import { toast } from 'sonner'
+import { AUTH_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 
 const SignInForm: React.FC = () => {
     const loginForm = useForm<IUserSignIn>({
@@ -23,7 +24,9 @@ const SignInForm: React.FC = () => {
 
     async function onSubmit(values: IUserSignIn) {
         await mutateSignIn(values).catch((ex) => {
-            toast.error(ex)
+            if (ex.response.status === 401 || ex.response.status === 400) {
+                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.BAD_REQUEST);
+            }
         });
     }
 
@@ -72,13 +75,9 @@ const SignInForm: React.FC = () => {
                     )}
                 />
                 <div className='flex justify-end'>
-                    <Button
-                        type='submit'
-                        className='h-fit'
-                        disabled={isPendingSignIn}
-                    >
+                    <LoaderButton isLoading={isPendingSignIn}>
                         Continue
-                    </Button>
+                    </LoaderButton>
                 </div>
             </form>
         </Form>

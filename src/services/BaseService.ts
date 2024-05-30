@@ -1,9 +1,11 @@
 import { DOMAIN_NAME } from '@/lib/constants/SettingSystem'
 import axios, { type Method } from 'axios'
+import Cookies from 'js-cookie'
 
 axios.interceptors.request.use(async (config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem("accessToken")}` || '';
-    return config;
+    config.headers.Authorization = Cookies.get('accessToken') ?
+        `Bearer ${Cookies.get('accessToken')}` : ''
+    return config
 })
 
 class BaseService {
