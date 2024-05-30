@@ -1,10 +1,8 @@
-"use client"
-
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { IUserSignIn } from '@/types/interfaces'
-import { loginSchema } from '@/lib/utils/schemas'
+import { loginSchema } from '@/lib/schemas'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -40,6 +38,7 @@ const SignInForm: React.FC = () => {
                                     {...field}
                                     className="border-0 border-b rounded-none "
                                     icon={<CircleUser className="w-5 h-5" />}
+                                    line={true}
                                     placeholder='Enter your username'
                                     type="text"
                                     disabled={isPendingSignIn} />
@@ -57,11 +56,11 @@ const SignInForm: React.FC = () => {
                                     {...field}
                                     className="border-0 border-b rounded-none pl-0"
                                     icon={<KeyRound className="w-5 h-5" />}
+                                    line={true}
                                     placeholder='********'
                                     type="password"
                                     disabled={isPendingSignIn} />
                             </FormControl>
-
                         </FormItem>
                     )}
                 />

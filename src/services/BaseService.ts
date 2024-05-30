@@ -1,4 +1,4 @@
-import { DOMAIN_NAME } from "@/lib/utils/constants/SettingSystem";
+import { DOMAIN_NAME } from "@/lib/constants/SettingSystem";
 import axios, { type Method } from "axios";
 
 axios.interceptors.request.use(async (config) => {

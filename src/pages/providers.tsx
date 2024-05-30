@@ -1,5 +1,5 @@
 import { ThemeProvider } from '@/components/general/ThemeProvider';
-import { LIGHT_THEME } from '@/lib/utils/constants/SettingSystem';
+import { LIGHT_THEME } from '@/lib/constants/SettingSystem';
 import React, { FC, PropsWithChildren } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
