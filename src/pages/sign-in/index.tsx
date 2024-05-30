@@ -9,7 +9,7 @@ import Head from 'next/head'
 const SignInPage = () => {
     return (
         <>
-            <Head key="sign-in">
+            <Head key='sign-in'>
                 <title>Sign In - Sharing Knowledge</title>
             </Head>
 
@@ -28,7 +28,6 @@ const SignInPage = () => {
                 </StyledCard>
             </div>
         </>
-
     )
 }
 

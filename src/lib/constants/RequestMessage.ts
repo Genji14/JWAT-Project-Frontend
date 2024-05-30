@@ -1,12 +1,13 @@
 export const USER_RESPONSE_MESSAGE = {
     CREATE: {
-        SUCCESS: "Create User Successfully !!!",
-        BAD_REQUEST: "Some thing went wrong, try again."
-    }
+        SUCCESS: 'Create User Successfully !!!',
+        BAD_REQUEST: 'Some thing went wrong, try again.',
+        CONFLICT: 'Username is existed.',
+    },
 }
 
 export const AUTH_RESPONSE_MESSAGE = {
     LOGIN: {
-        BAD_REQUEST: "Username or password incorrect, please try again.",
-    }
+        BAD_REQUEST: 'Username or password incorrect, please try again.',
+    },
 }
