@@ -17,7 +17,7 @@ const DashBoardLayout: FC<IDashBoardLayoutProps> = ({ children }) => {
             <Header />
             <div className="w-full h-full flex">
                 <SideBar />
-                <main className={cn("flex-auto flex mt-[4.5rem] h-[calc(100vh-4.5rem)] flex-col transition-all bg-border dark:bg-border/20 p-8", FONT_POPPINS.className, expanded ? "ml-96" : "ml-header")}>
+                <main className={cn("flex-auto flex mt-[4.5rem] h-[calc(100vh-4.5rem)] flex-col transition-all bg-border dark:bg-border/50 p-8", FONT_POPPINS.className, expanded ? "ml-96" : "ml-header")}>
                     {children}
                 </main>
             </div>

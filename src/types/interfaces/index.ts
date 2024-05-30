@@ -21,14 +21,13 @@ export interface IProjectForm {
 }
 
 export interface ICreateUserForm {
-    employeeId: number,
-    role: UserRole,
     fullName: string,
     phoneNumber: string,
     email: string,
-    dob: Date,
     gender: Gender,
+    dob: Date,
     address: string,
     username: string,
-    password: string
+    password: string,
+    roles: UserRole,
 }
