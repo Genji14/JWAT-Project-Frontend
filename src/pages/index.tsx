@@ -1,8 +1,8 @@
-import HandleBar from "@/components/pages/Dashboard/HandleBar";
+import HandleBar from '@/components/pages/Dashboard/HandleBar'
 export default function Home() {
-  return (
-    <>
-      <HandleBar />
-    </>
-  );
+    return (
+        <>
+            <HandleBar />
+        </>
+    )
 }

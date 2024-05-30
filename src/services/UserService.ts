@@ -1,9 +1,9 @@
-import { BaseService } from "./BaseService";
+import { BaseService } from './BaseService'
 
 class UserService extends BaseService {
     constructor() {
-        super();
+        super()
     }
 }
 
-export const userService = new UserService();
+export const userService = new UserService()
