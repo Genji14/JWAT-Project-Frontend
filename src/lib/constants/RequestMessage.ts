@@ -9,5 +9,6 @@ export const USER_RESPONSE_MESSAGE = {
 export const AUTH_RESPONSE_MESSAGE = {
     LOGIN: {
         BAD_REQUEST: 'Username or password incorrect, please try again.',
+        SERVER_ERROR: 'Somethings went wrong, please try again.',
     },
 }

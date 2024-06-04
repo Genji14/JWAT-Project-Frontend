@@ -1,13 +1,47 @@
 import { DOMAIN_NAME } from '@/lib/constants/SettingSystem'
 import axios, { type Method } from 'axios'
 import Cookies from 'js-cookie'
+import { authService } from './AuthService'
+import { toast } from 'sonner'
 
-axios.interceptors.request.use(async (config) => {
-    config.headers.Authorization = Cookies.get('accessToken')
-        ? `Bearer ${Cookies.get('accessToken')}`
-        : ''
-    return config
-})
+axios.interceptors.request.use(
+    async (config) => {
+        config.headers.Authorization = Cookies.get('accessToken')
+            ? `Bearer ${Cookies.get('accessToken')}`
+            : ''
+        return config
+    }
+)
+
+axios.interceptors.response.use(
+    response => response,
+    async error => {
+        const originalRequest = error.config;
+        if (error.response.status === 419 && !originalRequest._retry) {
+            originalRequest._retry = true;
+            const refreshToken = Cookies.get('refreshToken') ?? "";
+            try {
+                const { data } = await authService.refreshToken(refreshToken);
+                if (data) {
+                    Cookies.set('accessToken', data.accessToken);
+                    Cookies.set('refreshToken', data.refreshToken);
+                    originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
+                    return axios(originalRequest);
+                }
+            } catch {
+                Cookies.remove('accessToken');
+                Cookies.remove('refreshToken');
+                toast.message("Token expired", {
+                    description: "Your working session is expired, please sign in again.",
+                })
+                setTimeout(() => {
+                    window.location.href = '/sign-in';
+                }, 3000);
+            }
+        }
+        return Promise.reject(error);
+    }
+)
 
 class BaseService {
     private async request(
