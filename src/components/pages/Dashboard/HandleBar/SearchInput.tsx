@@ -7,7 +7,7 @@ const SearchInput = () => {
         <Input
             placeholder='Find projects...'
             icon={<Search className='h-5 w-5 text-muted-foreground' />}
-            className='w-96 py-5'
+            className='w-80 py-5'
         />
     )
 }

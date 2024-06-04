@@ -13,7 +13,6 @@ import { toast } from 'sonner'
 import { AUTH_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 
 const SignInForm: React.FC = () => {
-
     const loginForm = useForm<IUserSignIn>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -26,12 +25,12 @@ const SignInForm: React.FC = () => {
 
     async function onSubmit(values: IUserSignIn) {
         try {
-            await mutateSignIn(values);
+            await mutateSignIn(values)
         } catch (error: any) {
             if (error.response.status === HttpStatusCode.Unauthorized) {
-                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.BAD_REQUEST);
+                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.BAD_REQUEST)
             } else {
-                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.SERVER_ERROR);
+                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.SERVER_ERROR)
             }
         }
     }

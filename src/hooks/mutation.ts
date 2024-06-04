@@ -10,15 +10,15 @@ export const useSignIn = () => {
 
     const { mutateAsync, isPending } = useMutation({
         mutationFn: async (form: IUserSignIn) => {
-            const res = await authService.signIn(form);
-            return res.data;
+            const res = await authService.signIn(form)
+            return res.data
         },
         onSuccess(data) {
             Cookies.set('accessToken', data.accessToken)
             Cookies.set('refreshToken', data.refreshToken)
             router.push('/')
-        }
-    });
+        },
+    })
 
     return {
         mutateSignIn: mutateAsync,

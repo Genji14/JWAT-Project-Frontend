@@ -7,12 +7,17 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { Loader2 } from 'lucide-react'
 
-const SignInForm = dynamic(() => import('@/components/pages/SignIn/SignInForm'), {
-    loading: () => <div className="p-10 w-full h-full flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-primary" />
-    </div>,
-    ssr: false
-})
+const SignInForm = dynamic(
+    () => import('@/components/pages/SignIn/SignInForm'),
+    {
+        loading: () => (
+            <div className='flex h-full w-full items-center justify-center p-10'>
+                <Loader2 className='h-6 w-6 animate-spin text-primary' />
+            </div>
+        ),
+        ssr: false,
+    }
+)
 
 const SignInPage = () => {
     return (

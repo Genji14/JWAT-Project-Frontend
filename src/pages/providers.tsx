@@ -11,6 +11,10 @@ type IProvidersProps = PropsWithChildren<{
 const queryClient = new QueryClient()
 
 const Providers: FC<IProvidersProps> = ({ children }) => {
+
+    const rules = defineRulesFor('ADMIN');
+    const ability = new Ability(rules)
+
     return (
         <>
             <QueryClientProvider client={queryClient}>
@@ -20,7 +24,10 @@ const Providers: FC<IProvidersProps> = ({ children }) => {
                     enableSystem
                     disableTransitionOnChange
                 >
-                    {children}
+                    <AbilityContext.Provider value={ability}>
+                        {children}
+                    </AbilityContext.Provider>
+
                     <Toaster richColors />
                 </ThemeProvider>
             </QueryClientProvider>
