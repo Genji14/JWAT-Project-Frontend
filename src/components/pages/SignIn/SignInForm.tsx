@@ -8,10 +8,12 @@ import { LoaderButton } from '@/components/general/LoaderButton'
 import { Input } from '@/components/ui/input'
 import { CircleUser, KeyRound } from 'lucide-react'
 import { useSignIn } from '@/hooks/mutation'
+import { HttpStatusCode } from 'axios'
 import { toast } from 'sonner'
 import { AUTH_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 
 const SignInForm: React.FC = () => {
+
     const loginForm = useForm<IUserSignIn>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
@@ -23,11 +25,15 @@ const SignInForm: React.FC = () => {
     const { isPendingSignIn, mutateSignIn } = useSignIn()
 
     async function onSubmit(values: IUserSignIn) {
-        await mutateSignIn(values).catch((ex) => {
-            if (ex.response.status === 401 || ex.response.status === 400) {
-                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.BAD_REQUEST)
+        try {
+            await mutateSignIn(values);
+        } catch (error: any) {
+            if (error.response.status === HttpStatusCode.Unauthorized) {
+                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.BAD_REQUEST);
+            } else {
+                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.SERVER_ERROR);
             }
-        })
+        }
     }
 
     return (

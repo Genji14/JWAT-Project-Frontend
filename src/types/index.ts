@@ -9,3 +9,8 @@ export type DocumentStore = {
     removeDocument: (document: File) => void
     clean: () => void
 }
+
+export type RefreshTokenResponse = {
+    accessToken: string
+    refreshToken: string
+}

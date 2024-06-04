@@ -64,7 +64,7 @@ const CreateUserForm = () => {
                 createUserForm.setError('username', {
                     message: USER_RESPONSE_MESSAGE.CREATE.CONFLICT,
                 })
-            } else {
+            } else if (ex.response.status !== 419) {
                 toast.error(USER_RESPONSE_MESSAGE.CREATE.BAD_REQUEST)
             }
         })
@@ -107,6 +107,7 @@ const CreateUserForm = () => {
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={createUserForm.control}
                         name='address'
@@ -198,7 +199,7 @@ const CreateUserForm = () => {
                                                     className={cn(
                                                         'w-full text-left font-normal',
                                                         !field.value &&
-                                                            'text-muted-foreground'
+                                                        'text-muted-foreground'
                                                     )}
                                                 >
                                                     {field.value ? (
@@ -229,7 +230,7 @@ const CreateUserForm = () => {
                                                 disabled={(date) =>
                                                     date > new Date() ||
                                                     date <
-                                                        new Date('1900-01-01')
+                                                    new Date('1900-01-01')
                                                 }
                                                 initialFocus
                                             />
@@ -263,6 +264,7 @@ const CreateUserForm = () => {
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={createUserForm.control}
                         name='roles'
@@ -306,6 +308,7 @@ const CreateUserForm = () => {
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={createUserForm.control}
                         name='username'
