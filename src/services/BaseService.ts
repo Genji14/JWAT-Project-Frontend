@@ -3,6 +3,7 @@ import axios, { type Method } from 'axios'
 import Cookies from 'js-cookie'
 import { authService } from './AuthService'
 import { toast } from 'sonner'
+import { JwtPayload, jwtDecode } from 'jwt-decode'
 
 axios.interceptors.request.use(async (config) => {
     config.headers.Authorization = Cookies.get('accessToken')
@@ -23,6 +24,8 @@ axios.interceptors.response.use(
                 if (data) {
                     Cookies.set('accessToken', data.accessToken)
                     Cookies.set('refreshToken', data.refreshToken)
+                    let decoded: any = jwtDecode<JwtPayload>(data.accessToken);
+                    Cookies.set('role', decoded.roles);
                     originalRequest.headers['Authorization'] =
                         `Bearer ${data.accessToken}`
                     return axios(originalRequest)
@@ -30,6 +33,7 @@ axios.interceptors.response.use(
             } catch {
                 Cookies.remove('accessToken')
                 Cookies.remove('refreshToken')
+                Cookies.remove('role')
                 toast.message('Token expired', {
                     description:
                         'Your working session is expired, please sign in again.',

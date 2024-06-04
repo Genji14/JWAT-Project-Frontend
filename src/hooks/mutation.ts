@@ -3,6 +3,7 @@ import { userService } from '@/services/UserService'
 import { ICreateUserForm, IUserSignIn } from '@/types/interfaces'
 import { useMutation } from '@tanstack/react-query'
 import Cookies from 'js-cookie'
+import { JwtPayload, jwtDecode } from 'jwt-decode'
 import { useRouter } from 'next/navigation'
 
 export const useSignIn = () => {
@@ -16,6 +17,8 @@ export const useSignIn = () => {
         onSuccess(data) {
             Cookies.set('accessToken', data.accessToken)
             Cookies.set('refreshToken', data.refreshToken)
+            let decoded: any = jwtDecode<JwtPayload>(data.accessToken);
+            Cookies.set('role', decoded.roles);
             router.push('/')
         },
     })

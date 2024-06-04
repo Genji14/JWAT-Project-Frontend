@@ -24,6 +24,7 @@ const ProfileMenu = () => {
     const handleLogOut = () => {
         Cookies.remove('accessToken')
         Cookies.remove('refreshToken')
+        Cookies.remove('role')
         router.push('/sign-in')
     }
 
