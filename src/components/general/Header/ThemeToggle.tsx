@@ -3,7 +3,7 @@ import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
 import { Button } from '@/components/ui/button'
-import Hydration from '../Hydration'
+import Hydration from '../../shared/Hydration'
 import { DARK_THEME, LIGHT_THEME } from '@/lib/constants/SettingSystem'
 
 export function ModeToggle() {

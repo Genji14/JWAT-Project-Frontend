@@ -91,3 +91,25 @@ export const createUserSchema = z.object({
             'Role must be one of the following values: ADMIN, EMPLOYEE, MANAGER',
     }),
 })
+
+export const updateUserSchema = z.object({
+    gender: z.enum([Gender.FEMALE, Gender.MALE, Gender.OTHER], {
+        required_error: 'Gender is required',
+        invalid_type_error:
+            'Gender must be one of the following values: MALE, FEMALE, OTHER',
+    }),
+    address: z.string({
+        required_error: "Employee's address is required",
+    }).min(10, {
+        message: 'Address at least 10 characters',
+    }).max(80, {
+        message: "Address isn't longer than 80 characters",
+    }),
+    phoneNumber: z.string({
+        required_error: "Employee's phone number is required",
+    }).min(10, {
+        message: 'Phone number at least 10 characters',
+    }).max(12, {
+        message: "Phone number isn't longer than 12 characters",
+    }),
+})

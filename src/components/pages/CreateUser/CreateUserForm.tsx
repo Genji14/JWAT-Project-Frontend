@@ -1,5 +1,5 @@
-import { LoaderButton } from '@/components/general/LoaderButton'
-import StyledCard from '@/components/general/StyledCard'
+import { LoaderButton } from '@/components/shared/LoaderButton'
+import StyledCard from '@/components/shared/StyledCard'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import {
@@ -43,6 +43,7 @@ const CreateUserForm = () => {
     const { mutateCreateUser, isPendingCreateUser, isSuccessCreateUser } =
         useCreateUser()
     const expanded = useExpandedStore((state) => state.expanded)
+
     const createUserForm = useForm<ICreateUserForm>({
         resolver: zodResolver(createUserSchema),
         defaultValues: {
@@ -80,7 +81,7 @@ const CreateUserForm = () => {
     return (
         <StyledCard
             className={cn(
-                'mx-auto mt-8 w-full p-10 transition-all',
+                'mx-auto mt-4 w-full p-4 transition-all xl:mt-8 xl:p-10',
                 !expanded && 'xl:w-[calc(100%-24rem)]'
             )}
         >
@@ -199,7 +200,7 @@ const CreateUserForm = () => {
                                                     className={cn(
                                                         'w-full text-left font-normal',
                                                         !field.value &&
-                                                        'text-muted-foreground'
+                                                            'text-muted-foreground'
                                                     )}
                                                 >
                                                     {field.value ? (
@@ -230,7 +231,7 @@ const CreateUserForm = () => {
                                                 disabled={(date) =>
                                                     date > new Date() ||
                                                     date <
-                                                    new Date('1900-01-01')
+                                                        new Date('1900-01-01')
                                                 }
                                                 initialFocus
                                             />
@@ -246,7 +247,7 @@ const CreateUserForm = () => {
                         control={createUserForm.control}
                         name='email'
                         render={({ field }) => (
-                            <FormItem className='2xl:col-span-3'>
+                            <FormItem className='xl:col-span-3'>
                                 <FormLabel className='text-base font-semibold text-foreground'>
                                     Employee Email
                                 </FormLabel>
@@ -354,9 +355,9 @@ const CreateUserForm = () => {
                     <LoaderButton
                         isLoading={isPendingCreateUser}
                         type='submit'
-                        className='col-start-3 mt-6'
+                        className='col-start-3 mt-6 w-full'
                     >
-                        Complete Create
+                        Create
                     </LoaderButton>
                 </form>
             </Form>

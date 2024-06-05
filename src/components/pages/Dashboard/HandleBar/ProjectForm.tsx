@@ -14,10 +14,10 @@ import { Textarea } from '@/components/ui/textarea'
 import { projectSchema } from '@/lib/schemas'
 import { IProjectForm } from '@/types/interfaces'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FilePlus2 } from 'lucide-react'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import DocumentInput from './DocumentInput'
+import { DialogDescription, DialogHeader } from '@/components/ui/dialog'
 
 const ProjectForm = () => {
     const addProjectForm = useForm<IProjectForm>({
@@ -28,10 +28,19 @@ const ProjectForm = () => {
         },
     })
 
-    async function onSubmit(values: IProjectForm) {}
+    async function onSubmit(values: IProjectForm) { }
 
     return (
         <>
+            <DialogHeader>
+                <h3 className='text-xl font-bold uppercase'>
+                    Create New Project
+                </h3>
+                <DialogDescription>
+                    Name a project for sharing knowledge each
+                    other.
+                </DialogDescription>
+            </DialogHeader>
             <Form {...addProjectForm}>
                 <form
                     onSubmit={addProjectForm.handleSubmit(onSubmit)}
