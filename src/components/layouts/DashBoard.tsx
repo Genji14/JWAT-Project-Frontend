@@ -12,7 +12,6 @@ type IDashBoardLayoutProps = PropsWithChildren<{
 const DashBoardLayout: FC<IDashBoardLayoutProps> = ({ children }) => {
     const expanded = useExpandedStore((state) => state.expanded)
 
-
     return (
         <>
             <Header />
@@ -20,12 +19,12 @@ const DashBoardLayout: FC<IDashBoardLayoutProps> = ({ children }) => {
                 <SideBar expanded={expanded} isBrowser={true} />
                 <main
                     className={cn(
-                        'ml-0 mt-[4.5rem] flex min-h-[calc(100vh-4.5rem)] flex-auto flex-col bg-border p-2 transition-all dark:bg-border/50 sm:p-4 xl:p-6',
+                        'ml-0 flex min-h-screen flex-auto flex-col bg-border p-2 transition-all dark:bg-border/50 sm:p-4 xl:p-6',
                         FONT_POPPINS.className,
                         expanded ? 'xl:ml-80' : 'xl:ml-header'
                     )}
                 >
-                    {children}
+                    <section className='mt-[4.5rem]'>{children}</section>
                 </main>
             </div>
         </>

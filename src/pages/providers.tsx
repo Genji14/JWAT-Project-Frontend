@@ -1,4 +1,3 @@
-import { ThemeProvider } from '@/components/general/ThemeProvider'
 import { LIGHT_THEME } from '@/lib/constants/SettingSystem'
 import React, { FC, PropsWithChildren } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -7,6 +6,7 @@ import { AbilityContext } from '@/lib/contexts/CaslContext'
 import { createMongoAbility } from '@casl/ability'
 import { defineRulesFor } from '@/lib/utils'
 import { UserRole } from '@/types/enums'
+import { ThemeProvider } from '@/components/shared/ThemeProvider'
 
 type IProvidersProps = PropsWithChildren<{
     children: React.ReactNode
@@ -15,8 +15,7 @@ type IProvidersProps = PropsWithChildren<{
 const queryClient = new QueryClient()
 
 const Providers: FC<IProvidersProps> = ({ children }) => {
-
-    const ability = createMongoAbility(defineRulesFor(UserRole.ADMIN));
+    const ability = createMongoAbility(defineRulesFor(UserRole.ADMIN))
 
     return (
         <>

@@ -2,19 +2,15 @@ import { cn } from '@/lib/utils'
 import { FONT_POPPINS } from '@/lib/constants/SettingSystem'
 import { NextPage } from 'next'
 import React from 'react'
-import StyledCard from '@/components/general/StyledCard'
+import StyledCard from '@/components/shared/StyledCard'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
-import { Loader2 } from 'lucide-react'
+import Spinner from '@/components/shared/Spinner'
 
 const SignInForm = dynamic(
     () => import('@/components/pages/SignIn/SignInForm'),
     {
-        loading: () => (
-            <div className='flex h-full w-full items-center justify-center p-10'>
-                <Loader2 className='h-6 w-6 animate-spin text-primary' />
-            </div>
-        ),
+        loading: () => <Spinner />,
         ssr: false,
     }
 )

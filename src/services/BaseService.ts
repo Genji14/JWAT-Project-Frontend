@@ -24,8 +24,8 @@ axios.interceptors.response.use(
                 if (data) {
                     Cookies.set('accessToken', data.accessToken)
                     Cookies.set('refreshToken', data.refreshToken)
-                    let decoded: any = jwtDecode<JwtPayload>(data.accessToken);
-                    Cookies.set('role', decoded.roles);
+                    let decoded: any = jwtDecode<JwtPayload>(data.accessToken)
+                    Cookies.set('role', decoded.roles)
                     originalRequest.headers['Authorization'] =
                         `Bearer ${data.accessToken}`
                     return axios(originalRequest)
@@ -64,6 +64,10 @@ class BaseService {
     }
     put(url: string, data?: object | string) {
         return this.request('put', url, data)
+    }
+
+    patch(url: string, data?: object | string) {
+        return this.request('patch', url, data)
     }
 
     post(url: string, data?: object | string) {

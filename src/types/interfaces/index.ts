@@ -1,15 +1,5 @@
 import { Gender, UserRole } from '../enums'
 
-export interface ErrorResponse extends Error {
-    response: {
-        data: {
-            message: string
-            status: number
-        }
-        status: number
-    }
-}
-
 export interface IUserSignIn {
     username: string
     password: string
@@ -30,4 +20,16 @@ export interface ICreateUserForm {
     username: string
     password: string
     roles: UserRole
+}
+
+export interface IUserInfo extends ICreateUserForm {
+    avatar: string
+    createdAt: Date
+    updatedAt: Date
+}
+
+export interface IUpdateUserForm {
+    gender?: Gender
+    address?: string
+    phoneNumber?: string
 }

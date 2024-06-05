@@ -1,5 +1,5 @@
-import { LoaderButton } from '@/components/general/LoaderButton'
-import StyledCard from '@/components/general/StyledCard'
+import { LoaderButton } from '@/components/shared/LoaderButton'
+import StyledCard from '@/components/shared/StyledCard'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
 import {

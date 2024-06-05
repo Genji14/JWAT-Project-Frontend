@@ -5,14 +5,22 @@ import { PackagePlus } from 'lucide-react'
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogHeader,
     DialogTrigger,
 } from '@/components/ui/dialog'
 import { FONT_POPPINS } from '@/lib/constants/SettingSystem'
 import { cn } from '@/lib/utils'
-import ProjectForm from './ProjectForm'
-import Hydration from '@/components/general/Hydration'
+import Hydration from '@/components/shared/Hydration'
+import dynamic from 'next/dynamic'
+import Spinner from '@/components/shared/Spinner'
+
+const ProjectForm = dynamic(() => import('./ProjectForm'), {
+    loading: () => (
+        <div className='p-10'>
+            <Spinner />
+        </div>
+    ),
+    ssr: false
+})
 
 const HandleBar = () => {
     return (
@@ -29,20 +37,14 @@ const HandleBar = () => {
                             </Button>
                         </DialogTrigger>
                         <DialogContent
-                            className={cn('w-1/3', FONT_POPPINS.className)}
+                            className={cn(
+                                'lg:w-1/2 xl:w-1/3',
+                                FONT_POPPINS.className
+                            )}
                             onInteractOutside={(e) => {
                                 e.preventDefault()
                             }}
                         >
-                            <DialogHeader>
-                                <h3 className='text-xl font-bold uppercase'>
-                                    Create New Project
-                                </h3>
-                                <DialogDescription>
-                                    Name a project for sharing knowledge each
-                                    other.
-                                </DialogDescription>
-                            </DialogHeader>
                             <ProjectForm />
                         </DialogContent>
                     </Dialog>

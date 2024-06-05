@@ -6,6 +6,7 @@ import Cookies from 'js-cookie'
 import { JwtPayload, jwtDecode } from 'jwt-decode'
 import { useRouter } from 'next/navigation'
 
+
 export const useSignIn = () => {
     const router = useRouter()
 
@@ -17,8 +18,8 @@ export const useSignIn = () => {
         onSuccess(data) {
             Cookies.set('accessToken', data.accessToken)
             Cookies.set('refreshToken', data.refreshToken)
-            let decoded: any = jwtDecode<JwtPayload>(data.accessToken);
-            Cookies.set('role', decoded.roles);
+            let decoded: any = jwtDecode<JwtPayload>(data.accessToken)
+            Cookies.set('role', decoded.roles)
             router.push('/')
         },
     })
@@ -40,5 +41,19 @@ export const useCreateUser = () => {
         mutateCreateUser: mutateAsync,
         isPendingCreateUser: isPending,
         isSuccessCreateUser: isSuccess,
+    }
+}
+
+export const useUpdateProfile = () => {
+    const { mutateAsync, isPending, isSuccess } = useMutation({
+        mutationFn: async (form: FormData) => {
+            await userService.updateProfile(5, form);
+        },
+    })
+
+    return {
+        mutateUpdateProfile: mutateAsync,
+        isPendingUpdateProfile: isPending,
+        isSuccessUpdateProfile: isSuccess,
     }
 }

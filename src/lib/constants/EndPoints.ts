@@ -5,4 +5,5 @@ export const AUTH_ENDPOINTS = {
 
 export const USER_ENDPOINTS = {
     CREATE_USER: `user/create`,
+    UPDATE_PROFILE: (id: number) => `user/${id}`
 }
