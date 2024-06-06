@@ -4,9 +4,8 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { LogOut, UserRound } from 'lucide-react'
+import React, { useEffect } from 'react'
+import { KeyRound, LogOut, UserRound } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
@@ -16,8 +15,9 @@ import Spinner from '@/components/shared/Spinner'
 import { useCurrentUserInfo } from '@/hooks/query'
 import { Skeleton } from '@/components/ui/skeleton'
 import { convertAlt } from '@/lib/utils'
+import PasswordDialog from './PasswordDialog'
 
-const EditProfileForm = dynamic(() => import('./EditProfileForm'), {
+const EditProfileDialog = dynamic(() => import('./EditProfileDialog'), {
     loading: () => (
         <div className='p-10'>
             <Spinner />
@@ -68,13 +68,30 @@ const ProfileMenu = () => {
                             e.preventDefault()
                         }}
                     >
-                        <EditProfileForm userInfo={currentUserInfoData} />
+                        <EditProfileDialog userInfo={currentUserInfoData} />
+                    </DialogContent>
+                </Dialog>
+                <Dialog>
+                    <DialogTrigger asChild>
+                        <div className='flex items-center gap-2 px-3 py-1.5 text-sm font-semibold rounded cursor-pointer hover:bg-accent'>
+                            <KeyRound className='h-4 w-4' />
+                            <span>Change Password</span>
+                        </div>
+                    </DialogTrigger>
+                    <DialogContent
+                        styledCard={true}
+                        className='p-6 lg:w-1/2'
+                        onInteractOutside={(e) => {
+                            e.preventDefault()
+                        }}
+                    >
+                        <PasswordDialog />
                     </DialogContent>
                 </Dialog>
                 <div className='px-2'>
                     <Separator />
                 </div>
-                <div className='flex items-center gap-2 px-3 py-1.5 text-sm font-semibold rounded cursor-pointer hover:bg-accent' onClick={handleLogOut}                >
+                <div className='flex items-center gap-2 px-3 py-1.5 text-sm font-semibold rounded cursor-pointer hover:bg-accent' onClick={handleLogOut}>
                     <LogOut className='h-4 w-4' />
                     <span>Sign out</span>
                 </div>

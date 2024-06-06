@@ -44,3 +44,9 @@ export interface IUpdateUserForm {
     address: string
     phoneNumber: string
 }
+
+export interface IPasswordForm {
+    oldPassword: string,
+    password: string,
+    confirm: string
+}

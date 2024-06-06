@@ -1,7 +1,7 @@
 import { Gender, UserRole } from '@/types/enums'
 import { z } from 'zod'
 
-const currentDate = new Date()
+const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
 export const loginSchema = z.object({
     username: z.string().min(1),
@@ -113,3 +113,28 @@ export const updateUserSchema = z.object({
         message: "Phone number isn't longer than 12 characters",
     }),
 })
+
+export const passwordSchema = z.object({
+    oldPassword: z.string({
+        required_error: "Old password is required",
+    }).min(8, {
+        message: "Password at least 8 characters",
+    }),
+    password: z.string({
+        required_error: "Password is required",
+    }).min(8, {
+        message: "Password at least 8 characters",
+    }).regex(passwordRegex, {
+        message: "Password must contain uppercase, lowercase letter, numbers and special characters",
+    }),
+    confirm: z.string({
+        required_error: "Confirm password is required",
+    }).min(8, {
+        message: "Confirm password at least 8 characters",
+    }).regex(passwordRegex, {
+        message: "Password must contain uppercase, lowercase letter, numbers and special characters",
+    }),
+}).refine((values) => values.password === values.confirm, {
+    path: ["confirm"],
+    message: "Passwords do not match",
+});
