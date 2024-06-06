@@ -1,9 +1,7 @@
 import { DOMAIN_NAME } from '@/lib/constants/SettingSystem'
 import axios, { type Method } from 'axios'
 import Cookies from 'js-cookie'
-import { authService } from './AuthService'
-import { toast } from 'sonner'
-import { JwtPayload, jwtDecode } from 'jwt-decode'
+import { refreshToken } from '@/lib/utils'
 
 axios.interceptors.request.use(async (config) => {
     config.headers.Authorization = Cookies.get('accessToken')
@@ -15,37 +13,18 @@ axios.interceptors.request.use(async (config) => {
 axios.interceptors.response.use(
     (response) => response,
     async (error) => {
-        const originalRequest = error.config
+        const originalRequest = error.config;
         if (error.response.status === 419 && !originalRequest._retry) {
-            originalRequest._retry = true
-            const refreshToken = Cookies.get('refreshToken') ?? ''
-            try {
-                const { data } = await authService.refreshToken(refreshToken)
-                if (data) {
-                    Cookies.set('accessToken', data.accessToken)
-                    Cookies.set('refreshToken', data.refreshToken)
-                    let decoded: any = jwtDecode<JwtPayload>(data.accessToken)
-                    Cookies.set('role', decoded.roles)
-                    originalRequest.headers['Authorization'] =
-                        `Bearer ${data.accessToken}`
-                    return axios(originalRequest)
-                }
-            } catch {
-                Cookies.remove('accessToken')
-                Cookies.remove('refreshToken')
-                Cookies.remove('role')
-                toast.message('Token expired', {
-                    description:
-                        'Your working session is expired, please sign in again.',
-                })
-                setTimeout(() => {
-                    window.location.href = '/sign-in'
-                }, 3000)
+            originalRequest._retry = true;
+            const newAccessToken = await refreshToken();
+            if (newAccessToken) {
+                originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                return axios(originalRequest);
             }
         }
-        return Promise.reject(error)
+        return Promise.reject(error);
     }
-)
+);
 
 class BaseService {
     private async request(

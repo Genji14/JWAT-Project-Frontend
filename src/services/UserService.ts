@@ -7,6 +7,10 @@ class UserService extends BaseService {
         super()
     }
 
+    current = () => {
+        return this.get(USER_ENDPOINTS.CURRENT);
+    }
+
     createUser = (form: ICreateUserForm) => {
         return this.post(USER_ENDPOINTS.CREATE_USER, form)
     }

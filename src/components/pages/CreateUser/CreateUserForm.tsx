@@ -55,7 +55,7 @@ const CreateUserForm = () => {
             address: '',
             username: '',
             password: '',
-            roles: UserRole.EMPLOYEE,
+            role: UserRole.EMPLOYEE,
         },
     })
 
@@ -82,7 +82,7 @@ const CreateUserForm = () => {
         <StyledCard
             className={cn(
                 'mx-auto mt-4 w-full p-4 transition-all xl:mt-8 xl:p-10',
-                !expanded && 'xl:w-[calc(100%-24rem)]'
+                !expanded && 'xl:w-[calc(100%-15.5rem)]'
             )}
         >
             <Form {...createUserForm}>
@@ -200,7 +200,7 @@ const CreateUserForm = () => {
                                                     className={cn(
                                                         'w-full text-left font-normal',
                                                         !field.value &&
-                                                            'text-muted-foreground'
+                                                        'text-muted-foreground'
                                                     )}
                                                 >
                                                     {field.value ? (
@@ -231,7 +231,7 @@ const CreateUserForm = () => {
                                                 disabled={(date) =>
                                                     date > new Date() ||
                                                     date <
-                                                        new Date('1900-01-01')
+                                                    new Date('1900-01-01')
                                                 }
                                                 initialFocus
                                             />
@@ -268,7 +268,7 @@ const CreateUserForm = () => {
 
                     <FormField
                         control={createUserForm.control}
-                        name='roles'
+                        name='role'
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className='text-base font-semibold text-foreground'>

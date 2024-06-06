@@ -7,7 +7,6 @@ import PersonalForm from './PersonalForm'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { updateUserSchema } from '@/lib/schemas'
-import { Gender } from '@/types/enums'
 import { Form } from '@/components/ui/form'
 import AvatarForm from './AvatarForm'
 import { useUpdateProfile } from '@/hooks/mutation'
@@ -15,7 +14,7 @@ import { HttpStatusCode } from 'axios'
 import { toast } from 'sonner'
 
 type IEditProfileContentProps = PropsWithChildren<{
-    userInfo?: IUserInfo
+    userInfo: IUserInfo
 }>
 
 const EditProfileContent: FC<IEditProfileContentProps> = ({ userInfo }) => {
@@ -26,9 +25,9 @@ const EditProfileContent: FC<IEditProfileContentProps> = ({ userInfo }) => {
     const editProfileForm = useForm<IUpdateUserForm>({
         resolver: zodResolver(updateUserSchema),
         defaultValues: {
-            address: "",
-            gender: Gender.OTHER,
-            phoneNumber: "",
+            address: userInfo.address,
+            gender: userInfo.gender,
+            phoneNumber: userInfo.phoneNumber,
         },
     })
 
@@ -55,8 +54,8 @@ const EditProfileContent: FC<IEditProfileContentProps> = ({ userInfo }) => {
 
     return (
         <>
-            <DialogHeader>
-                <h3 className='text-xl font-bold uppercase'>Edit profile</h3>
+            <DialogHeader className='space-y-0'>
+                <h3 className='font-bold uppercase text-xl'>User profile</h3>
                 <DialogDescription>
                     Provide new informations to change your profile.
                 </DialogDescription>
@@ -64,7 +63,7 @@ const EditProfileContent: FC<IEditProfileContentProps> = ({ userInfo }) => {
             <Separator />
             <Form {...editProfileForm}>
                 <form onSubmit={editProfileForm.handleSubmit(onSubmit)} className="grid gap-4 mb-2">
-                    <AvatarForm onAvatarChange={handleAvatarChange} />
+                    <AvatarForm onAvatarChange={handleAvatarChange} userInfo={userInfo} />
                     <Separator />
                     <PersonalForm form={editProfileForm} />
                 </form>
