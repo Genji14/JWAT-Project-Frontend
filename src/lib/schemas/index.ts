@@ -85,7 +85,7 @@ export const createUserSchema = z.object({
     password: z.string({
         required_error: 'Password is required',
     }),
-    roles: z.enum([UserRole.ADMIN, UserRole.EMPLOYEE, UserRole.MANAGER], {
+    role: z.enum([UserRole.ADMIN, UserRole.EMPLOYEE, UserRole.MANAGER], {
         required_error: 'Role is required',
         invalid_type_error:
             'Role must be one of the following values: ADMIN, EMPLOYEE, MANAGER',

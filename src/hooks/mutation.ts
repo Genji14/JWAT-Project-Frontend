@@ -19,7 +19,7 @@ export const useSignIn = () => {
             Cookies.set('accessToken', data.accessToken)
             Cookies.set('refreshToken', data.refreshToken)
             let decoded: any = jwtDecode<JwtPayload>(data.accessToken)
-            Cookies.set('role', decoded.roles)
+            Cookies.set('role', decoded.role)
             router.push('/')
         },
     })

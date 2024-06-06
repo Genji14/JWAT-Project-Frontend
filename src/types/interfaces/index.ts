@@ -19,10 +19,11 @@ export interface ICreateUserForm {
     address: string
     username: string
     password: string
-    roles: UserRole
+    role: UserRole
 }
 
 export interface IUserInfo extends ICreateUserForm {
+    id: number
     avatar: string
     createdAt: Date
     updatedAt: Date
