@@ -12,6 +12,8 @@ import AvatarForm from './AvatarForm'
 import { useUpdateProfile } from '@/hooks/mutation'
 import { HttpStatusCode } from 'axios'
 import { toast } from 'sonner'
+import { LoaderButton } from '@/components/shared/LoaderButton'
+import { Loader2 } from 'lucide-react'
 
 type IEditProfileContentProps = PropsWithChildren<{
     userInfo: IUserInfo
@@ -38,9 +40,12 @@ const EditProfileContent: FC<IEditProfileContentProps> = ({ userInfo }) => {
 
     async function onSubmit(data: IUpdateUserForm) {
         const formData = new FormData();
-        formData.append('user', new Blob([JSON.stringify(data)], { type: "application/json" }));
+        // formData.append('user', new Blob([JSON.stringify(data)], { type: "application/json" }));
+        formData.append('phoneNumber', data.phoneNumber);
+        formData.append('gender', data.gender);
+        formData.append('address', data.address);
         if (avatarFile)
-            formData.append('images', avatarFile);
+            formData.append('files', avatarFile);
         try {
             await mutateUpdateProfile(formData);
         } catch (error: any) {
@@ -63,14 +68,17 @@ const EditProfileContent: FC<IEditProfileContentProps> = ({ userInfo }) => {
             <Separator />
             <Form {...editProfileForm}>
                 <form onSubmit={editProfileForm.handleSubmit(onSubmit)} className="grid gap-4 mb-2">
-                    <AvatarForm onAvatarChange={handleAvatarChange} userInfo={userInfo} />
+                    <AvatarForm isPending={isPendingUpdateProfile} onAvatarChange={handleAvatarChange} userInfo={userInfo} />
                     <Separator />
-                    <PersonalForm form={editProfileForm} />
+                    <PersonalForm isPending={isPendingUpdateProfile} form={editProfileForm} />
                 </form>
             </Form>
             <DialogFooter>
-                <Button onClick={() => editProfileForm.handleSubmit(onSubmit)()} className='xl:w-fit px-4 h-fit py-1.5'>Save</Button>
-            </DialogFooter >
+                <Button disabled={isPendingUpdateProfile} onClick={() => editProfileForm.handleSubmit(onSubmit)()} className='xl:w-fit px-4 h-fit py-1.5'>
+                    <span>Save</span>
+                    {isPendingUpdateProfile && <Loader2 className='ml-2 h-4 w-4 animate-spin' />}
+                </Button>
+            </DialogFooter>
         </>
     )
 }

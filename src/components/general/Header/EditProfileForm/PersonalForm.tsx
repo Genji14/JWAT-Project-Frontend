@@ -1,17 +1,17 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Gender } from '@/types/enums';
-import { IUpdateUserForm, IUserInfo } from '@/types/interfaces';
+import { IUpdateUserForm } from '@/types/interfaces';
 import React, { FC, PropsWithChildren } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 type IPersonalFormProps = PropsWithChildren<{
+    isPending: boolean,
     form: UseFormReturn<IUpdateUserForm, any, undefined>
 }>;
 
-const PersonalForm: FC<IPersonalFormProps> = ({ form }) => {
+const PersonalForm: FC<IPersonalFormProps> = ({ isPending, form }) => {
     return <>
         <div className='grid gap-x-4 gap-y-2'>
             <h4 className='font-bold uppercase mb-2'>Personal Information</h4>
@@ -23,7 +23,7 @@ const PersonalForm: FC<IPersonalFormProps> = ({ form }) => {
                         <FormItem className='space-y-1'>
                             <FormLabel>Phone number</FormLabel>
                             <FormControl>
-                                <Input placeholder="Require Vietnam Phone (+84)" {...field} />
+                                <Input disabled={isPending} placeholder="Require Vietnam Phone (+84)" {...field} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -39,6 +39,7 @@ const PersonalForm: FC<IPersonalFormProps> = ({ form }) => {
                             </FormLabel>
                             <FormControl>
                                 <Select
+                                    disabled={isPending}
                                     onValueChange={field.onChange}
                                     defaultValue={field.value}
                                 >
@@ -72,7 +73,7 @@ const PersonalForm: FC<IPersonalFormProps> = ({ form }) => {
                     <FormItem className='space-y-1'>
                         <FormLabel>Address</FormLabel>
                         <FormControl>
-                            <Input placeholder="Type new Adress ..." {...field} />
+                            <Input disabled={isPending} placeholder="Type new Adress ..." {...field} />
                         </FormControl>
                         <FormMessage />
                     </FormItem>
