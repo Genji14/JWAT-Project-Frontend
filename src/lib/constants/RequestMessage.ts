@@ -4,6 +4,9 @@ export const USER_RESPONSE_MESSAGE = {
         BAD_REQUEST: 'Some thing went wrong, try again.',
         CONFLICT: 'Username is existed.',
     },
+    EDIT: {
+        SUCCESS: 'Edit User Successfully !!!',
+    }
 }
 
 export const AUTH_RESPONSE_MESSAGE = {

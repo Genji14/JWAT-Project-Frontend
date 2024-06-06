@@ -45,7 +45,7 @@ const ProfileMenu = () => {
         <Popover>
             <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
-                    <AvatarImage src={undefined} />
+                    <AvatarImage src={currentUserInfoData.media ? currentUserInfoData.media.url : undefined} />
                     <AvatarFallback>{convertAlt(currentUserInfoData.fullName)}</AvatarFallback>
                 </Avatar>
             </PopoverTrigger>

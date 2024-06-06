@@ -6,5 +6,5 @@ export const AUTH_ENDPOINTS = {
 export const USER_ENDPOINTS = {
     CREATE_USER: `user/create`,
     CURRENT: `user/current`,
-    UPDATE_PROFILE: (id: number) => `user/${id}`,
+    UPDATE_PROFILE: `user/update`,
 }

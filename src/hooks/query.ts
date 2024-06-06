@@ -8,7 +8,9 @@ export const useCurrentUserInfo = () => {
         queryFn: async () => {
             const res = await userService.current();
             return res.data;
-        }
+        },
+        staleTime: 0,
+        refetchOnWindowFocus: false
     })
 
     return {

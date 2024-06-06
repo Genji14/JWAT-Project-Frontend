@@ -15,8 +15,8 @@ class UserService extends BaseService {
         return this.post(USER_ENDPOINTS.CREATE_USER, form)
     }
 
-    updateProfile = (id: number, form: FormData) => {
-        return this.patch(USER_ENDPOINTS.UPDATE_PROFILE(id), form)
+    updateProfile = (form: FormData) => {
+        return this.patch(USER_ENDPOINTS.UPDATE_PROFILE, form)
     }
 }
 

@@ -9,3 +9,8 @@ export enum UserRole {
     EMPLOYEE = 'EMPLOYEE',
     MANAGER = 'MANAGER',
 }
+
+export enum mediaType {
+    IMAGE = 'iamge',
+    VIDEO = 'video'
+}

@@ -1,10 +1,13 @@
+import { USER_QUERY_KEY } from '@/lib/constants/QueryKey'
+import { USER_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 import { authService } from '@/services/AuthService'
 import { userService } from '@/services/UserService'
 import { ICreateUserForm, IUserSignIn } from '@/types/interfaces'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Cookies from 'js-cookie'
 import { JwtPayload, jwtDecode } from 'jwt-decode'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 
 export const useSignIn = () => {
@@ -45,10 +48,17 @@ export const useCreateUser = () => {
 }
 
 export const useUpdateProfile = () => {
+
+    const queryClient = useQueryClient();
+
     const { mutateAsync, isPending, isSuccess } = useMutation({
         mutationFn: async (form: FormData) => {
-            await userService.updateProfile(5, form);
+            await userService.updateProfile(form);
         },
+        onSuccess: () => {
+            toast.success(USER_RESPONSE_MESSAGE.EDIT.SUCCESS);
+            queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY.CURRENT] });
+        }
     })
 
     return {
