@@ -10,16 +10,13 @@ import { updateUserSchema } from '@/lib/schemas'
 import { Form } from '@/components/ui/form'
 import AvatarForm from './AvatarForm'
 import { useUpdateProfile } from '@/hooks/mutation'
-import { HttpStatusCode } from 'axios'
-import { toast } from 'sonner'
-import { LoaderButton } from '@/components/shared/LoaderButton'
 import { Loader2 } from 'lucide-react'
 
-type IEditProfileContentProps = PropsWithChildren<{
+type IEditProfileDialogProps = PropsWithChildren<{
     userInfo: IUserInfo
 }>
 
-const EditProfileContent: FC<IEditProfileContentProps> = ({ userInfo }) => {
+const EditProfileDialog: FC<IEditProfileDialogProps> = ({ userInfo }) => {
 
     const [avatarFile, setAvatarFile] = React.useState<File | null>(null);
     const { mutateUpdateProfile, isPendingUpdateProfile } = useUpdateProfile();
@@ -40,7 +37,6 @@ const EditProfileContent: FC<IEditProfileContentProps> = ({ userInfo }) => {
 
     async function onSubmit(data: IUpdateUserForm) {
         const formData = new FormData();
-        // formData.append('user', new Blob([JSON.stringify(data)], { type: "application/json" }));
         formData.append('phoneNumber', data.phoneNumber);
         formData.append('gender', data.gender);
         formData.append('address', data.address);
@@ -83,4 +79,4 @@ const EditProfileContent: FC<IEditProfileContentProps> = ({ userInfo }) => {
     )
 }
 
-export default EditProfileContent
+export default EditProfileDialog

@@ -51,7 +51,7 @@ export const useUpdateProfile = () => {
 
     const queryClient = useQueryClient();
 
-    const { mutateAsync, isPending, isSuccess } = useMutation({
+    const { mutateAsync, isPending } = useMutation({
         mutationFn: async (form: FormData) => {
             await userService.updateProfile(form);
         },
@@ -64,6 +64,23 @@ export const useUpdateProfile = () => {
     return {
         mutateUpdateProfile: mutateAsync,
         isPendingUpdateProfile: isPending,
-        isSuccessUpdateProfile: isSuccess,
+    }
+}
+
+export const useChangePassword = () => {
+
+    const { mutateAsync, isPending, isSuccess } = useMutation({
+        mutationFn: async (form: FormData) => {
+            await userService.updateProfile(form);
+        },
+        onSuccess: () => {
+            toast.success(USER_RESPONSE_MESSAGE.EDIT.PASSWORD_SUCCESS);
+        }
+    })
+
+    return {
+        mutateChangePassword: mutateAsync,
+        isPendingChangePassword: isPending,
+        isSuccessChangePassword: isSuccess
     }
 }
