@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { UserRole } from './types/enums'
 
 export function middleware(request: NextRequest) {
     const accessToken = request.cookies.get('accessToken')?.value;

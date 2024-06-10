@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { ModeToggle } from './ThemeToggle'
 import SidebarButton from './SidebarButton'
 import BreadCrumbComponent from '../BreadCrumb'
@@ -11,6 +11,7 @@ const ProfileMenu = dynamic(() => import("./ProfileMenu"), {
 })
 
 const Header: React.FC = () => {
+
     return (
         <header className='fixed left-0 top-0 z-50 flex h-[4.5rem] w-full items-center border-b bg-background shadow backdrop-blur-xl dark:border-border'>
             <nav className='relative flex h-full w-full items-center justify-between pr-4 sm:pr-6 lg:pr-8'>

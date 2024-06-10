@@ -16,6 +16,7 @@ import { useCurrentUserInfo } from '@/hooks/query'
 import { Skeleton } from '@/components/ui/skeleton'
 import { convertAlt } from '@/lib/utils'
 import PasswordDialog from './PasswordDialog'
+import { useStore } from '@/components/providers/StoreProvider'
 
 const EditProfileDialog = dynamic(() => import('./EditProfileDialog'), {
     loading: () => (
@@ -28,13 +29,14 @@ const EditProfileDialog = dynamic(() => import('./EditProfileDialog'), {
 const ProfileMenu = () => {
 
     const router = useRouter();
+    const removeRole = useStore((state) => state.removeRole);
     const { currentUserInfoData, isFetchingCurrentUserInfo } = useCurrentUserInfo();
 
     const handleLogOut = () => {
         Cookies.remove('accessToken')
         Cookies.remove('refreshToken')
-        Cookies.remove('role')
         router.push('/sign-in')
+        removeRole();
     }
 
     if (isFetchingCurrentUserInfo) {

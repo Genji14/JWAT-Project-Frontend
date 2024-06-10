@@ -8,6 +8,17 @@ export const loginSchema = z.object({
     password: z.string().min(1),
 })
 
+
+const fileSchema = z.object({
+    name: z.string(),
+    type: z.string().refine(type => type === 'image/jpeg' || type === 'image/png', {
+        message: 'File must be a JPEG or PNG image',
+    }),
+    size: z.number().max(2000000, {
+        message: 'File size must be less than 2MB',
+    }),
+});
+
 export const projectSchema = z.object({
     projectName: z
         .string({
@@ -23,6 +34,7 @@ export const projectSchema = z.object({
         .min(20, {
             message: 'Project description at least 20 characters',
         }),
+    logo: fileSchema
 })
 
 export const createUserSchema = z.object({

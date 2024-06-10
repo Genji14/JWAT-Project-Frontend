@@ -1,3 +1,4 @@
+import { useStore } from '@/components/providers/StoreProvider'
 import { USER_QUERY_KEY } from '@/lib/constants/QueryKey'
 import { USER_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 import { authService } from '@/services/AuthService'
@@ -11,7 +12,8 @@ import { toast } from 'sonner'
 
 
 export const useSignIn = () => {
-    const router = useRouter()
+    const router = useRouter();
+    const setRole = useStore((state) => state.setRole)
 
     const { mutateAsync, isPending } = useMutation({
         mutationFn: async (form: IUserSignIn) => {
@@ -19,7 +21,7 @@ export const useSignIn = () => {
             Cookies.set('accessToken', data.accessToken)
             Cookies.set('refreshToken', data.refreshToken)
             const { data: role } = await userService.getRole();
-            Cookies.set('role', role);
+            setRole(role);
         },
         onSuccess: () => {
             router.push('/')

@@ -22,6 +22,7 @@ export interface IUpdateUserForm {
 export interface IProjectForm {
     projectName: string
     description: string
+    logo: File | undefined
 }
 
 

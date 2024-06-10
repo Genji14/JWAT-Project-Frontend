@@ -9,15 +9,15 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { projectSchema } from '@/lib/schemas'
-import { IProjectForm } from '@/types/interfaces'
 import { zodResolver } from '@hookform/resolvers/zod'
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import DocumentInput from './DocumentInput'
 import { DialogDescription, DialogHeader } from '@/components/ui/dialog'
+import PhotoInput from './PhotoInput'
+import { IProjectForm } from '@/types/interfaces/Form'
+import { Separator } from '@/components/ui/separator'
 
 const ProjectForm = () => {
     const addProjectForm = useForm<IProjectForm>({
@@ -25,15 +25,19 @@ const ProjectForm = () => {
         defaultValues: {
             projectName: '',
             description: '',
+            logo: undefined
         },
     })
 
-    async function onSubmit(values: IProjectForm) { }
+    async function onSubmit(values: IProjectForm) {
+        console.log(values)
+
+    }
 
     return (
         <>
-            <DialogHeader>
-                <h3 className='text-xl font-bold uppercase'>
+            <DialogHeader className="space-y-0">
+                <h3 className='text-xl font-bold uppercase leading-0'>
                     Create New Project
                 </h3>
                 <DialogDescription>
@@ -41,10 +45,11 @@ const ProjectForm = () => {
                     other.
                 </DialogDescription>
             </DialogHeader>
+            <Separator />
             <Form {...addProjectForm}>
                 <form
                     onSubmit={addProjectForm.handleSubmit(onSubmit)}
-                    className='mt-4 space-y-4'
+                    className='space-y-4'
                 >
                     <FormField
                         control={addProjectForm.control}
@@ -71,7 +76,7 @@ const ProjectForm = () => {
                                 <FormControl>
                                     <Textarea {...field} />
                                 </FormControl>
-                                <FormDescription>
+                                <FormDescription className="text-xs">
                                     Describe about this project to understand
                                     what we're doing.
                                 </FormDescription>
@@ -79,21 +84,12 @@ const ProjectForm = () => {
                             </FormItem>
                         )}
                     />
-                    <div className='flex flex-col space-y-2'>
-                        <Label>
-                            Member{' '}
-                            <span className='text-muted-foreground/50'>
-                                (Optional)
-                            </span>
-                        </Label>
-                        <div className=''></div>
+                    <PhotoInput form={addProjectForm} />
+                    <div className="w-full pt-2">
+                        <Button type='submit' className='w-full'>
+                            Complete
+                        </Button>
                     </div>
-
-                    <DocumentInput />
-
-                    <Button type='submit' className='w-full'>
-                        Complete
-                    </Button>
                 </form>
             </Form>
         </>
