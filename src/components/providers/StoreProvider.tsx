@@ -1,9 +1,9 @@
-import { TExpandedSlice } from '@/stores/slices/ExpandedSlice';
-import { TRoleSlice } from '@/stores/slices/RoleSlice';
 import { type ReactNode, createContext, useRef, useContext } from 'react'
 import { type StoreApi, useStore as useZustandStore, create } from 'zustand'
 import { createRoleSlice } from "@/stores/slices/RoleSlice"
 import { createExpandedSlice } from "@/stores/slices/ExpandedSlice"
+import { TRoleSlice } from '@/stores/types/Role';
+import { TExpandedSlice } from '@/stores/types/Expand';
 
 export type TStore = TRoleSlice & TExpandedSlice;
 

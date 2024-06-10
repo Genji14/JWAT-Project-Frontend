@@ -37,8 +37,9 @@ const HandleBar = () => {
                             </Button>
                         </DialogTrigger>
                         <DialogContent
+                            styledCard={true}
                             className={cn(
-                                'lg:w-1/2 xl:w-1/3',
+                                'p-6 lg:w-1/2 xl:w-1/3',
                                 FONT_POPPINS.className
                             )}
                             onInteractOutside={(e) => {
