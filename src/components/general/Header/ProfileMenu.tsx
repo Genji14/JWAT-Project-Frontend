@@ -4,7 +4,7 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { KeyRound, LogOut, UserRound } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import Cookies from 'js-cookie'

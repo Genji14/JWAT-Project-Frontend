@@ -117,8 +117,8 @@ export const updateUserSchema = z.object({
 export const passwordSchema = z.object({
     oldPassword: z.string({
         required_error: "Old password is required",
-    }).min(8, {
-        message: "Password at least 8 characters",
+    }).min(1, {
+        message: "Old password is required",
     }),
     password: z.string({
         required_error: "Password is required",

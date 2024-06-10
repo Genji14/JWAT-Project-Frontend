@@ -5,11 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { useChangePassword } from '@/hooks/mutation';
 import { passwordSchema } from '@/lib/schemas';
-import { IPasswordForm } from '@/types/interfaces';
+import { IChangePasswordForm, IPasswordForm } from '@/types/interfaces/Form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import React, { FC, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 
 const PasswordDialog: FC = () => {
@@ -32,11 +33,14 @@ const PasswordDialog: FC = () => {
     }, [isPendingChangePassword])
 
     async function onSubmit(data: IPasswordForm) {
-        const formData = new FormData();
-        formData.append('password', data.password);
+        const reqForm: IChangePasswordForm = {
+            oldPassword: data.oldPassword,
+            password: data.password
+        }
         try {
-            await mutateChangePassword(formData);
+            await mutateChangePassword(reqForm);
         } catch (error: any) {
+            toast.error(error.response.data.message);
         }
     }
 

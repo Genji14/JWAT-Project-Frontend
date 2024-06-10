@@ -5,15 +5,15 @@ import {
     SheetHeader,
     SheetTrigger,
 } from '@/components/ui/sheet'
-import { useExpandedStore } from '@/hooks/zustand'
 import { cn } from '@/lib/utils'
 import { Menu } from 'lucide-react'
 import React from 'react'
 import Sidebar from '../Sidebar'
 import { Separator } from '@/components/ui/separator'
+import { useStore } from '@/components/providers/StoreProvider'
 
 const SidebarButton = () => {
-    const toggle = useExpandedStore((state) => state.toggle)
+    const toggle = useStore((state) => state.toggle)
 
     return (
         <div className={cn('flex h-full justify-center p-4 transition-all')}>
