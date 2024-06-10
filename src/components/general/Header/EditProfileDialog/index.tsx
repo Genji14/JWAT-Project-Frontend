@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { DialogDescription, DialogFooter, DialogHeader } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
-import { IUpdateUserForm, IUserInfo } from '@/types/interfaces'
+import { IUserInfo } from '@/types/interfaces'
 import React, { FC, PropsWithChildren, useCallback } from 'react'
 import PersonalForm from './PersonalForm'
 import { useForm } from 'react-hook-form'
@@ -11,6 +11,7 @@ import { Form } from '@/components/ui/form'
 import AvatarForm from './AvatarForm'
 import { useUpdateProfile } from '@/hooks/mutation'
 import { Loader2 } from 'lucide-react'
+import { IUpdateUserForm } from '@/types/interfaces/Form'
 
 type IEditProfileDialogProps = PropsWithChildren<{
     userInfo: IUserInfo

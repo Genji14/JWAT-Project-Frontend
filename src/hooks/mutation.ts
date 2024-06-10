@@ -2,10 +2,10 @@ import { USER_QUERY_KEY } from '@/lib/constants/QueryKey'
 import { USER_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 import { authService } from '@/services/AuthService'
 import { userService } from '@/services/UserService'
-import { ICreateUserForm, IUserSignIn } from '@/types/interfaces'
+import { IUserSignIn } from '@/types/interfaces'
+import { IChangePasswordForm, ICreateUserForm } from '@/types/interfaces/Form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Cookies from 'js-cookie'
-import { JwtPayload, jwtDecode } from 'jwt-decode'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
@@ -15,14 +15,13 @@ export const useSignIn = () => {
 
     const { mutateAsync, isPending } = useMutation({
         mutationFn: async (form: IUserSignIn) => {
-            const res = await authService.signIn(form)
-            return res.data
-        },
-        onSuccess(data) {
+            const { data } = await authService.signIn(form);
             Cookies.set('accessToken', data.accessToken)
             Cookies.set('refreshToken', data.refreshToken)
-            let decoded: any = jwtDecode<JwtPayload>(data.accessToken)
-            Cookies.set('role', decoded.role)
+            const { data: role } = await userService.getRole();
+            Cookies.set('role', role);
+        },
+        onSuccess: () => {
             router.push('/')
         },
     })
@@ -70,8 +69,8 @@ export const useUpdateProfile = () => {
 export const useChangePassword = () => {
 
     const { mutateAsync, isPending, isSuccess } = useMutation({
-        mutationFn: async (form: FormData) => {
-            await userService.updateProfile(form);
+        mutationFn: async (form: IChangePasswordForm) => {
+            await userService.changePassword(form);
         },
         onSuccess: () => {
             toast.success(USER_RESPONSE_MESSAGE.EDIT.PASSWORD_SUCCESS);

@@ -4,13 +4,14 @@ import { useExpandedStore } from '@/hooks/zustand'
 import { cn } from '@/lib/utils'
 import { FONT_POPPINS } from '@/lib/constants/SettingSystem'
 import React, { FC, PropsWithChildren } from 'react'
+import { useStore } from '../providers/StoreProvider'
 
 type IDashBoardLayoutProps = PropsWithChildren<{
     children: React.ReactNode
 }>
 
 const DashBoardLayout: FC<IDashBoardLayoutProps> = ({ children }) => {
-    const expanded = useExpandedStore((state) => state.expanded)
+    const expanded = useStore((state) => state.expanded)
 
     return (
         <>

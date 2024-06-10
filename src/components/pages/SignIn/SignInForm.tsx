@@ -8,7 +8,6 @@ import { LoaderButton } from '@/components/shared/LoaderButton'
 import { Input } from '@/components/ui/input'
 import { CircleUser, KeyRound } from 'lucide-react'
 import { useSignIn } from '@/hooks/mutation'
-import { HttpStatusCode } from 'axios'
 import { toast } from 'sonner'
 import { AUTH_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 
@@ -27,10 +26,10 @@ const SignInForm: React.FC = () => {
         try {
             await mutateSignIn(values)
         } catch (error: any) {
-            if (error.response?.status === HttpStatusCode.Unauthorized) {
-                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.BAD_REQUEST)
-            } else {
+            if (error.response?.status === 500) {
                 toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.SERVER_ERROR)
+            } else {
+                toast.error(error.response.data.message)
             }
         }
     }

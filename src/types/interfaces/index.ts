@@ -1,26 +1,9 @@
-import { Media } from '..'
-import { Gender, UserRole } from '../enums'
+import { Media } from ".."
+import { Gender, UserRole } from "../enums"
 
 export interface IUserSignIn {
     username: string
     password: string
-}
-
-export interface IProjectForm {
-    projectName: string
-    description: string
-}
-
-export interface ICreateUserForm {
-    fullName: string
-    phoneNumber: string
-    email: string
-    gender: Gender
-    dob: Date
-    address: string
-    username: string
-    password: string
-    role: UserRole
 }
 
 export interface IUserInfo {
@@ -37,16 +20,4 @@ export interface IUserInfo {
     username: string
     role: UserRole
 
-}
-
-export interface IUpdateUserForm {
-    gender: Gender
-    address: string
-    phoneNumber: string
-}
-
-export interface IPasswordForm {
-    oldPassword: string,
-    password: string,
-    confirm: string
 }
