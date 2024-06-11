@@ -10,13 +10,14 @@ const ProjectLoader = () => {
         <div
             className={cn(
                 'grid grid-cols-1 gap-4 md:grid-cols-2',
-                expanded ? 'lg:grid-cols-5' : 'lg:grid-cols-4'
+                expanded ? 'lg:grid-cols-4' : 'lg:grid-cols-4'
             )}
         >
             <Skeleton className='aspect-square bg-accent' />
             <Skeleton className='aspect-square bg-accent' />
             <Skeleton className='aspect-square bg-accent' />
             <Skeleton className='aspect-square bg-accent' />
+
             {!expanded && <Skeleton className='aspect-square bg-accent' />}
         </div>
     )

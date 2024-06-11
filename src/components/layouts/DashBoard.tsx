@@ -4,8 +4,11 @@ import { cn } from '@/lib/utils'
 import { FONT_POPPINS } from '@/lib/constants/SettingSystem'
 import React, { FC, PropsWithChildren } from 'react'
 import { useStore } from '../providers/StoreProvider'
-import { UserRole } from '@/types/enums'
-import SideBarProjectList from '../general/Sidebar/ProjectList'
+import dynamic from 'next/dynamic'
+
+const SidebarDynamicItems = dynamic(() => import('../general/Sidebar/DynamicItem'), {
+    ssr: false
+})
 
 type IDashBoardLayoutProps = PropsWithChildren<{
     children: React.ReactNode
@@ -13,18 +16,13 @@ type IDashBoardLayoutProps = PropsWithChildren<{
 
 const DashBoardLayout: FC<IDashBoardLayoutProps> = ({ children }) => {
     const expanded = useStore((state) => state.expanded)
-    const role = useStore((state) => state.role)
 
     return (
         <>
             <Header />
             <div className='flex h-full w-full'>
                 <SideBar isBrowser={true}>
-                    {role !== UserRole.ADMIN ? (
-                        <SideBarProjectList expanded={expanded} />
-                    ) : (
-                        <></>
-                    )}
+                    <SidebarDynamicItems />
                 </SideBar>
                 <main
                     className={cn(

@@ -32,6 +32,7 @@ export const useSearchProject = (name?: string) => {
             const res = await projectService.searchProjects(name)
             return res.data
         },
+        refetchOnWindowFocus: false
     })
 
     return {

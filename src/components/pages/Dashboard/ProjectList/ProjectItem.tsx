@@ -19,7 +19,7 @@ const ProjectItem: FC<IProjectItemProps> = ({ project }) => {
                     src={project.media.url}
                     alt={project.name}
                 />
-                <div className='absolute bottom-2 left-2 right-2 z-50 rounded bg-background p-1.5 text-center text-sm shadow-md dark:bg-accent'>
+                <div className='absolute bottom-0 inset-x-0 z-50 rounded bg-background p-1.5 text-center text-sm shadow-md dark:bg-accent'>
                     <div className='flex flex-col gap-2 px-2'>
                         <div className='flex items-center justify-between'>
                             <h2 className='truncate text-left text-base font-bold uppercase'>

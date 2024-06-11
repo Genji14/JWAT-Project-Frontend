@@ -1,6 +1,5 @@
 import React from 'react'
 import SidebarButton from './SidebarButton'
-import BreadCrumbComponent from '../BreadCrumb'
 import dynamic from 'next/dynamic'
 import { Skeleton } from '@/components/ui/skeleton'
 import Logo from './Logo'
@@ -26,7 +25,10 @@ const Header: React.FC = () => {
             <nav className='relative flex h-full w-full items-center justify-between pr-4 sm:pr-6 lg:pr-8'>
                 <div className='flex items-center gap-2'>
                     <SidebarButton />
-                    <Link href={role === UserRole.ADMIN ? '/admin' : '/'}>
+                    <Link
+                        href={role === UserRole.ADMIN ? '/admin/dashboard' : '/'}
+                        className='ml-4'
+                    >
                         <Logo />
                     </Link>
                     {/* <BreadCrumbComponent /> */}

@@ -5,14 +5,14 @@ import SidebarItem from '../SidebarItem'
 import Image from 'next/image'
 import { Skeleton } from '@/components/ui/skeleton'
 
-const SideBarProjectList = () => {
+const SidebarProjectList = () => {
     const { isFetchingProjectList, projectListData } = useSearchProject()
 
     if (isFetchingProjectList) {
         return (
-            <div className='space-y-2 '>
-                <Skeleton className='h-12 w-12 bg-accent' />
-                <Skeleton className='h-12 w-12 bg-accent' />
+            <div className='space-y-2 p-2'>
+                <Skeleton className='h-12 w-12 bg-accent p-2' />
+                <Skeleton className='h-12 w-12 bg-accent p-2' />
             </div>
         )
     }
@@ -43,4 +43,4 @@ const SideBarProjectList = () => {
     )
 }
 
-export default SideBarProjectList
+export default SidebarProjectList
