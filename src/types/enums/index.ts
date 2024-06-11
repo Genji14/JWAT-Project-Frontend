@@ -12,5 +12,5 @@ export enum UserRole {
 
 export enum mediaType {
     IMAGE = 'iamge',
-    VIDEO = 'video'
+    VIDEO = 'video',
 }

@@ -6,8 +6,8 @@ export const USER_RESPONSE_MESSAGE = {
     },
     EDIT: {
         SUCCESS: 'Edit User Successfully !!!',
-        PASSWORD_SUCCESS: "Change Password Successfully !!!"
-    }
+        PASSWORD_SUCCESS: 'Change Password Successfully !!!',
+    },
 }
 
 export const AUTH_RESPONSE_MESSAGE = {

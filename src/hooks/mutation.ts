@@ -2,26 +2,31 @@ import { useStore } from '@/components/providers/StoreProvider'
 import { USER_QUERY_KEY } from '@/lib/constants/QueryKey'
 import { USER_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 import { authService } from '@/services/AuthService'
+import { projectService } from '@/services/ProjectService'
 import { userService } from '@/services/UserService'
-import { IUserSignIn } from '@/types/interfaces'
-import { IChangePasswordForm, ICreateUserForm } from '@/types/interfaces/Form'
+import {
+    IChangePasswordForm,
+    ICreateUserForm,
+    ISignInForm,
+} from '@/types/interfaces/Form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
+// Auth
 
 export const useSignIn = () => {
-    const router = useRouter();
+    const router = useRouter()
     const setRole = useStore((state) => state.setRole)
 
     const { mutateAsync, isPending } = useMutation({
-        mutationFn: async (form: IUserSignIn) => {
-            const { data } = await authService.signIn(form);
+        mutationFn: async (form: ISignInForm) => {
+            const { data } = await authService.signIn(form)
             Cookies.set('accessToken', data.accessToken)
             Cookies.set('refreshToken', data.refreshToken)
-            const { data: role } = await userService.getRole();
-            setRole(role);
+            const { data: role } = await userService.getRole()
+            setRole(role)
         },
         onSuccess: () => {
             router.push('/')
@@ -33,6 +38,8 @@ export const useSignIn = () => {
         isPendingSignIn: isPending,
     }
 }
+
+// User
 
 export const useCreateUser = () => {
     const { mutateAsync, isPending, isSuccess } = useMutation({
@@ -49,17 +56,18 @@ export const useCreateUser = () => {
 }
 
 export const useUpdateProfile = () => {
-
-    const queryClient = useQueryClient();
+    const queryClient = useQueryClient()
 
     const { mutateAsync, isPending } = useMutation({
         mutationFn: async (form: FormData) => {
-            await userService.updateProfile(form);
+            await userService.updateProfile(form)
         },
         onSuccess: () => {
-            toast.success(USER_RESPONSE_MESSAGE.EDIT.SUCCESS);
-            queryClient.invalidateQueries({ queryKey: [USER_QUERY_KEY.CURRENT] });
-        }
+            toast.success(USER_RESPONSE_MESSAGE.EDIT.SUCCESS)
+            queryClient.invalidateQueries({
+                queryKey: [USER_QUERY_KEY.CURRENT],
+            })
+        },
     })
 
     return {
@@ -69,19 +77,36 @@ export const useUpdateProfile = () => {
 }
 
 export const useChangePassword = () => {
-
     const { mutateAsync, isPending, isSuccess } = useMutation({
         mutationFn: async (form: IChangePasswordForm) => {
-            await userService.changePassword(form);
+            await userService.changePassword(form)
         },
         onSuccess: () => {
-            toast.success(USER_RESPONSE_MESSAGE.EDIT.PASSWORD_SUCCESS);
-        }
+            toast.success(USER_RESPONSE_MESSAGE.EDIT.PASSWORD_SUCCESS)
+        },
     })
 
     return {
         mutateChangePassword: mutateAsync,
         isPendingChangePassword: isPending,
-        isSuccessChangePassword: isSuccess
+        isSuccessChangePassword: isSuccess,
+    }
+}
+
+// Project
+
+export const useCreateProject = () => {
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: async (form: FormData) => {
+            await projectService.createProject(form)
+        },
+        onSuccess: () => {
+            toast.success('Add Project successfully')
+        },
+    })
+
+    return {
+        mutateCreateProject: mutateAsync,
+        isPendingCreateProject: isPending,
     }
 }

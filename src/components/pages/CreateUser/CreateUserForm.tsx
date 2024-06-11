@@ -1,4 +1,3 @@
-import { LoaderButton } from '@/components/shared/LoaderButton'
 import StyledCard from '@/components/shared/StyledCard'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -25,24 +24,24 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { useCreateUser } from '@/hooks/mutation'
-import { useExpandedStore } from '@/hooks/zustand'
 import { createUserSchema } from '@/lib/schemas'
 import { USER_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 import { cn } from '@/lib/utils'
 import { Gender, UserRole } from '@/types/enums'
-import { ICreateUserForm } from '@/types/interfaces'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
-import { CalendarIcon } from 'lucide-react'
+import { CalendarIcon, Loader2 } from 'lucide-react'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { HttpStatusCode } from 'axios'
+import { ICreateUserForm } from '@/types/interfaces/Form'
+import { useStore } from '@/components/providers/StoreProvider'
 
 const CreateUserForm = () => {
     const { mutateCreateUser, isPendingCreateUser, isSuccessCreateUser } =
         useCreateUser()
-    const expanded = useExpandedStore((state) => state.expanded)
+    const expanded = useStore((state) => state.expanded)
 
     const createUserForm = useForm<ICreateUserForm>({
         resolver: zodResolver(createUserSchema),
@@ -200,7 +199,7 @@ const CreateUserForm = () => {
                                                     className={cn(
                                                         'w-full text-left font-normal',
                                                         !field.value &&
-                                                        'text-muted-foreground'
+                                                            'text-muted-foreground'
                                                     )}
                                                 >
                                                     {field.value ? (
@@ -231,7 +230,7 @@ const CreateUserForm = () => {
                                                 disabled={(date) =>
                                                     date > new Date() ||
                                                     date <
-                                                    new Date('1900-01-01')
+                                                        new Date('1900-01-01')
                                                 }
                                                 initialFocus
                                             />
@@ -352,13 +351,16 @@ const CreateUserForm = () => {
                         )}
                     />
 
-                    <LoaderButton
-                        isLoading={isPendingCreateUser}
+                    <Button
+                        disabled={isPendingCreateUser}
                         type='submit'
                         className='col-start-3 mt-6 w-full'
                     >
-                        Create
-                    </LoaderButton>
+                        <span>Create</span>
+                        {isPendingCreateUser && (
+                            <Loader2 className='ml-2 h-4 w-4 animate-spin' />
+                        )}
+                    </Button>
                 </form>
             </Form>
         </StyledCard>

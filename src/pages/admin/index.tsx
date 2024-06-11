@@ -1,12 +1,8 @@
-import { NextPage } from 'next';
+import { NextPage } from 'next'
 import React from 'react'
 
 const AdminDashBoardPage: NextPage = () => {
-    return (
-        <div>
-            This is Admin DashBoad
-        </div>
-    )
+    return <div>This is Admin DashBoad</div>
 }
 
-export default AdminDashBoardPage;
+export default AdminDashBoardPage

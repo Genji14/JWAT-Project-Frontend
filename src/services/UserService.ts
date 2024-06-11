@@ -1,20 +1,21 @@
-import { IChangePasswordForm, ICreateUserForm } from '@/types/interfaces/Form';
+import { IChangePasswordForm, ICreateUserForm } from '@/types/interfaces/Form'
 import { BaseService } from './BaseService'
 import { USER_ENDPOINTS } from '@/lib/constants/EndPoints'
-import { AxiosResponse } from 'axios';
-import { UserRole } from '@/types/enums';
+import { AxiosResponse } from 'axios'
+import { UserRole } from '@/types/enums'
+import { IUserInfo } from '@/types/interfaces/User'
 
 class UserService extends BaseService {
     constructor() {
         super()
     }
 
-    current = () => {
-        return this.get(USER_ENDPOINTS.CURRENT);
+    current = (): Promise<AxiosResponse<IUserInfo>> => {
+        return this.get(USER_ENDPOINTS.CURRENT)
     }
 
     getRole = (): Promise<AxiosResponse<UserRole>> => {
-        return this.get(USER_ENDPOINTS.GET_ROLE);
+        return this.get(USER_ENDPOINTS.GET_ROLE)
     }
 
     createUser = (form: ICreateUserForm) => {

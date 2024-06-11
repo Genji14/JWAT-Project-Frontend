@@ -1,18 +1,18 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IUserSignIn } from '@/types/interfaces'
 import { loginSchema } from '@/lib/schemas'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
-import { LoaderButton } from '@/components/shared/LoaderButton'
 import { Input } from '@/components/ui/input'
-import { CircleUser, KeyRound } from 'lucide-react'
+import { CircleUser, KeyRound, Loader2 } from 'lucide-react'
 import { useSignIn } from '@/hooks/mutation'
 import { toast } from 'sonner'
 import { AUTH_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
+import { Button } from '@/components/ui/button'
+import { ISignInForm } from '@/types/interfaces/Form'
 
 const SignInForm: React.FC = () => {
-    const loginForm = useForm<IUserSignIn>({
+    const loginForm = useForm<ISignInForm>({
         resolver: zodResolver(loginSchema),
         defaultValues: {
             username: '',
@@ -22,7 +22,7 @@ const SignInForm: React.FC = () => {
 
     const { isPendingSignIn, mutateSignIn } = useSignIn()
 
-    async function onSubmit(values: IUserSignIn) {
+    async function onSubmit(values: ISignInForm) {
         try {
             await mutateSignIn(values)
         } catch (error: any) {
@@ -79,9 +79,12 @@ const SignInForm: React.FC = () => {
                     )}
                 />
                 <div className='flex justify-end'>
-                    <LoaderButton isLoading={isPendingSignIn}>
-                        Continue
-                    </LoaderButton>
+                    <Button disabled={isPendingSignIn}>
+                        <span>Continue</span>
+                        {isPendingSignIn && (
+                            <Loader2 className='ml-2 h-4 w-4 animate-spin' />
+                        )}
+                    </Button>
                 </div>
             </form>
         </Form>

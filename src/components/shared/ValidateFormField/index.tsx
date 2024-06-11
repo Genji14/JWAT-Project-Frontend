@@ -1,13 +1,11 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren } from 'react'
 
 type IValidateFormFieldProps = PropsWithChildren<{
-    type: string,
-
-
-}>;
+    type: string
+}>
 
 const ValidateFormField: FC<IValidateFormFieldProps> = (props) => {
-    return <></>;
-};
+    return <></>
+}
 
-export default ValidateFormField;
+export default ValidateFormField

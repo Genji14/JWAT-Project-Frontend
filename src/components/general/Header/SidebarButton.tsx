@@ -39,7 +39,7 @@ const SidebarButton = () => {
                         Main menu
                     </SheetHeader>
                     <Separator />
-                    <Sidebar expanded={false} />
+                    <Sidebar />
                 </SheetContent>
             </Sheet>
         </div>

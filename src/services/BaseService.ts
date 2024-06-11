@@ -13,27 +13,31 @@ axios.interceptors.request.use(async (config) => {
 axios.interceptors.response.use(
     (response) => response,
     async (error) => {
-        const originalRequest = error.config;
+        const originalRequest = error.config
         if (error.response.status === 419 && !originalRequest._retry) {
-            originalRequest._retry = true;
-            const newAccessToken = await refreshToken();
+            originalRequest._retry = true
+            const newAccessToken = await refreshToken()
             if (newAccessToken) {
-                originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-                return axios(originalRequest);
+                originalRequest.headers['Authorization'] =
+                    `Bearer ${newAccessToken}`
+                return axios(originalRequest)
             }
         }
-        return Promise.reject(error);
+        return Promise.reject(error)
     }
-);
+)
 
 class BaseService {
     private async request(
         method: Method,
         url: string,
         data?: object | string,
-        customHeaders?: object
+        options?: object
     ) {
-        const requestConfig = { headers: customHeaders, data }
+        const requestConfig = {
+            ...options,
+            data,
+        }
         const requestUrl = `${DOMAIN_NAME}${url}`
         return axios.request({
             method,
@@ -41,20 +45,21 @@ class BaseService {
             ...requestConfig,
         })
     }
-    put(url: string, data?: object | string) {
-        return this.request('put', url, data)
-    }
 
-    patch(url: string, data?: object | string) {
-        return this.request('patch', url, data)
+    get(url: string, data?: object | string, params?: object) {
+        return this.request('get', url, data, { params })
     }
 
     post(url: string, data?: object | string) {
         return this.request('post', url, data)
     }
 
-    get(url: string, data?: object | string) {
-        return this.request('get', url, data)
+    put(url: string, data?: object | string) {
+        return this.request('put', url, data)
+    }
+
+    patch(url: string, data?: object | string) {
+        return this.request('patch', url, data)
     }
 
     delete(url: string, data?: object | string) {

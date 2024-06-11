@@ -16,10 +16,14 @@ type IProvidersProps = PropsWithChildren<{
 const queryClient = new QueryClient()
 
 const Providers: FC<IProvidersProps> = ({ children }) => {
-
     return (
         <QueryClientProvider client={queryClient}>
-            <ThemeProvider attribute='class' defaultTheme={LIGHT_THEME} enableSystem disableTransitionOnChange>
+            <ThemeProvider
+                attribute='class'
+                defaultTheme={LIGHT_THEME}
+                enableSystem
+                disableTransitionOnChange
+            >
                 <StoreProvider>
                     {children}
                     <Toaster richColors />
