@@ -4,28 +4,32 @@ import ProjectLoader from '../ProjectLoader'
 import { IProject } from '@/types/interfaces/Project'
 import ProjectItem from './ProjectItem'
 import dynamic from 'next/dynamic'
+import { useSearchProjectContext } from '@/lib/contexts/SearchProjectContext'
 
 const EmptyMessage = dynamic(() => import('./EmptyMessage'), {
     ssr: false,
 })
 
 const ProjectList = () => {
-    const { isFetchingProjectList, projectListData } = useSearchProject()
+    const { debounceQuery } = useSearchProjectContext();
+    const { isFetchingProjectList, projectListData } = useSearchProject(debounceQuery)
 
     if (isFetchingProjectList) {
         return <ProjectLoader />
     }
 
     return (
-        <div className='my-4 grid grid-cols-4 gap-4'>
-            {projectListData ? (
-                projectListData?.map((project: IProject) => {
-                    return <ProjectItem key={project.id} project={project} />
-                })
-            ) : (
-                <EmptyMessage />
-            )}
-        </div>
+        <>
+            {
+                projectListData && projectListData.length > 0 ? <div className='my-4 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4'>
+                    {
+                        projectListData?.map((project: IProject) => {
+                            return <ProjectItem key={project.id} project={project} />
+                        })
+                    }
+                </div> : <EmptyMessage />
+            }
+        </>
     )
 }
 

@@ -2,7 +2,6 @@ import { useStore } from '@/components/providers/StoreProvider'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect } from 'react'
 
 const SidebarItem = ({
     icon,
@@ -20,12 +19,8 @@ const SidebarItem = ({
     const isActive =
         (pathname === '/' && href === '/') ||
         pathname === href ||
-        (pathname !== "/" && pathname?.startsWith(`${href}/`))
+        (pathname !== "/admin" && pathname?.startsWith(`${href}/`))
 
-
-    useEffect(() => {
-        console.log(expanded)
-    }, [expanded])
 
     return (
         <li className='group relative'>

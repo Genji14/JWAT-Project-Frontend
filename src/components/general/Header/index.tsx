@@ -27,7 +27,7 @@ const Header: React.FC = () => {
                     <SidebarButton />
                     <Link
                         href={role === UserRole.ADMIN ? '/admin/dashboard' : '/'}
-                        className='ml-4'
+                        className='lg:ml-4'
                     >
                         <Logo />
                     </Link>

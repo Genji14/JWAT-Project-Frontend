@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { CircleUser, KeyRound, Loader2 } from 'lucide-react'
 import { useSignIn } from '@/hooks/mutation'
 import { toast } from 'sonner'
-import { AUTH_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
+import { AUTH_RESPONSE_MESSAGE, SERVER_MESSAGE } from '@/lib/constants/RequestMessage'
 import { Button } from '@/components/ui/button'
 import { ISignInForm } from '@/types/interfaces/Form'
 
@@ -26,10 +26,14 @@ const SignInForm: React.FC = () => {
         try {
             await mutateSignIn(values)
         } catch (error: any) {
-            if (error.response?.status === 500) {
-                toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.SERVER_ERROR)
+            if (error.response) {
+                if (error.response.status === 500) {
+                    toast.error(AUTH_RESPONSE_MESSAGE.LOGIN.SERVER_ERROR)
+                } else {
+                    toast.error(error.response.data.message)
+                }
             } else {
-                toast.error(error.response.data.message)
+                toast.error(SERVER_MESSAGE.NOT_STARTED)
             }
         }
     }

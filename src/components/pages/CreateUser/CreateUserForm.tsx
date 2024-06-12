@@ -39,9 +39,10 @@ import { ICreateUserForm } from '@/types/interfaces/Form'
 import { useStore } from '@/components/providers/StoreProvider'
 
 const CreateUserForm = () => {
+    const expanded = useStore((state) => state.expanded)
+
     const { mutateCreateUser, isPendingCreateUser, isSuccessCreateUser } =
         useCreateUser()
-    const expanded = useStore((state) => state.expanded)
 
     const createUserForm = useForm<ICreateUserForm>({
         resolver: zodResolver(createUserSchema),
@@ -49,12 +50,12 @@ const CreateUserForm = () => {
             fullName: '',
             phoneNumber: '',
             email: '',
-            gender: Gender.OTHER,
-            dob: new Date(),
+            gender: undefined,
+            dob: undefined,
             address: '',
             username: '',
             password: '',
-            role: UserRole.EMPLOYEE,
+            role: undefined,
         },
     })
 
@@ -64,8 +65,23 @@ const CreateUserForm = () => {
                 createUserForm.setError('username', {
                     message: USER_RESPONSE_MESSAGE.CREATE.CONFLICT,
                 })
-            } else if (ex.response.status !== 419) {
-                toast.error(USER_RESPONSE_MESSAGE.CREATE.BAD_REQUEST)
+            }
+
+            if (ex.response.status === HttpStatusCode.BadRequest) {
+                if (ex.response.data.message === "phoneNumber") {
+                    createUserForm.setError('phoneNumber', {
+                        message: USER_RESPONSE_MESSAGE.CREATE.PHONE_CONFLICT,
+                    })
+                }
+                if (ex.response.data.message === "email") {
+                    createUserForm.setError('email', {
+                        message: USER_RESPONSE_MESSAGE.CREATE.EMAIL_CONFLICT,
+                    })
+                }
+            }
+
+            if (ex.response.status === HttpStatusCode.InternalServerError) {
+                toast.error(USER_RESPONSE_MESSAGE.CREATE.SERVER_ERROR)
             }
         })
     }
@@ -100,6 +116,7 @@ const CreateUserForm = () => {
                                 <FormControl>
                                     <Input
                                         {...field}
+                                        disabled={isPendingCreateUser}
                                         placeholder="Employee's name..."
                                     />
                                 </FormControl>
@@ -119,6 +136,7 @@ const CreateUserForm = () => {
                                 <FormControl>
                                     <Input
                                         {...field}
+                                        disabled={isPendingCreateUser}
                                         placeholder="Type employee's address..."
                                     />
                                 </FormControl>
@@ -138,6 +156,7 @@ const CreateUserForm = () => {
                                 <FormControl>
                                     <Input
                                         {...field}
+                                        disabled={isPendingCreateUser}
                                         placeholder='Type phone number...'
                                     />
                                 </FormControl>
@@ -156,6 +175,7 @@ const CreateUserForm = () => {
                                 </FormLabel>
                                 <FormControl>
                                     <Select
+                                        disabled={isPendingCreateUser}
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
                                     >
@@ -196,10 +216,11 @@ const CreateUserForm = () => {
                                             <FormControl>
                                                 <Button
                                                     variant={'outline'}
+                                                    disabled={isPendingCreateUser}
                                                     className={cn(
                                                         'w-full text-left font-normal',
                                                         !field.value &&
-                                                            'text-muted-foreground'
+                                                        'text-muted-foreground'
                                                     )}
                                                 >
                                                     {field.value ? (
@@ -209,7 +230,7 @@ const CreateUserForm = () => {
                                                         )
                                                     ) : (
                                                         <span>
-                                                            Chọn ngày sinh
+                                                            Choose a date
                                                         </span>
                                                     )}
                                                     <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
@@ -230,7 +251,7 @@ const CreateUserForm = () => {
                                                 disabled={(date) =>
                                                     date > new Date() ||
                                                     date <
-                                                        new Date('1900-01-01')
+                                                    new Date('1900-01-01')
                                                 }
                                                 initialFocus
                                             />
@@ -253,6 +274,7 @@ const CreateUserForm = () => {
                                 <FormControl>
                                     <Input
                                         {...field}
+                                        disabled={isPendingCreateUser}
                                         placeholder='example@gmail.com'
                                     />
                                 </FormControl>
@@ -275,6 +297,7 @@ const CreateUserForm = () => {
                                 </FormLabel>
                                 <FormControl>
                                     <Select
+                                        disabled={isPendingCreateUser}
                                         onValueChange={field.onChange}
                                         defaultValue={field.value}
                                     >
@@ -320,6 +343,7 @@ const CreateUserForm = () => {
                                 <FormControl>
                                     <Input
                                         {...field}
+                                        disabled={isPendingCreateUser}
                                         placeholder='Type username...'
                                     />
                                 </FormControl>
@@ -342,6 +366,7 @@ const CreateUserForm = () => {
                                 <FormControl>
                                     <Input
                                         {...field}
+                                        disabled
                                         placeholder='*******'
                                         type='password'
                                     />

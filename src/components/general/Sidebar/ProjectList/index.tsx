@@ -10,9 +10,23 @@ const SidebarProjectList = () => {
 
     if (isFetchingProjectList) {
         return (
-            <div className='space-y-2 p-2'>
-                <Skeleton className='h-12 w-12 bg-accent p-2' />
-                <Skeleton className='h-12 w-12 bg-accent p-2' />
+            <div className='space-y-2 w-full'>
+                <div className='flex items-center gap-3 w-full p-2'>
+                    <Skeleton className='h-10 w-10 bg-accent' />
+                    <Skeleton className='h-6 flex-auto bg-accent' />
+                </div>
+                <div className='flex items-center gap-3 w-full p-2'>
+                    <Skeleton className='h-10 w-10 bg-accent p-2' />
+                    <Skeleton className='h-6 flex-auto  bg-accent' />
+                </div>
+                <div className='flex items-center gap-3 w-full p-2'>
+                    <Skeleton className='h-10 w-10 bg-accent' />
+                    <Skeleton className='h-6 flex-auto bg-accent' />
+                </div>
+                <div className='flex items-center gap-3 w-full p-2'>
+                    <Skeleton className='h-10 w-10 bg-accent p-2' />
+                    <Skeleton className='h-6 flex-auto  bg-accent' />
+                </div>
             </div>
         )
     }
@@ -25,7 +39,7 @@ const SidebarProjectList = () => {
                     return (
                         <SidebarItem
                             key={project.id}
-                            label={project.name}
+                            label={project.name.toUpperCase()}
                             href={`/projects/${project.id}`}
                             icon={
                                 <Image
@@ -43,4 +57,4 @@ const SidebarProjectList = () => {
     )
 }
 
-export default SidebarProjectList
+export default SidebarProjectList;

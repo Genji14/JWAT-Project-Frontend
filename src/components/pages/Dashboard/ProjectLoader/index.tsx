@@ -1,7 +1,7 @@
 import { useStore } from '@/components/providers/StoreProvider'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 const ProjectLoader = () => {
     const expanded = useStore((state) => state.expanded)

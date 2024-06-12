@@ -1,24 +1,33 @@
-import { UserRole } from '@/types/enums'
-import { AbilityBuilder, createMongoAbility } from '@casl/ability'
+// abilities.ts
+import { UserRole } from '@/types/enums';
+import { AbilityBuilder, createMongoAbility } from '@casl/ability';
 
-export default function defineAbilitiesFor(role: UserRole) {
-    const { can, cannot, build } = new AbilityBuilder(createMongoAbility)
+type Actions = 'create' | 'read' | 'update' | 'delete' | 'reach';
+type Subjects = 'Admin' | 'General' | 'Project';
 
-    switch (role) {
-        case UserRole.ADMIN:
-            can('manage', 'all') // Quản lý tất cả mọi thứ
-            break
-        case UserRole.MANAGER:
-            can('read', 'all') // Đọc tất cả mọi thứ
-            can('update', 'Task') // Cập nhật Task
-            cannot('delete', 'Task') // Không được xóa Task
-            break
-        case UserRole.EMPLOYEE:
-            can('read', 'all') // Đọc tất cả mọi thứ
-            can('update', 'Task') // Cập nhật Task
-            can('delete', 'Task') // Xóa Task
-            break
+
+export function defineAbilitiesFor(role: string) {
+    const { can, cannot, build } = new AbilityBuilder(createMongoAbility);
+
+    if (role) {
+        switch (role) {
+            case UserRole.ADMIN:
+                can('reach', 'Admin');
+                cannot('reach', 'General');
+                break;
+            case UserRole.MANAGER:
+                can('reach', 'General');
+                can('create', 'Project');
+                cannot('reach', 'Admin');
+                break;
+            case UserRole.EMPLOYEE:
+                can('reach', 'General');
+                cannot('create', 'Project');
+                cannot('reach', 'adminPage');
+                break;
+        }
     }
 
-    return build()
+    return build();
 }
+

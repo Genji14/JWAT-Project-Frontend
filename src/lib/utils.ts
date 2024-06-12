@@ -51,14 +51,11 @@ export const refreshToken = async () => {
         if (data) {
             Cookies.set('accessToken', data.accessToken)
             Cookies.set('refreshToken', data.refreshToken)
-            let decoded: any = jwtDecode<JwtPayload>(data.accessToken)
-            Cookies.set('role', decoded.role)
             return data.accessToken
         }
     } catch {
         Cookies.remove('accessToken')
         Cookies.remove('refreshToken')
-        Cookies.remove('role')
         toast.message('Token expired', {
             description:
                 'Your working session is expired, please sign in again.',

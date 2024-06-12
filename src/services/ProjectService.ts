@@ -12,8 +12,12 @@ class ProjectService extends BaseService {
         return this.post(PROJECT_ENDPOINTS.CREATE_PROJECT, form)
     }
 
+    getProjectsByEmployee = (): Promise<AxiosResponse<IProject[]>> => {
+        return this.get(PROJECT_ENDPOINTS.GET_PROJECTS_BY_USER);
+    }
+
     searchProjects = (name?: string): Promise<AxiosResponse<IProject[]>> => {
-        return this.get(PROJECT_ENDPOINTS.SEARCH_BY_EMPLOYEE, undefined, {
+        return this.get(PROJECT_ENDPOINTS.SEARCH, undefined, {
             name,
         })
     }

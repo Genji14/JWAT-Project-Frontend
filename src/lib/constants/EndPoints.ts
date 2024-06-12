@@ -13,5 +13,6 @@ export const USER_ENDPOINTS = {
 
 export const PROJECT_ENDPOINTS = {
     CREATE_PROJECT: `project`,
-    SEARCH_BY_EMPLOYEE: `project/user`,
+    GET_PROJECTS_BY_USER: `project/user`,
+    SEARCH: `project/search`,
 }

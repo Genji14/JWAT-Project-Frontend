@@ -1,5 +1,5 @@
 import { useStore } from '@/components/providers/StoreProvider'
-import { USER_QUERY_KEY } from '@/lib/constants/QueryKey'
+import { PROJECT_QUERY_KEY, USER_QUERY_KEY } from '@/lib/constants/QueryKey'
 import { projectService } from '@/services/ProjectService'
 import { userService } from '@/services/UserService'
 import { useQuery } from '@tanstack/react-query'
@@ -26,13 +26,17 @@ export const useCurrentUserInfo = () => {
 
 export const useSearchProject = (name?: string) => {
     const { data, isFetching } = useQuery({
-        queryKey: ['', name],
+        queryKey: [PROJECT_QUERY_KEY.SEARCH, name],
         queryFn: async ({ queryKey }) => {
-            const [_key, name] = queryKey
-            const res = await projectService.searchProjects(name)
-            return res.data
+            const [_key, name] = queryKey;
+            if (name) {
+                const res = await projectService.searchProjects(name);
+                return res.data;
+            }
+            const res = await projectService.getProjectsByEmployee();
+            return res.data;
         },
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
     })
 
     return {
