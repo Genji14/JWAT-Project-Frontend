@@ -1,39 +1,14 @@
 import { type ClassValue, clsx } from 'clsx'
-import { authService } from '@/services/AuthService'
 import Cookies from 'js-cookie'
-import { JwtPayload, jwtDecode } from 'jwt-decode'
 import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
-import {
-    AbilityBuilder,
-    ExtractSubjectType,
-    MongoQuery,
-    Subject,
-    SubjectRawRule,
-    createMongoAbility,
-} from '@casl/ability'
-import { UserRole } from '@/types/enums'
+import axios from 'axios'
+import { authService } from '@/services/auth.service'
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
 
-export function defineRulesFor(
-    role: UserRole
-): SubjectRawRule<string, ExtractSubjectType<Subject>, MongoQuery>[] {
-    const { can, cannot, rules } = new AbilityBuilder(createMongoAbility)
-
-    if (role === UserRole.ADMIN) {
-        can('manage', 'all')
-    }
-
-    if (role === UserRole.EMPLOYEE) {
-        can('read', 'all')
-        cannot('manage', 'all')
-    }
-
-    return rules
-}
 
 export function convertAlt(fullName: string): string {
     if (fullName) {
@@ -64,4 +39,28 @@ export const refreshToken = async () => {
             window.location.href = '/sign-in'
         }, 3000)
     }
+}
+
+export const authorizeServerHeader = (cookies: string) => {
+    axios.interceptors.request.use(async (config) => {
+        config.headers.Authorization = cookies
+            ? `Bearer ${cookies}`
+            : ''
+        return config
+    })
+
+}
+
+export const getAccessToken = (context: any) => {
+    const cookies = context.req.headers.cookie;
+    const cookieArray = cookies.split(';');
+
+    let accessToken = '';
+    for (let i = 0; i < cookieArray.length; i++) {
+        if (cookieArray[i].trim().startsWith('accessToken=')) {
+            accessToken = cookieArray[i].split('=')[1];
+            break;
+        }
+    }
+    return accessToken;
 }

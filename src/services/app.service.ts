@@ -27,7 +27,7 @@ axios.interceptors.response.use(
     }
 )
 
-class BaseService {
+class AppService {
     private async request(
         method: Method,
         url: string,
@@ -67,4 +67,4 @@ class BaseService {
     }
 }
 
-export { BaseService }
+export { AppService }

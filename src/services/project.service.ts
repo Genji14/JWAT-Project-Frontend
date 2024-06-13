@@ -1,15 +1,19 @@
 import { PROJECT_ENDPOINTS } from '@/lib/constants/EndPoints'
-import { BaseService } from './BaseService'
 import { AxiosResponse } from 'axios'
 import { IProject } from '@/types/interfaces/Project'
+import { AppService } from './app.service'
 
-class ProjectService extends BaseService {
+class ProjectService extends AppService {
     constructor() {
         super()
     }
 
     createProject = (form: FormData) => {
         return this.post(PROJECT_ENDPOINTS.CREATE_PROJECT, form)
+    }
+
+    findOne = (id: number) => {
+        return this.get(PROJECT_ENDPOINTS.FIND_ONE(id));
     }
 
     getProjectsByEmployee = (): Promise<AxiosResponse<IProject[]>> => {

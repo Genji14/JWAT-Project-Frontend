@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import SearchInput from './SearchInput'
 import { Button } from '@/components/ui/button'
 import { PackagePlus } from 'lucide-react'

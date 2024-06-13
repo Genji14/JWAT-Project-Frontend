@@ -1,11 +1,11 @@
 import { IChangePasswordForm, ICreateUserForm } from '@/types/interfaces/Form'
-import { BaseService } from './BaseService'
 import { USER_ENDPOINTS } from '@/lib/constants/EndPoints'
 import { AxiosResponse } from 'axios'
 import { UserRole } from '@/types/enums'
 import { IUserInfo } from '@/types/interfaces/User'
+import { AppService } from './app.service'
 
-class UserService extends BaseService {
+class UserService extends AppService {
     constructor() {
         super()
     }

@@ -1,13 +1,13 @@
-import { IUserSignIn } from '@/types/interfaces'
-import { BaseService } from './BaseService'
+import { ISignInForm } from '@/types/interfaces/Form'
 import { AUTH_ENDPOINTS } from '@/lib/constants/EndPoints'
+import { AppService } from './app.service'
 
-class AuthService extends BaseService {
+class AuthService extends AppService {
     constructor() {
         super()
     }
 
-    signIn = (userLogin: IUserSignIn) => {
+    signIn = (userLogin: ISignInForm) => {
         return this.post(AUTH_ENDPOINTS.SIGN_IN, userLogin)
     }
 

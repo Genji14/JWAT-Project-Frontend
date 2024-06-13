@@ -14,5 +14,6 @@ export const USER_ENDPOINTS = {
 export const PROJECT_ENDPOINTS = {
     CREATE_PROJECT: `project`,
     GET_PROJECTS_BY_USER: `project/user`,
+    FIND_ONE: (id: number) => `project/${id}`,
     SEARCH: `project/search`,
 }

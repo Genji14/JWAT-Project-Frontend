@@ -1,7 +1,8 @@
 import { useStore } from '@/components/providers/StoreProvider'
 import { PROJECT_QUERY_KEY, USER_QUERY_KEY } from '@/lib/constants/QueryKey'
-import { projectService } from '@/services/ProjectService'
-import { userService } from '@/services/UserService'
+import { projectService } from '@/services/project.service'
+import { userService } from '@/services/user.service'
+
 import { useQuery } from '@tanstack/react-query'
 
 export const useCurrentUserInfo = () => {
