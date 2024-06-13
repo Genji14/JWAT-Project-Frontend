@@ -1,28 +1,34 @@
 import Header from '@/components/general/Header'
 import SideBar from '@/components/general/Sidebar'
-import { useExpandedStore } from '@/hooks/zustand'
 import { cn } from '@/lib/utils'
 import { FONT_POPPINS } from '@/lib/constants/SettingSystem'
 import React, { FC, PropsWithChildren } from 'react'
-import { useStore } from '../providers/StoreProvider'
+import { useStore } from '../../providers/StoreProvider'
+import dynamic from 'next/dynamic'
 
-type IDashBoardLayoutProps = PropsWithChildren<{
+const SidebarDynamicItems = dynamic(() => import('../../general/Sidebar/DynamicItem'), {
+    ssr: false
+})
+
+type IDashboardLayoutProps = PropsWithChildren<{
     children: React.ReactNode
 }>
 
-const DashBoardLayout: FC<IDashBoardLayoutProps> = ({ children }) => {
+const DashboardLayout: FC<IDashboardLayoutProps> = ({ children }) => {
     const expanded = useStore((state) => state.expanded)
 
     return (
         <>
             <Header />
             <div className='flex h-full w-full'>
-                <SideBar expanded={expanded} isBrowser={true} />
+                <SideBar isBrowser={true}>
+                    <SidebarDynamicItems />
+                </SideBar>
                 <main
                     className={cn(
                         'ml-0 flex min-h-screen flex-auto flex-col bg-border p-2 transition-all dark:bg-border/50 sm:p-4 xl:p-6',
                         FONT_POPPINS.className,
-                        expanded ? 'xl:ml-80' : 'xl:ml-header'
+                        expanded ? 'xl:ml-72' : 'xl:ml-header'
                     )}
                 >
                     <section className='mt-[4.5rem]'>{children}</section>
@@ -32,4 +38,4 @@ const DashBoardLayout: FC<IDashBoardLayoutProps> = ({ children }) => {
     )
 }
 
-export default DashBoardLayout
+export default DashboardLayout

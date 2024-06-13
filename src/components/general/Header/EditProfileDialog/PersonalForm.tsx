@@ -1,30 +1,48 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Gender } from '@/types/enums';
-import { IUpdateUserForm } from '@/types/interfaces';
-import React, { FC, PropsWithChildren } from 'react';
-import { UseFormReturn } from 'react-hook-form';
+import {
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
+import { Gender } from '@/types/enums'
+import { IUpdateUserForm } from '@/types/interfaces'
+import React, { FC, PropsWithChildren } from 'react'
+import { UseFormReturn } from 'react-hook-form'
 
 type IPersonalFormProps = PropsWithChildren<{
-    isPending: boolean,
+    isPending: boolean
     form: UseFormReturn<IUpdateUserForm, any, undefined>
-}>;
+}>
 
 const PersonalForm: FC<IPersonalFormProps> = ({ isPending, form }) => {
     return (
         <>
             <div className='grid gap-x-4 gap-y-2'>
-                <h4 className='font-bold uppercase mb-2'>Personal Information</h4>
-                <div className='grid xl:grid-cols-2 gap-4 '>
+                <h4 className='mb-2 font-bold uppercase'>
+                    Personal Information
+                </h4>
+                <div className='grid gap-4 xl:grid-cols-2 '>
                     <FormField
                         control={form.control}
-                        name="phoneNumber"
+                        name='phoneNumber'
                         render={({ field }) => (
                             <FormItem className='space-y-1'>
                                 <FormLabel>Phone number</FormLabel>
                                 <FormControl>
-                                    <Input disabled={isPending} placeholder="Require Vietnam Phone (+84)" {...field} />
+                                    <Input
+                                        disabled={isPending}
+                                        placeholder='Require Vietnam Phone (+84)'
+                                        {...field}
+                                    />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -35,9 +53,7 @@ const PersonalForm: FC<IPersonalFormProps> = ({ isPending, form }) => {
                         name='gender'
                         render={({ field }) => (
                             <FormItem className='space-y-1'>
-                                <FormLabel>
-                                    Gender
-                                </FormLabel>
+                                <FormLabel>Gender</FormLabel>
                                 <FormControl>
                                     <Select
                                         disabled={isPending}
@@ -69,12 +85,16 @@ const PersonalForm: FC<IPersonalFormProps> = ({ isPending, form }) => {
                 </div>
                 <FormField
                     control={form.control}
-                    name="address"
+                    name='address'
                     render={({ field }) => (
                         <FormItem className='space-y-1'>
                             <FormLabel>Address</FormLabel>
                             <FormControl>
-                                <Input disabled={isPending} placeholder="Type new Adress ..." {...field} />
+                                <Input
+                                    disabled={isPending}
+                                    placeholder='Type new Adress ...'
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -82,7 +102,7 @@ const PersonalForm: FC<IPersonalFormProps> = ({ isPending, form }) => {
                 />
             </div>
         </>
-    );
-};
+    )
+}
 
-export default PersonalForm;
+export default PersonalForm

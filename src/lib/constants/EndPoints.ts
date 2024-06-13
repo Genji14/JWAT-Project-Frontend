@@ -8,5 +8,12 @@ export const USER_ENDPOINTS = {
     CURRENT: `user/current`,
     UPDATE_PROFILE: `user/update`,
     CHANGE_PASSWORD: `user/change-password`,
-    GET_ROLE: `user/get-role`
+    GET_ROLE: `user/get-role`,
+}
+
+export const PROJECT_ENDPOINTS = {
+    CREATE_PROJECT: `project`,
+    GET_PROJECTS_BY_USER: `project/user`,
+    FIND_ONE: (id: number) => `project/${id}`,
+    SEARCH: `project/search`,
 }

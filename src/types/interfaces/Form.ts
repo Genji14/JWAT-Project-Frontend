@@ -1,5 +1,35 @@
-import { Gender, UserRole } from "../enums"
+import { Gender, UserRole } from '../enums'
 
+// Authentication
+export interface ISignInForm {
+    username: string
+    password: string
+}
+
+// Update Profile
+export interface IUpdateUserForm {
+    gender: Gender
+    address: string
+    phoneNumber: string
+}
+
+export interface IChangePasswordForm {
+    oldPassword: string
+    password: string
+}
+
+export interface IPasswordForm extends IChangePasswordForm {
+    confirm: string
+}
+
+// Create Project
+export interface IProjectForm {
+    projectName: string
+    description: string
+    logo: File | undefined
+}
+
+// Create User
 export interface ICreateUserForm {
     fullName: string
     phoneNumber: string
@@ -10,27 +40,4 @@ export interface ICreateUserForm {
     username: string
     password: string
     role: UserRole
-}
-
-export interface IUpdateUserForm {
-    gender: Gender
-    address: string
-    phoneNumber: string
-}
-
-
-export interface IProjectForm {
-    projectName: string
-    description: string
-    logo: File | undefined
-}
-
-
-export interface IChangePasswordForm {
-    oldPassword: string,
-    password: string,
-}
-
-export interface IPasswordForm extends IChangePasswordForm {
-    confirm: string
 }

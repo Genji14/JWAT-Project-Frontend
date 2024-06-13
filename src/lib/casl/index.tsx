@@ -1,25 +1,39 @@
 import { UserRole } from '@/types/enums';
-import { AbilityBuilder, createMongoAbility } from '@casl/ability';
+import { AbilityBuilder, AbilityTuple, MongoAbility, MongoQuery, createMongoAbility } from '@casl/ability';
 
-export default function defineAbilitiesFor(role: UserRole) {
-    const { can, cannot, build } = new AbilityBuilder(createMongoAbility);
+type Actions = 'create' | 'read' | 'update' | 'delete' | 'reach';
+type Subjects = 'Admin' | 'General' | 'Project';
+
+
+export function defineAbilities() {
+    const { build } = new AbilityBuilder(createMongoAbility);
+    return build();
+}
+
+export function updateAbility(ability: MongoAbility<AbilityTuple, MongoQuery>, role: UserRole | null) {
+    const { can, cannot, rules } = new AbilityBuilder(createMongoAbility);
 
 
     switch (role) {
         case UserRole.ADMIN:
-            can('manage', 'all'); // Quản lý tất cả mọi thứ
+            can('reach', 'Admin');
+            cannot('reach', 'General');
             break;
         case UserRole.MANAGER:
-            can('read', 'all'); // Đọc tất cả mọi thứ
-            can('update', 'Task'); // Cập nhật Task
-            cannot('delete', 'Task'); // Không được xóa Task
+            can('reach', 'General');
+            can('create', 'Project');
+            cannot('reach', 'Admin');
             break;
         case UserRole.EMPLOYEE:
-            can('read', 'all'); // Đọc tất cả mọi thứ
-            can('update', 'Task'); // Cập nhật Task
-            can('delete', 'Task'); // Xóa Task
+            can('reach', 'General');
+            cannot('create', 'Project');
+            cannot('reach', 'adminPage');
+            break;
+        default:
+            cannot('read', 'all');
             break;
     }
 
-    return build();
+    ability.update(rules);
+    return ability;
 }

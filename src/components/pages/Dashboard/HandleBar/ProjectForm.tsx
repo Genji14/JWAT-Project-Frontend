@@ -18,41 +18,54 @@ import { DialogDescription, DialogHeader } from '@/components/ui/dialog'
 import PhotoInput from './PhotoInput'
 import { IProjectForm } from '@/types/interfaces/Form'
 import { Separator } from '@/components/ui/separator'
+import { useCreateProject } from '@/hooks/mutation'
+import { Loader2 } from 'lucide-react'
 
 const ProjectForm = () => {
-    const addProjectForm = useForm<IProjectForm>({
+    const { mutateCreateProject, isPendingCreateProject } = useCreateProject()
+
+    const createProjectForm = useForm<IProjectForm>({
         resolver: zodResolver(projectSchema),
         defaultValues: {
             projectName: '',
             description: '',
-            logo: undefined
+            logo: undefined,
         },
     })
 
     async function onSubmit(values: IProjectForm) {
-        console.log(values)
-
+        try {
+            const formData = new FormData()
+            formData.append('name', values.projectName)
+            formData.append('description', values.description)
+            if (values.logo instanceof File) {
+                formData.append('files', values.logo)
+            }
+            await mutateCreateProject(formData)
+            createProjectForm.reset()
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     return (
         <>
-            <DialogHeader className="space-y-0">
-                <h3 className='text-xl font-bold uppercase leading-0'>
+            <DialogHeader className='space-y-0'>
+                <h3 className='leading-0 text-xl font-bold uppercase'>
                     Create New Project
                 </h3>
                 <DialogDescription>
-                    Name a project for sharing knowledge each
-                    other.
+                    Name a project for sharing knowledge each other.
                 </DialogDescription>
             </DialogHeader>
             <Separator />
-            <Form {...addProjectForm}>
+            <Form {...createProjectForm}>
                 <form
-                    onSubmit={addProjectForm.handleSubmit(onSubmit)}
+                    onSubmit={createProjectForm.handleSubmit(onSubmit)}
                     className='space-y-4'
                 >
                     <FormField
-                        control={addProjectForm.control}
+                        control={createProjectForm.control}
                         name='projectName'
                         render={({ field }) => (
                             <FormItem>
@@ -68,7 +81,7 @@ const ProjectForm = () => {
                         )}
                     />
                     <FormField
-                        control={addProjectForm.control}
+                        control={createProjectForm.control}
                         name='description'
                         render={({ field }) => (
                             <FormItem>
@@ -76,7 +89,7 @@ const ProjectForm = () => {
                                 <FormControl>
                                     <Textarea {...field} />
                                 </FormControl>
-                                <FormDescription className="text-xs">
+                                <FormDescription className='text-xs'>
                                     Describe about this project to understand
                                     what we're doing.
                                 </FormDescription>
@@ -84,10 +97,17 @@ const ProjectForm = () => {
                             </FormItem>
                         )}
                     />
-                    <PhotoInput form={addProjectForm} />
-                    <div className="w-full pt-2">
-                        <Button type='submit' className='w-full'>
-                            Complete
+                    <PhotoInput form={createProjectForm} />
+                    <div className='w-full pt-2'>
+                        <Button
+                            type='submit'
+                            disabled={isPendingCreateProject}
+                            className='w-full'
+                        >
+                            <span>Complete</span>
+                            {isPendingCreateProject && (
+                                <Loader2 className='ml-2 h-4 w-4 animate-spin' />
+                            )}
                         </Button>
                     </div>
                 </form>

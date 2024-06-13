@@ -3,14 +3,13 @@ import { Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 
 import { Button } from '@/components/ui/button'
-import Hydration from '../../shared/Hydration'
 import { DARK_THEME, LIGHT_THEME } from '@/lib/constants/SettingSystem'
 
-export function ModeToggle() {
+const ModeToggle = () => {
     const { theme, setTheme } = useTheme()
 
     return (
-        <Hydration>
+        <>
             {theme === LIGHT_THEME ? (
                 <Button
                     variant={'ghost'}
@@ -32,6 +31,8 @@ export function ModeToggle() {
                     <Moon size={20} />
                 </Button>
             )}
-        </Hydration>
+        </>
     )
 }
+
+export default ModeToggle

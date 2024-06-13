@@ -1,31 +1,30 @@
 import { Gender, UserRole } from '@/types/enums'
 import { z } from 'zod'
 
-const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+const passwordRegex =
+    /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
 
 export const loginSchema = z.object({
     username: z.string().min(1),
     password: z.string().min(1),
 })
 
-
-const fileSchema = z.object({
-    name: z.string(),
-    type: z.string().refine(type => type === 'image/jpeg' || type === 'image/png', {
-        message: 'File must be a JPEG or PNG image',
-    }),
-    size: z.number().max(2000000, {
-        message: 'File size must be less than 2MB',
-    }),
-});
+const fileSchema = z.custom<File>(
+    (file) => {
+        return file instanceof File
+    },
+    {
+        message: 'Logo must be a file',
+    }
+)
 
 export const projectSchema = z.object({
     projectName: z
         .string({
             required_error: 'Project name is required',
         })
-        .min(6, {
-            message: 'Project name at least 6 characters',
+        .min(3, {
+            message: 'Project name at least 3 characters',
         }),
     description: z
         .string({
@@ -34,7 +33,7 @@ export const projectSchema = z.object({
         .min(20, {
             message: 'Project description at least 20 characters',
         }),
-    logo: fileSchema
+    logo: fileSchema.optional(),
 })
 
 export const createUserSchema = z.object({
@@ -110,43 +109,61 @@ export const updateUserSchema = z.object({
         invalid_type_error:
             'Gender must be one of the following values: MALE, FEMALE, OTHER',
     }),
-    address: z.string({
-        required_error: "Employee's address is required",
-    }).min(10, {
-        message: 'Address at least 10 characters',
-    }).max(80, {
-        message: "Address isn't longer than 80 characters",
-    }),
-    phoneNumber: z.string({
-        required_error: "Employee's phone number is required",
-    }).min(10, {
-        message: 'Phone number at least 10 characters',
-    }).max(12, {
-        message: "Phone number isn't longer than 12 characters",
-    }),
+    address: z
+        .string({
+            required_error: "Employee's address is required",
+        })
+        .min(10, {
+            message: 'Address at least 10 characters',
+        })
+        .max(80, {
+            message: "Address isn't longer than 80 characters",
+        }),
+    phoneNumber: z
+        .string({
+            required_error: "Employee's phone number is required",
+        })
+        .min(10, {
+            message: 'Phone number at least 10 characters',
+        })
+        .max(12, {
+            message: "Phone number isn't longer than 12 characters",
+        }),
 })
 
-export const passwordSchema = z.object({
-    oldPassword: z.string({
-        required_error: "Old password is required",
-    }).min(1, {
-        message: "Old password is required",
-    }),
-    password: z.string({
-        required_error: "Password is required",
-    }).min(8, {
-        message: "Password at least 8 characters",
-    }).regex(passwordRegex, {
-        message: "Password must contain uppercase, lowercase letter, numbers and special characters",
-    }),
-    confirm: z.string({
-        required_error: "Confirm password is required",
-    }).min(8, {
-        message: "Confirm password at least 8 characters",
-    }).regex(passwordRegex, {
-        message: "Password must contain uppercase, lowercase letter, numbers and special characters",
-    }),
-}).refine((values) => values.password === values.confirm, {
-    path: ["confirm"],
-    message: "Passwords do not match",
-});
+export const passwordSchema = z
+    .object({
+        oldPassword: z
+            .string({
+                required_error: 'Old password is required',
+            })
+            .min(1, {
+                message: 'Old password is required',
+            }),
+        password: z
+            .string({
+                required_error: 'Password is required',
+            })
+            .min(8, {
+                message: 'Password at least 8 characters',
+            })
+            .regex(passwordRegex, {
+                message:
+                    'Password must contain uppercase, lowercase letter, numbers and special characters',
+            }),
+        confirm: z
+            .string({
+                required_error: 'Confirm password is required',
+            })
+            .min(8, {
+                message: 'Confirm password at least 8 characters',
+            })
+            .regex(passwordRegex, {
+                message:
+                    'Password must contain uppercase, lowercase letter, numbers and special characters',
+            }),
+    })
+    .refine((values) => values.password === values.confirm, {
+        path: ['confirm'],
+        message: 'Passwords do not match',
+    })

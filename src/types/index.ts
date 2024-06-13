@@ -1,4 +1,4 @@
-import { mediaType } from "./enums"
+import { mediaType } from './enums'
 
 export type ExpandStore = {
     expanded: boolean
@@ -16,7 +16,6 @@ export type RefreshTokenResponse = {
     accessToken: string
     refreshToken: string
 }
-
 
 export type Media = {
     id: number

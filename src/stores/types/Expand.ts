@@ -6,4 +6,4 @@ export type TExpandedAction = {
     toggle: () => void
 }
 
-export type TExpandedSlice = TExpandedState & TExpandedAction;
+export type TExpandedSlice = TExpandedState & TExpandedAction

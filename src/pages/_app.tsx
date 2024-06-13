@@ -1,9 +1,9 @@
 import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import Providers from './providers'
-import DashBoardLayout from '@/components/layouts/DashBoard'
 import { NextPage } from 'next'
 import { ReactElement, ReactNode } from 'react'
+import DashboardLayout from '@/components/layouts/Dashboard'
 
 export type NextPageWithLayout = NextPage & {
     getLayout?: (page: ReactElement) => ReactNode
@@ -18,7 +18,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         Component.getLayout ||
         ((page) => (
             <Providers>
-                <DashBoardLayout>{page}</DashBoardLayout>
+                <DashboardLayout>{page}</DashboardLayout>
             </Providers>
         ))
 
