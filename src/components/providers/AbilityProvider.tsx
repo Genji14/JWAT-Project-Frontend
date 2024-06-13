@@ -1,19 +1,19 @@
-import React, { createContext, useContext, useEffect, useMemo } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import { createContextualCan } from '@casl/react';
 import { useStore } from './StoreProvider';
 import { AbilityTuple, MongoAbility, MongoQuery } from '@casl/ability';
-import { defineAbilitiesFor } from '@/lib/casl';
+import { defineAbilities, updateAbility } from '@/lib/casl';
 
-const defaultAbility = defineAbilitiesFor("MANAGER");
+const ability = defineAbilities();
 
-const AbilityContext = createContext<MongoAbility<AbilityTuple, MongoQuery>>(defaultAbility);
+const AbilityContext = createContext<MongoAbility<AbilityTuple, MongoQuery>>(ability);
 
 export const AbilityProvider = ({ children }: { children: React.ReactNode }) => {
     const role = useStore((state) => state.role);
 
-    const ability = useMemo(() => {
-        role ? defineAbilitiesFor(role) : defineAbilitiesFor("MANAGER")
-    }, [role]);
+    useEffect(() => {
+        role && updateAbility(ability, role);
+    }, [role, ability])
 
     return (
         <AbilityContext.Provider value={ability}>
@@ -21,13 +21,11 @@ export const AbilityProvider = ({ children }: { children: React.ReactNode }) => 
         </AbilityContext.Provider>
     );
 };
-
 export const useAbility = (): MongoAbility<AbilityTuple, MongoQuery> => {
     const context = useContext(AbilityContext);
     if (!context) {
         throw new Error('useAbility must be used within AbilityProvider');
     }
-
     return context;
 };
 

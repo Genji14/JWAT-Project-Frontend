@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import SearchInput from './SearchInput'
 import { Button } from '@/components/ui/button'
 import { PackagePlus } from 'lucide-react'
@@ -20,12 +20,12 @@ const ProjectForm = dynamic(() => import('./ProjectForm'), {
 
 const HandleBar = () => {
 
-    // const ability = useAbility();
+    const ability = useAbility();
 
     return (
         <div className='flex items-center gap-2'>
             <SearchInput />
-            {/* <Can I="create" a="Project" ability={ability}>
+            <Can I="create" a="Project" ability={ability}>
                 <Dialog>
                     <DialogTrigger>
                         <Button className='gap-2'>
@@ -46,7 +46,7 @@ const HandleBar = () => {
                         <ProjectForm />
                     </DialogContent>
                 </Dialog>
-            </Can> */}
+            </Can>
         </div>
     )
 }
