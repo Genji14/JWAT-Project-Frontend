@@ -93,9 +93,6 @@ export const createUserSchema = z.object({
         .max(20, {
             message: "Username isn't longer than 20 characters",
         }),
-    password: z.string({
-        required_error: 'Password is required',
-    }),
     role: z.enum([UserRole.ADMIN, UserRole.EMPLOYEE, UserRole.MANAGER], {
         required_error: 'Role is required',
         invalid_type_error:

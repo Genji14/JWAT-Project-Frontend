@@ -44,6 +44,9 @@ export interface ICreateUserForm {
     dob: Date
     address: string
     username: string
-    password: string
     role: UserRole
+}
+
+export interface ICreateUserRequest extends ICreateUserForm {
+    password: string
 }
