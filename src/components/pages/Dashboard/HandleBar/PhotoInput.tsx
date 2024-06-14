@@ -71,9 +71,9 @@ const PhotoInput = ({
                         onDragLeave={() => setIsDragging(false)}
                         onDrop={(evt) => handleDrop(evt)}
                         className={cn(
-                            'relative rounded border-2 border-dashed border-muted-foreground/50 p-3 text-sm font-medium text-muted-foreground/50',
+                            'relative rounded border-2 border-dashed border-muted-foreground/50 p-3 text-sm font-medium text-muted-foreground/50 hover:border-primary hover:bg-accent hover:text-primary hover:shadow-lg',
                             isDragging &&
-                                'cursor-copy border-primary bg-accent text-primary shadow-lg',
+                            'cursor-copy border-primary bg-accent text-primary shadow-lg',
                             !photo && 'cursor-pointer'
                         )}
                     >
@@ -101,7 +101,7 @@ const PhotoInput = ({
                         {!photo && (
                             <Label
                                 htmlFor='project-logo-input'
-                                className='flex items-center justify-center gap-1'
+                                className='flex items-center justify-center gap-1 cursor-pointer'
                             >
                                 <FilePlus2 className='h-5 w-5' />
                                 <span className='flex items-center gap-1'>

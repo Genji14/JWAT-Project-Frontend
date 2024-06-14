@@ -3,7 +3,6 @@ import { createContextualCan } from '@casl/react';
 import { useStore } from './StoreProvider';
 import { AbilityTuple, MongoAbility, MongoQuery } from '@casl/ability';
 import { defineAbilities, updateAbility } from '@/lib/casl';
-
 const ability = defineAbilities();
 
 const AbilityContext = createContext<MongoAbility<AbilityTuple, MongoQuery>>(ability);

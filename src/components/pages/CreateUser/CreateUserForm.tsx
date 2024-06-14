@@ -35,14 +35,13 @@ import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { HttpStatusCode } from 'axios'
-import { ICreateUserForm } from '@/types/interfaces/Form'
+import { ICreateUserForm, ICreateUserRequest } from '@/types/interfaces/Form'
 import { useStore } from '@/components/providers/StoreProvider'
 
 const CreateUserForm = () => {
     const expanded = useStore((state) => state.expanded)
 
-    const { mutateCreateUser, isPendingCreateUser, isSuccessCreateUser } =
-        useCreateUser()
+    const { mutateCreateUser, isPendingCreateUser, isSuccessCreateUser } = useCreateUser()
 
     const createUserForm = useForm<ICreateUserForm>({
         resolver: zodResolver(createUserSchema),
@@ -54,13 +53,13 @@ const CreateUserForm = () => {
             dob: undefined,
             address: '',
             username: '',
-            password: '',
             role: undefined,
         },
     })
 
     async function onSubmit(values: ICreateUserForm) {
-        await mutateCreateUser(values).catch((ex) => {
+        const createUserReq: ICreateUserRequest = { ...values, password: values.username };
+        await mutateCreateUser(createUserReq).catch((ex) => {
             if (ex.response.status === HttpStatusCode.Conflict) {
                 createUserForm.setError('username', {
                     message: USER_RESPONSE_MESSAGE.CREATE.CONFLICT,
@@ -357,7 +356,7 @@ const CreateUserForm = () => {
 
                     <FormField
                         control={createUserForm.control}
-                        name='password'
+                        name='username'
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel className='text-base font-semibold text-foreground'>
