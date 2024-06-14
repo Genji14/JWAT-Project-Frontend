@@ -18,11 +18,11 @@ import { DialogDescription, DialogHeader } from '@/components/ui/dialog'
 import PhotoInput from './PhotoInput'
 import { IProjectForm } from '@/types/interfaces/Form'
 import { Separator } from '@/components/ui/separator'
-import { useCreateProject } from '@/hooks/mutation'
 import { Loader2 } from 'lucide-react'
+import { useCreateProject } from '@/hooks/mutation/project'
 
 const ProjectForm = () => {
-    const { mutateCreateProject, isPendingCreateProject } = useCreateProject()
+    const { mutateCreateProject, isPendingCreateProject } = useCreateProject();
 
     const createProjectForm = useForm<IProjectForm>({
         resolver: zodResolver(projectSchema),

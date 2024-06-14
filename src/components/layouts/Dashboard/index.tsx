@@ -10,11 +10,11 @@ const SidebarDynamicItems = dynamic(() => import('../../general/Sidebar/DynamicI
     ssr: false
 })
 
-type IDashboardLayoutProps = PropsWithChildren<{
+type TDashboardLayoutProps = PropsWithChildren<{
     children: React.ReactNode
 }>
 
-const DashboardLayout: FC<IDashboardLayoutProps> = ({ children }) => {
+const DashboardLayout: FC<TDashboardLayoutProps> = ({ children }) => {
     const expanded = useStore((state) => state.expanded)
 
     return (

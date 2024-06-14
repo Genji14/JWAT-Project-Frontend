@@ -15,10 +15,11 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
     const getLayout =
-        Component.getLayout ||
-        ((page) => (
+        Component.getLayout ?? ((page) => (
             <Providers>
-                <DashboardLayout>{page}</DashboardLayout>
+                <DashboardLayout>
+                    {page}
+                </DashboardLayout>
             </Providers>
         ))
 

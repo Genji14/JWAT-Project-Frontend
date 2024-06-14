@@ -9,7 +9,6 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
 
-
 export function convertAlt(fullName: string): string {
     if (fullName) {
         let words = fullName.split(' ')
@@ -41,11 +40,13 @@ export const refreshToken = async () => {
     }
 }
 
-export const authorizeServerHeader = (cookies: string) => {
+export const authorizeServerHeader = (accessToken: string) => {
     axios.interceptors.request.use(async (config) => {
-        config.headers.Authorization = cookies
-            ? `Bearer ${cookies}`
+        config.headers.Authorization = accessToken
+            ? `Bearer ${accessToken}`
             : ''
+
+        console.log(config.headers.Authorization)
         return config
     })
 
