@@ -3,9 +3,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { IUserInfo } from '@/types/interfaces'
 import { cn, convertAlt } from '@/lib/utils'
 import { format } from 'date-fns'
+import { IUserInfo } from '@/types/interfaces/User'
 
 type IAvatarFormProps = PropsWithChildren<{
     isPending: boolean

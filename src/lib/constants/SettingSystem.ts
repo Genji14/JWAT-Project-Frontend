@@ -9,3 +9,4 @@ export const FONT_POPPINS = Poppins({
 
 export const LIGHT_THEME = 'light'
 export const DARK_THEME = 'dark'
+

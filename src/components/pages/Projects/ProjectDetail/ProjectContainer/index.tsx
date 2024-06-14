@@ -1,24 +1,91 @@
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { IProject } from '@/types/interfaces/Project';
-import Image from 'next/image';
 import React from 'react';
+import ProjectKnowledge from '../ProjectKnowledge';
+import { useProjectDetailContext } from '@/lib/contexts/ProjectDetailProject';
 
-type TProjectContainerProps = {
-    isFetching: boolean,
-    project: IProject
-};
 
-const ProjectContainer: React.FC<TProjectContainerProps> = ({ isFetching, project }) => {
+
+const ProjectContainer: React.FC = () => {
+
+    const { project } = useProjectDetailContext();
+
     return (
         <>
-            <div className="flex flex-col gap-2">
-                <AspectRatio ratio={6 / 1} className="w-full bg-background rounded shadow-md">
-                    <div className="flex gap-2">
+            <div className="grid grid-cols-12 gap-4 ">
+                <div className="col-start-2 col-span-7 w-full flex flex-col gap-2 rounded shadow-md">
+                    <div className="flex gap-2 h-24 bg-background">
                         <div className='h-full'>
-
                         </div>
                     </div>
-                </AspectRatio>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                    <div className="flex gap-2 h-24 bg-background">
+                        <div className='h-full'>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-start-10 col-span-3 w-full relative">
+                    <div className="sticky top-40">
+                        <ProjectKnowledge knowledge={"hehe"} />
+                    </div>
+                </div>
             </div>
         </>
     );

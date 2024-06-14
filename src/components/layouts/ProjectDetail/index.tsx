@@ -1,9 +1,7 @@
 import React, { FC, PropsWithChildren } from 'react'
 import { ProjectMenu } from '@/components/general/ProjectMenu'
 
-type TProjectDetailLayout = PropsWithChildren<{
-    children: React.ReactNode
-}>
+type TProjectDetailLayout = PropsWithChildren<{}>
 
 const ProjectDetailLayout: FC<TProjectDetailLayout> = ({ children }) => {
 

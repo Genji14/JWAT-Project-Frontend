@@ -14,7 +14,7 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { Gender } from '@/types/enums'
-import { IUpdateUserForm } from '@/types/interfaces'
+import { IUpdateUserForm } from '@/types/interfaces/Form'
 import React, { FC, PropsWithChildren } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 

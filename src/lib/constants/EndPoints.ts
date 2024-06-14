@@ -17,3 +17,7 @@ export const PROJECT_ENDPOINTS = {
     FIND_ONE: (id: number) => `project/${id}`,
     SEARCH: `project/search`,
 }
+
+export const KNOWLEDGE_ENDPOINTS = {
+    CREATE_KNOWLEDGE: `project/knowledge`
+}
