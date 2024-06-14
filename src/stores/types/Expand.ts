@@ -4,6 +4,7 @@ export type TExpandedState = {
 
 export type TExpandedAction = {
     toggle: () => void
+    block: () => void
 }
 
 export type TExpandedSlice = TExpandedState & TExpandedAction

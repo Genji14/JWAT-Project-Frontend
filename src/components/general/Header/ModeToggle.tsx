@@ -16,9 +16,9 @@ const ModeToggle = () => {
                     onClick={() => {
                         setTheme(DARK_THEME)
                     }}
-                    className='p-2.5'
+                    className='p-2 w-fit h-fit'
                 >
-                    <Sun size={20} />
+                    <Sun className='w-5 h-5' />
                 </Button>
             ) : (
                 <Button
@@ -26,9 +26,9 @@ const ModeToggle = () => {
                     onClick={() => {
                         setTheme(LIGHT_THEME)
                     }}
-                    className='p-2.5'
+                    className='p-2 w-fit h-fit'
                 >
-                    <Moon size={20} />
+                    <Moon className='w-5 h-5' />
                 </Button>
             )}
         </>

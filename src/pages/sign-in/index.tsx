@@ -1,11 +1,11 @@
 import { cn } from '@/lib/utils'
 import { FONT_POPPINS } from '@/lib/constants/SettingSystem'
-import { NextPage } from 'next'
-import React from 'react'
+import React, { ReactElement } from 'react'
 import StyledCard from '@/components/shared/StyledCard'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import Spinner from '@/components/shared/Spinner'
+import { NextPageWithLayout } from '../_app'
 
 const SignInForm = dynamic(
     () => import('@/components/pages/SignIn/SignInForm'),
@@ -15,7 +15,7 @@ const SignInForm = dynamic(
     }
 )
 
-const SignInPage = () => {
+const SignInPage: NextPageWithLayout = () => {
     return (
         <>
             <Head key='sign-in'>
@@ -40,6 +40,6 @@ const SignInPage = () => {
     )
 }
 
-SignInPage.getLayout = (page: NextPage) => page
+SignInPage.getLayout = (page: ReactElement) => page
 
-export default SignInPage
+export default SignInPage;
