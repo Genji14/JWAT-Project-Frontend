@@ -36,7 +36,7 @@ const SidebarItem = ({
                 <span
                     className={cn(
                         'overflow-hidden text-nowrap text-sm font-bold transition-all',
-                        expanded ? 'ml-3 w-52' : 'w-0'
+                        expanded ? 'ml-3 w-[12.75rem]' : 'w-0'
                     )}
                 >
                     {label}

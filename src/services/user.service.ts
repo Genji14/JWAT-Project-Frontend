@@ -18,6 +18,11 @@ class UserService extends AppService {
         return this.get(USER_ENDPOINTS.GET_ROLE)
     }
 
+    findOne = (id: number): Promise<AxiosResponse<IUserInfo>> => {
+        return this.get(USER_ENDPOINTS.FIND_ONE(id))
+
+    }
+
     createUser = (form: ICreateUserForm) => {
         return this.post(USER_ENDPOINTS.CREATE_USER, form)
     }
