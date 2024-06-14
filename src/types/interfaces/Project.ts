@@ -8,4 +8,5 @@ export interface IProject {
     createdAt: Date
     updatedAt: Date
     deleteAt: Date | null
+    owner: number
 }

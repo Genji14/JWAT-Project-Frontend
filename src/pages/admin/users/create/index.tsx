@@ -1,7 +1,11 @@
-import CreateUserForm from '@/components/pages/CreateUser/CreateUserForm'
 import { NextPage } from 'next'
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import React from 'react'
+
+const CreateUserForm = dynamic(() => import('@/components/pages/Admin/CreateUser/CreateUserForm'), {
+    ssr: false
+})
 
 const CreateUserPage: NextPage = () => {
     return (

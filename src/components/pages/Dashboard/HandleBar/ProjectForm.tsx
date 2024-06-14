@@ -19,7 +19,7 @@ import PhotoInput from './PhotoInput'
 import { IProjectForm } from '@/types/interfaces/Form'
 import { Separator } from '@/components/ui/separator'
 import { Loader2 } from 'lucide-react'
-import { useCreateProject } from '@/hooks/mutation/project'
+import { useCreateProject } from '@/hooks/mutation/project.mutation'
 
 const ProjectForm = () => {
     const { mutateCreateProject, isPendingCreateProject } = useCreateProject();

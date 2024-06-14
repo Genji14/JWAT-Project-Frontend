@@ -1,5 +1,9 @@
+import { AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useFindUserById } from '@/hooks/query/user.query'
+import { convertAlt } from '@/lib/utils'
 import { IProject } from '@/types/interfaces/Project'
+import { Avatar } from '@radix-ui/react-avatar'
 import { format } from 'date-fns'
 import { Crown } from 'lucide-react'
 import Image from 'next/image'
@@ -10,6 +14,9 @@ interface IProjectItemProps {
 }
 
 const ProjectItem: FC<IProjectItemProps> = ({ project }) => {
+
+    const { userInfoData, isFetchingUserInfo } = useFindUserById(project.id);
+
     return (
         <div className='aspect-square overflow-hidden flex flex-col rounded-lg shadow-md'>
             <div className='bg-background dark:bg-accent flex-auto'>
@@ -33,17 +40,39 @@ const ProjectItem: FC<IProjectItemProps> = ({ project }) => {
                         </h4>
                     </div>
                     <div className='flex items-center gap-2'>
-                        <Skeleton className='h-10 w-10 rounded-full' />
-                        <div className='flex h-fit flex-col space-y-0 text-left'>
-                            <h5 className='text-sm font-semibold text-primary'>
-                                Vo Phu Phat
-                            </h5>
-                            <div className='text-muted-foreground flex items-center gap-1'>
-                                <Crown className='w-3.5 h-3.5' />
-                                <span className='text-xs font-normal'>
-                                    Owner
-                                </span>
-                            </div>
+                        {
+                            isFetchingUserInfo ?
+                                <Skeleton className='h-10 w-10 rounded-full bg-border' />
+                                :
+                                (
+                                    userInfoData &&
+                                    <Avatar>
+                                        <AvatarImage src={userInfoData.media?.url} alt={userInfoData.fullName} />
+                                        <AvatarFallback>{convertAlt(userInfoData.fullName)}</AvatarFallback>
+                                    </Avatar>
+                                )
+
+                        }
+                        <div className='flex h-fit flex-col space-y-1 text-left'>
+                            {
+                                isFetchingUserInfo ? <Skeleton className='h-4 w-32 rounded-full bg-border' />
+                                    : (
+                                        userInfoData &&
+                                        <h5 className='text-sm font-semibold text-primary'>
+                                            {userInfoData.fullName}
+                                        </h5>
+                                    )
+                            }
+                            {
+                                isFetchingUserInfo ? <Skeleton className='h-4 w-16 rounded-full bg-border' />
+                                    : <div className='text-muted-foreground flex items-center gap-1'>
+                                        <Crown className='w-3.5 h-3.5' />
+                                        <span className='text-xs font-normal'>
+                                            Owner
+                                        </span>
+                                    </div>
+                            }
+
                         </div>
                     </div>
                 </div>
