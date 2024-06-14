@@ -1,5 +1,3 @@
-"use client"
-
 import { useDebounce } from '@/hooks/useDebounce';
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
@@ -25,7 +23,7 @@ export const SearchProjectProvider: React.FC<{ children: ReactNode }> = ({ child
 export const useSearchProjectContext = (): ISearchProjectContext => {
     const context = useContext(SearchProjectContext);
     if (!context) {
-        throw new Error('useSearchProjectContext phải được dùng trong SearchProjectProvider');
+        throw new Error('useSearchProjectContext must be used within SearchProjectProvider');
     }
     return context;
 };

@@ -17,7 +17,7 @@ const SidebarDynamicItems = () => {
     return (
         <>
             {
-                role && role !== UserRole.ADMIN ? (
+                role ? (role !== UserRole.ADMIN ? (
                     pathname.startsWith("/projects/") ? <></> : <SidebarProjectList />
                 ) : <>
                     <SidebarItem
@@ -35,7 +35,7 @@ const SidebarDynamicItems = () => {
                         label='Project Management'
                         icon={<div className='p-2'><Package className='h-6 w-6' /></div>}
                     />
-                </>
+                </>) : <></>
             }
         </>
     )

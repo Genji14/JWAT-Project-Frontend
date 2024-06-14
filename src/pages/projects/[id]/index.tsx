@@ -1,12 +1,10 @@
-import DashboardLayout from "@/components/layouts/Dashboard";
 import ProjectDetailLayout from "@/components/layouts/ProjectDetail";
 import ProjectContainer from "@/components/pages/Projects/ProjectDetail/ProjectContainer";
 import { API_INSTANCE, authorizeSSR } from "@/lib/constants/ApiInstance";
 import { PROJECT_ENDPOINTS } from "@/lib/constants/EndPoints";
-import Providers from "@/pages/providers";
+import { ProjectDetailProvider } from "@/lib/contexts/ProjectDetailProject";
 import { IProject } from "@/types/interfaces/Project";
 import Head from "next/head";
-import { ReactElement } from "react";
 
 const ProjectDetailPage = ({ project }: { project: IProject }) => {
 
@@ -15,7 +13,12 @@ const ProjectDetailPage = ({ project }: { project: IProject }) => {
             <Head>
                 <title>{`${project.name} - Sharing Knowledge`}</title>
             </Head>
-            <ProjectContainer project={project} />
+            <ProjectDetailProvider initialData={project}>
+                <ProjectDetailLayout>
+                    <ProjectContainer />
+                </ProjectDetailLayout>
+            </ProjectDetailProvider>
+
         </>
     )
 }
@@ -32,18 +35,4 @@ export async function getServerSideProps({ req, params }: any) {
     return { props: { project: null } };
 
 }
-
-ProjectDetailPage.getLayout = function getLayout(page: ReactElement) {
-    return (
-        <Providers>
-            <DashboardLayout>
-                <ProjectDetailLayout>
-                    {page}
-                </ProjectDetailLayout>
-            </DashboardLayout>
-        </Providers>
-
-    )
-}
-
 export default ProjectDetailPage;

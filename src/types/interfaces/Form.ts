@@ -29,6 +29,12 @@ export interface IProjectForm {
     logo: File | undefined
 }
 
+// Create Knowledge
+export interface IKnowledgeForm {
+    knowledgeName: string
+    image: File
+}
+
 // Create User
 export interface ICreateUserForm {
     fullName: string
