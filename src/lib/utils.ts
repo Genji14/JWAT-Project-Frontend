@@ -52,8 +52,8 @@ export const authorizeServerHeader = (accessToken: string) => {
 
 }
 
-export const getAccessToken = (context: any) => {
-    const cookies = context.req.headers.cookie;
+export const getAccessToken = (req: any) => {
+    const cookies = req.headers.cookie;
     const cookieArray = cookies.split(';');
 
     let accessToken = '';

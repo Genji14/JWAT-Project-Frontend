@@ -1,14 +1,12 @@
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { IProject } from '@/types/interfaces/Project';
-import Image from 'next/image';
 import React from 'react';
 
 type TProjectContainerProps = {
-    isFetching: boolean,
     project: IProject
 };
 
-const ProjectContainer: React.FC<TProjectContainerProps> = ({ isFetching, project }) => {
+const ProjectContainer: React.FC<TProjectContainerProps> = ({ project }) => {
     return (
         <>
             <div className="flex flex-col gap-2">

@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/sonner'
 import { ThemeProvider } from '@/components/shared/ThemeProvider'
 import { StoreProvider } from '@/components/providers/StoreProvider'
 import { AbilityProvider } from '@/components/providers/AbilityProvider'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 type IProvidersProps = PropsWithChildren<{
     children: React.ReactNode
@@ -18,8 +19,10 @@ const Providers: FC<IProvidersProps> = ({ children }) => {
             <StoreProvider>
                 <AbilityProvider>
                     <ThemeProvider attribute='class' defaultTheme={LIGHT_THEME} enableSystem disableTransitionOnChange>
-                        {children}
-                        <Toaster richColors />
+                        <TooltipProvider>
+                            {children}
+                            <Toaster richColors />
+                        </TooltipProvider>
                     </ThemeProvider>
                 </AbilityProvider>
             </StoreProvider>
