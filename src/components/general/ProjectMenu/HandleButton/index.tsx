@@ -13,7 +13,7 @@ const HandleButton = () => {
                     <Tooltip>
                         <DialogTrigger asChild>
                             <TooltipTrigger asChild>
-                                <Button variant={"ghost"} className="w-fit h-fit p-2">
+                                <Button variant={"ghost"} className="p-2">
                                     <UserRoundCogIcon className="w-5 h-5" />
                                 </Button>
                             </TooltipTrigger>
@@ -37,7 +37,7 @@ const HandleButton = () => {
                     <Tooltip>
                         <DialogTrigger asChild>
                             <TooltipTrigger asChild>
-                                <Button variant={"ghost"} className="w-fit h-fit p-2">
+                                <Button variant={"ghost"} className="p-2">
                                     <FolderPen className="w-5 h-5" />
                                 </Button>
                             </TooltipTrigger>
@@ -61,7 +61,7 @@ const HandleButton = () => {
                     <Tooltip>
                         <DialogTrigger asChild>
                             <TooltipTrigger asChild>
-                                <Button variant={"ghost"} className="w-fit h-fit p-2">
+                                <Button variant={"ghost"} className="p-2">
                                     <AlbumIcon className="w-5 h-5" />
                                 </Button>
                             </TooltipTrigger>
@@ -73,7 +73,7 @@ const HandleButton = () => {
                 </TooltipProvider>
                 <DialogContent
                     styledCard={true}
-                    className='p-6 lg:w-1/2'
+                    className='p-6 lg:w-1/3'
                     onInteractOutside={(e) => {
                         e.preventDefault()
                     }}

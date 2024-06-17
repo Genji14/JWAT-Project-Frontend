@@ -20,5 +20,7 @@ export const PROJECT_ENDPOINTS = {
 }
 
 export const KNOWLEDGE_ENDPOINTS = {
-    CREATE_KNOWLEDGE: `project/knowledge`
+    CREATE_KNOWLEDGE: `project/knowledge`,
+    GET_KNOWLEDGE_BY_PROJECT: (id: number) => `project/knowledge/${id}`,
+
 }

@@ -8,3 +8,7 @@ export const PROJECT_QUERY_KEY = {
     GET_PROJECTS_BY_USER: "getProjectByUser",
     FIND_ONE: "findOneProject"
 }
+
+export const KNOWLEDGE_QUERY_KEY = {
+    GET_KNOWLEDGES_BY_PROJECT: "getKnowledgesByProject",
+}

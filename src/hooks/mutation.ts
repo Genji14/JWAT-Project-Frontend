@@ -2,7 +2,6 @@ import { useStore } from '@/components/providers/StoreProvider'
 import { USER_QUERY_KEY } from '@/lib/constants/QueryKey'
 import { USER_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 import { authService } from '@/services/auth.service'
-import { projectService } from '@/services/project.service'
 import { userService } from '@/services/user.service'
 
 import {

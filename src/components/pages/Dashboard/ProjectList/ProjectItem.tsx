@@ -1,9 +1,8 @@
-import { AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useFindUserById } from '@/hooks/query/user.query'
 import { convertAlt } from '@/lib/utils'
 import { IProject } from '@/types/interfaces/Project'
-import { Avatar } from '@radix-ui/react-avatar'
 import { format } from 'date-fns'
 import { Crown } from 'lucide-react'
 import Image from 'next/image'
@@ -15,7 +14,7 @@ interface IProjectItemProps {
 
 const ProjectItem: FC<IProjectItemProps> = ({ project }) => {
 
-    const { userInfoData, isFetchingUserInfo } = useFindUserById(project.id);
+    const { userInfoData, isFetchingUserInfo } = useFindUserById(project.owner);
 
     return (
         <div className='aspect-square overflow-hidden flex flex-col rounded-lg shadow-md'>
@@ -46,7 +45,7 @@ const ProjectItem: FC<IProjectItemProps> = ({ project }) => {
                                 :
                                 (
                                     userInfoData &&
-                                    <Avatar>
+                                    <Avatar className="w-10 h-10">
                                         <AvatarImage src={userInfoData.media?.url} alt={userInfoData.fullName} />
                                         <AvatarFallback>{convertAlt(userInfoData.fullName)}</AvatarFallback>
                                     </Avatar>

@@ -34,7 +34,7 @@ const SidebarButton = () => {
                     <Link href="/">
                         <Button
                             variant={'ghost'}
-                            className='h-fit w-fit p-2'
+                            className='p-2'
                         >
                             <ChevronLeftIcon className='h-6 w-6' />
                         </Button>
@@ -43,7 +43,7 @@ const SidebarButton = () => {
                     <Button
                         onClick={toggle}
                         variant={'ghost'}
-                        className='hidden h-fit w-fit p-2 xl:block'
+                        className='hidden p-2 xl:block'
                     >
                         <Menu className='h-6 w-6' />
                     </Button>
@@ -54,7 +54,7 @@ const SidebarButton = () => {
                 <SheetTrigger asChild>
                     <Button
                         variant={'ghost'}
-                        className='h-fit w-fit p-2 xl:hidden'
+                        className='p-2 xl:hidden'
                     >
                         <Menu className='h-6 w-6' />
                     </Button>

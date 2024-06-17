@@ -14,7 +14,7 @@ const fileSchema = z.custom<File>(
         return file instanceof File
     },
     {
-        message: 'Logo must be a file',
+        message: 'Image is required',
     }
 )
 
@@ -171,5 +171,7 @@ export const knowledgeSchema = z.object({
         .min(3, {
             message: 'Knowledge name at least 3 characters',
         }),
-    image: fileSchema.optional(),
+    image: fileSchema.refine((file) => file !== undefined, {
+        message: 'Image file is required',
+    })
 })

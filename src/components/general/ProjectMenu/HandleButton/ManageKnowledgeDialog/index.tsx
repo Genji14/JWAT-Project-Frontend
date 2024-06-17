@@ -1,12 +1,14 @@
-import { Button } from '@/components/ui/button'
-import { DialogDescription, DialogFooter, DialogHeader } from '@/components/ui/dialog'
+import { DialogDescription, DialogHeader } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { useProjectDetailContext } from '@/lib/contexts/ProjectDetailProject'
 import React from 'react'
 import AddKnowledgeSection from './AddKnowledgeSection'
+import KnowledgeList from './KnowledgeList'
+import { useGetKnowledgeByProjectId } from '@/hooks/query/knowledge.query'
 
 const ManageKnowledgeDialog = () => {
     const { project } = useProjectDetailContext();
+    const { knowledgeListData, isFetchingKnowledgeList } = useGetKnowledgeByProjectId();
 
     return (
         <>
@@ -18,6 +20,7 @@ const ManageKnowledgeDialog = () => {
             </DialogHeader>
             <Separator />
             <AddKnowledgeSection />
+            <KnowledgeList data={knowledgeListData} isFetching={isFetchingKnowledgeList} />
         </>)
 }
 
