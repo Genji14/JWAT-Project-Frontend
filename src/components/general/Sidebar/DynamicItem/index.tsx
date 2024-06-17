@@ -22,17 +22,17 @@ const SidebarDynamicItems = () => {
                 ) : <>
                     <SidebarItem
                         href='/admin/dashboard'
-                        label='Dashboard'
+                        label='DASHBOARD'
                         icon={<div className='p-2'><PieChart className='h-6 w-6' /></div>}
                     />
                     <SidebarItem
                         href='/admin/users'
-                        label='User Management'
+                        label='USER MANAGEMENT'
                         icon={<div className='p-2'><UsersRoundIcon className='h-6 w-6' /></div>}
                     />
                     <SidebarItem
                         href='/admin/projects'
-                        label='Project Management'
+                        label='PROJECT MANAGEMENT'
                         icon={<div className='p-2'><Package className='h-6 w-6' /></div>}
                     />
                 </>) : <></>

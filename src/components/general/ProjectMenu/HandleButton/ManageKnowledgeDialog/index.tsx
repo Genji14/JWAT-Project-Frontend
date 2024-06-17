@@ -1,14 +1,21 @@
 import { DialogDescription, DialogHeader } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { useProjectDetailContext } from '@/lib/contexts/ProjectDetailProject'
-import React from 'react'
+import React, { useEffect } from 'react'
 import AddKnowledgeSection from './AddKnowledgeSection'
 import KnowledgeList from './KnowledgeList'
 import { useGetKnowledgeByProjectId } from '@/hooks/query/knowledge.query'
+import { useStore } from '@/components/providers/StoreProvider'
 
 const ManageKnowledgeDialog = () => {
     const { project } = useProjectDetailContext();
     const { knowledgeListData, isFetchingKnowledgeList } = useGetKnowledgeByProjectId();
+    const isAddingMode = useStore(state => state.isAddingMode);
+    const defaultAddingMode = useStore(state => state.defaultAddingMode);
+
+    useEffect(() => {
+        defaultAddingMode();
+    }, [])
 
     return (
         <>
@@ -20,8 +27,9 @@ const ManageKnowledgeDialog = () => {
             </DialogHeader>
             <Separator />
             <AddKnowledgeSection />
-            <KnowledgeList data={knowledgeListData} isFetching={isFetchingKnowledgeList} />
-        </>)
+            {!isAddingMode && <KnowledgeList data={knowledgeListData} isFetching={isFetchingKnowledgeList} />}
+        </>
+    )
 }
 
 export default ManageKnowledgeDialog

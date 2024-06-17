@@ -3,6 +3,7 @@ import { USER_QUERY_KEY } from '@/lib/constants/QueryKey'
 import { USER_RESPONSE_MESSAGE } from '@/lib/constants/RequestMessage'
 import { authService } from '@/services/auth.service'
 import { userService } from '@/services/user.service'
+import { UserRole } from '@/types/enums'
 
 import {
     IChangePasswordForm,
@@ -27,9 +28,13 @@ export const useSignIn = () => {
             Cookies.set('refreshToken', data.refreshToken)
             const { data: role } = await userService.getRole()
             setRole(role)
+            return role;
         },
-        onSuccess: () => {
-            router.push('/')
+        onSuccess: (data) => {
+            if (data === UserRole.ADMIN)
+                router.push('/admin/dashboard');
+            else
+                router.push("/")
         },
     })
 
@@ -92,6 +97,4 @@ export const useChangePassword = () => {
         isSuccessChangePassword: isSuccess,
     }
 }
-
-// Project
 

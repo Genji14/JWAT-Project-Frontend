@@ -6,7 +6,9 @@ export const USER_QUERY_KEY = {
 export const PROJECT_QUERY_KEY = {
     SEARCH: "searchProject",
     GET_PROJECTS_BY_USER: "getProjectByUser",
-    FIND_ONE: "findOneProject"
+    FIND_ONE: "findOneProject",
+    SEARCH_USER_NOT_IN_PROJECT: "searchUserNotInProject"
+
 }
 
 export const KNOWLEDGE_QUERY_KEY = {

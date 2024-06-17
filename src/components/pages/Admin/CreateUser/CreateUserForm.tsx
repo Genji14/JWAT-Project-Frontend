@@ -370,7 +370,6 @@ const CreateUserForm = () => {
                                         type='password'
                                     />
                                 </FormControl>
-                                <FormMessage />
                             </FormItem>
                         )}
                     />
