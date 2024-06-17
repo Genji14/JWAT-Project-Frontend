@@ -3,24 +3,23 @@ import {
     FormControl,
     FormField,
     FormItem,
-    FormLabel,
     FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { cn } from '@/lib/utils'
-import { IProjectForm } from '@/types/interfaces/Form'
-import { FilePlus2, X } from 'lucide-react'
-import Image from 'next/image'
+import { IKnowledgeForm } from '@/types/interfaces/Form'
+import { FilePlus2 } from 'lucide-react'
 import React, { useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 
 const PhotoInput = ({
     form,
+    isPending,
 }: {
-    form: UseFormReturn<IProjectForm, any, undefined>
+    form: UseFormReturn<IKnowledgeForm, any, undefined>,
+    isPending: boolean,
 }) => {
-    const [photo, setPhoto] = useState<string>('')
     const [isDragging, setIsDragging] = useState<boolean>(false)
 
     const handleChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,8 +29,7 @@ const PhotoInput = ({
                 file &&
                 (file.type === 'image/jpeg' || file.type === 'image/png')
             ) {
-                form.setValue('logo', file)
-                setPhoto(URL.createObjectURL(file))
+                form.setValue('image', file)
             }
         }
     }
@@ -44,25 +42,22 @@ const PhotoInput = ({
                 file &&
                 (file.type === 'image/jpeg' || file.type === 'image/png')
             ) {
-                form.setValue('logo', file)
-                setPhoto(URL.createObjectURL(file))
+                form.setValue('image', file)
             }
         }
         setIsDragging(false)
     }
 
     const handleRemovePhoto = () => {
-        setPhoto('')
-        form.setValue('logo', undefined)
+        form.resetField('image')
     }
 
     return (
         <FormField
             control={form.control}
-            name='logo'
+            name='image'
             render={() => (
                 <FormItem className='space-y-2'>
-                    <FormLabel>Logo Image</FormLabel>
                     <div
                         onDragOver={(event) => {
                             event.preventDefault()
@@ -74,33 +69,29 @@ const PhotoInput = ({
                             'relative rounded border-2 border-dashed border-muted-foreground/50 p-3 text-sm font-medium text-muted-foreground/50 hover:border-primary hover:bg-accent hover:text-primary hover:shadow-lg',
                             isDragging &&
                             'cursor-copy border-primary bg-accent text-primary shadow-lg',
-                            !photo && 'cursor-pointer'
+                            !form.getValues("image") && 'cursor-pointer'
                         )}
                     >
-                        {photo && (
-                            <>
+                        {form.getValues("image") && (
+                            <div className="flex items-center gap-2">
+
+                                <span className='h-full w-full flex-auto truncate'>
+                                    {form.getValues("image")?.name}
+                                </span>
                                 <Button
                                     type='button'
                                     variant={'destructive'}
-                                    className='absolute right-1.5 top-1.5 p-1'
+                                    className='px-2 py-0.5'
                                     onClick={handleRemovePhoto}
+                                    disabled={isPending}
                                 >
-                                    <X className='h-3 w-3' />
+                                    Remove
                                 </Button>
-                                <div className='h-full w-full'>
-                                    <Image
-                                        width={3000}
-                                        height={3000}
-                                        src={photo}
-                                        alt='Project Logo'
-                                        className='aspect-[25/9] object-cover'
-                                    />
-                                </div>
-                            </>
+                            </div>
                         )}
-                        {!photo && (
+                        {!form.getValues("image") && (
                             <Label
-                                htmlFor='project-logo-input'
+                                htmlFor='project-image-input'
                                 className='flex items-center justify-center gap-1 cursor-pointer'
                             >
                                 <FilePlus2 className='h-5 w-5' />
@@ -114,7 +105,7 @@ const PhotoInput = ({
                                 </span>
                                 <FormControl>
                                     <Input
-                                        id='project-logo-input'
+                                        id='project-image-input'
                                         type='file'
                                         className='hidden'
                                         onChange={handleChangePhoto}
@@ -130,4 +121,4 @@ const PhotoInput = ({
     )
 }
 
-export default PhotoInput
+export default PhotoInput;

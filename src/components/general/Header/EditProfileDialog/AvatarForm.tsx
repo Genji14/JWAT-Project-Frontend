@@ -98,7 +98,7 @@ const AvatarForm: FC<IAvatarFormProps> = React.memo(
                                     <Button
                                         type='button'
                                         onClick={handleRemovePhoto}
-                                        className='h-full w-fit px-3 py-[5.2px] text-xs'
+                                        className='h-full px-3 py-[5.2px] text-xs'
                                         variant={'outline'}
                                     >
                                         Remove
