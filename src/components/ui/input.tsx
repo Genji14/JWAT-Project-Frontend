@@ -15,7 +15,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                 <div
                     className={cn(
                         'absolute top-1/2 -translate-y-1/2',
-                        !line ? 'left-2' : 'left-0'
+                        !line ? 'left-2.5' : 'left-0'
                     )}
                 >
                     {icon!}
@@ -25,7 +25,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     className={cn(
                         'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-300 disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-gray-600',
                         className,
-                        icon && 'pl-10',
+                        icon && 'pl-8',
                         icon && line && 'pl-8',
                         !line
                             ? 'focus-visible:outline-primary'

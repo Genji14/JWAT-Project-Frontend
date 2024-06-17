@@ -5,22 +5,21 @@ import { knowledgeSchema } from '@/lib/schemas';
 import { IKnowledgeForm } from '@/types/interfaces/Form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Check, Loader2, X } from 'lucide-react';
-import React, { SetStateAction } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form';
 import PhotoInput from './PhotoInput';
 import { useCreateKnowledge } from '@/hooks/mutation/knowledge.mutation';
 import { useRouter } from 'next/router';
+import { useStore } from '@/components/providers/StoreProvider';
 
-const KnowledgeForm = ({ setIsAdding }: { setIsAdding: React.Dispatch<SetStateAction<boolean>> }) => {
+const KnowledgeForm = () => {
 
+    const toggleAdding = useStore(state => state.toggleAdding);
     const { mutateCreateKnowledge, isPendingCreateKnowledge } = useCreateKnowledge();
     const { query } = useRouter();
 
     const createKnowledgeForm = useForm<IKnowledgeForm>({
         resolver: zodResolver(knowledgeSchema),
-        defaultValues: {
-            knowledgeName: ""
-        }
     })
 
     async function onSubmit(values: IKnowledgeForm) {
@@ -30,7 +29,7 @@ const KnowledgeForm = ({ setIsAdding }: { setIsAdding: React.Dispatch<SetStateAc
             formData.append("name", values.knowledgeName);
             formData.append("files", values.image);
             await mutateCreateKnowledge(formData);
-            setIsAdding(false);
+            toggleAdding();
         } catch (error) {
             console.error(error)
         }
@@ -62,12 +61,11 @@ const KnowledgeForm = ({ setIsAdding }: { setIsAdding: React.Dispatch<SetStateAc
                 />
                 <div className="flex items-center justify-end gap-2 transition-all">
                     <Button disabled={isPendingCreateKnowledge} className="bg-green-600/90 hover:bg-green-600 p-2 h-fit w-fit transition-all">
-                        {isPendingCreateKnowledge && <span className="mr-1 text-xs">Submitting</span>}
                         {isPendingCreateKnowledge ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
                     </Button>
                     {
                         !isPendingCreateKnowledge &&
-                        <Button type="button" className="p-2 h-fit w-fit" variant={"destructive"} onClick={() => setIsAdding(false)}>
+                        <Button type="button" className="p-2 h-fit w-fit" variant={"destructive"} onClick={toggleAdding}>
                             <X className="w-4 h-4" />
                         </Button>
                     }

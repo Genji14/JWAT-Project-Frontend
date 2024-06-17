@@ -11,7 +11,7 @@ const SearchInput = () => {
         <Input
             onChange={(evt) => setQuery(evt.target.value)}
             placeholder='Find projects...'
-            icon={<Search className='h-5 w-5 text-muted-foreground' />}
+            icon={<Search className='h-4 w-4 text-muted-foreground' />}
             className='w-96 py-5'
         />
     )

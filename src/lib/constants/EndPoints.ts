@@ -17,10 +17,13 @@ export const PROJECT_ENDPOINTS = {
     GET_PROJECTS_BY_USER: `project/user`,
     FIND_ONE: (id: number) => `project/${id}`,
     SEARCH: `project/search`,
+    SEARCH_USER_NOT_IN_PROJECT: `project/findUserNotIn`,
+    INVITE_USER: `project/addUsers`
 }
 
 export const KNOWLEDGE_ENDPOINTS = {
     CREATE_KNOWLEDGE: `project/knowledge`,
     GET_KNOWLEDGE_BY_PROJECT: (id: number) => `project/knowledge/${id}`,
+
 
 }

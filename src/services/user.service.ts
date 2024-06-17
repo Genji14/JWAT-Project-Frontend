@@ -34,6 +34,8 @@ class UserService extends AppService {
     changePassword = (form: IChangePasswordForm) => {
         return this.patch(USER_ENDPOINTS.CHANGE_PASSWORD, form)
     }
+
+
 }
 
 export const userService = new UserService()

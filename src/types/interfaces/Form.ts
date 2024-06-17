@@ -50,3 +50,11 @@ export interface ICreateUserForm {
 export interface ICreateUserRequest extends ICreateUserForm {
     password: string
 }
+
+
+// Invite User 
+
+export interface IAddUserToProjectForm {
+    project: number,
+    users: number[]
+}

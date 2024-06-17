@@ -15,3 +15,18 @@ export interface IUserInfo {
     username: string
     role: UserRole
 }
+
+export interface IUserNotInProject {
+    id: number
+    fullName: string,
+    phoneNumber: string,
+    email: string,
+    gender: Gender,
+    dob: Date,
+    address: string,
+    username: string,
+    role: UserRole,
+    userCreateId: null | number,
+    userProjects: any[],
+    media?: Media
+}

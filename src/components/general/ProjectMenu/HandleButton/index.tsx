@@ -2,8 +2,16 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { AlbumIcon, FolderPen, UserRoundCogIcon } from 'lucide-react';
-import React from 'react'
-import ManageKnowledgeDialog from './ManageKnowledgeDialog';
+import React from 'react';
+import dynamic from 'next/dynamic';
+
+const ManageKnowledgeDialog = dynamic(() => import("./ManageKnowledgeDialog"), {
+    ssr: false
+})
+
+const ManageUserDialog = dynamic(() => import("./ManageUserDialog"), {
+    ssr: false
+});
 
 const HandleButton = () => {
     return (
@@ -19,17 +27,18 @@ const HandleButton = () => {
                             </TooltipTrigger>
                         </DialogTrigger>
                         <TooltipContent side="bottom">
-                            <p>Manage User</p>
+                            <p>Manage Member</p>
                         </TooltipContent>
                     </Tooltip>
                 </TooltipProvider>
                 <DialogContent
                     styledCard={true}
-                    className='p-6 lg:w-1/2'
+                    className='p-6 lg:w-2/5'
                     onInteractOutside={(e) => {
                         e.preventDefault()
                     }}
                 >
+                    <ManageUserDialog />
                 </DialogContent>
             </Dialog>
             <Dialog>
@@ -49,7 +58,7 @@ const HandleButton = () => {
                 </TooltipProvider>
                 <DialogContent
                     styledCard={true}
-                    className='p-6 lg:w-1/2'
+                    className='p-6 lg:w-2/5'
                     onInteractOutside={(e) => {
                         e.preventDefault()
                     }}
@@ -73,7 +82,7 @@ const HandleButton = () => {
                 </TooltipProvider>
                 <DialogContent
                     styledCard={true}
-                    className='p-6 lg:w-1/3'
+                    className='p-6 lg:w-2/5'
                     onInteractOutside={(e) => {
                         e.preventDefault()
                     }}

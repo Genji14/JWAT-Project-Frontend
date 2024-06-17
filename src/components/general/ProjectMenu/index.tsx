@@ -35,6 +35,13 @@ export function ProjectMenu() {
                             </NavigationMenuLink>
                         </Link>
                     </NavigationMenuItem>
+                    <NavigationMenuItem>
+                        <Link href={`/projects/${query.id}/members`} legacyBehavior passHref>
+                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                Members
+                            </NavigationMenuLink>
+                        </Link>
+                    </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
             <HandleButton />
