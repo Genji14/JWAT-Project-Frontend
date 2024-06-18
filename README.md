@@ -14,8 +14,7 @@ npm install
 
 ```
 
-## Now let start the application
-
+## Now let's start the application
 
 ```
 yarn dev
@@ -23,4 +22,4 @@ yarn dev
 npm run dev
 ```
 
-### Then NextJS application will run at [NextJS Application](http://localhost:3000/)
+### Then NextJS application will run at http://localhost:3000/
