@@ -41,3 +41,20 @@ export const useInviteUser = () => {
     }
 }
 
+export const useAddDocument = () => {
+    const { query } = useRouter();
+
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: async (form: FormData) => {
+            await projectService.addDocument(Number(query.id as string), form);
+        },
+        onSuccess: () => {
+            toast.success('Add new document successfully !!')
+        },
+    })
+
+    return {
+        mutateAddDocument: mutateAsync,
+        isPendingAddDocument: isPending,
+    }
+}

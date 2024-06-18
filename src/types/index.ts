@@ -23,3 +23,12 @@ export type Media = {
     cloudId: string
     mediaType: mediaType
 }
+
+export type Document = {
+    id: number,
+    name: string,
+    url: string,
+    createdAt: Date,
+    updatedAt: Date,
+    deleteAt: Date | null
+}

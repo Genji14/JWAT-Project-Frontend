@@ -7,6 +7,7 @@ export const FONT_POPPINS = Poppins({
     weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
 })
 
-export const LIGHT_THEME = 'light'
-export const DARK_THEME = 'dark'
+export const LIGHT_THEME = 'light';
+export const DARK_THEME = 'dark';
 
+export const DEBOUNCE_TIME = 500

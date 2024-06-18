@@ -18,7 +18,10 @@ export const PROJECT_ENDPOINTS = {
     FIND_ONE: (id: number) => `project/${id}`,
     SEARCH: `project/search`,
     SEARCH_USER_NOT_IN_PROJECT: `project/findUserNotIn`,
-    INVITE_USER: `project/addUsers`
+    INVITE_USER: `project/addUsers`,
+    ADD_DOCUMENT: (id: number) => `project/document/${id}`,
+    GET_ROOT_DOCUMENT_GROUP: (id: number) => `project/document/group/${id}`
+
 }
 
 export const KNOWLEDGE_ENDPOINTS = {

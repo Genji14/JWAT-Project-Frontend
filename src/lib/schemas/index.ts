@@ -1,13 +1,7 @@
 import { Gender, UserRole } from '@/types/enums'
 import { z } from 'zod'
 
-const passwordRegex =
-    /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
-
-export const loginSchema = z.object({
-    username: z.string().min(1),
-    password: z.string().min(1),
-})
+const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
 
 const fileSchema = z.custom<File>(
     (file) => {
@@ -17,6 +11,22 @@ const fileSchema = z.custom<File>(
         message: 'Image is required',
     }
 )
+
+const allowedFileTypes = [
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-powerpoint',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'application/pdf',
+    'text/plain',
+];
+
+export const loginSchema = z.object({
+    username: z.string().min(1),
+    password: z.string().min(1),
+})
 
 export const projectSchema = z.object({
     projectName: z
@@ -173,5 +183,20 @@ export const knowledgeSchema = z.object({
         }),
     image: fileSchema.refine((file) => file !== undefined, {
         message: 'Image file is required',
+    })
+})
+
+export const documentSchema = z.object({
+    files: z.array(
+        z.instanceof(File).refine(file => allowedFileTypes.includes(file.type), {
+            message: "Invalid file type. Only Word, Excel, PPT, PDF, and TXT files are allowed."
+        })
+    ).nonempty('At least one file is required'),
+});
+
+export const documentGroupSchema = z.object({
+    parent: z.number(),
+    name: z.string({
+        required_error: "Document group must have a name"
     })
 })
