@@ -6,13 +6,14 @@ import { Search } from 'lucide-react';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useSearchUserNotInProject } from '@/hooks/query/project.query';
 import InviteUserList from './UserList';
+import { DEBOUNCE_TIME } from '@/lib/constants/SettingSystem';
 
 const InviteUserHandler = () => {
 
     const toggleAdding = useStore(state => state.toggleAdding);
     const [query, setQuery] = useState<string>("");
 
-    const debounceQuery = useDebounce(query, 500);
+    const debounceQuery = useDebounce(query, DEBOUNCE_TIME);
 
     const { isFetchingUser, userData } = useSearchUserNotInProject(debounceQuery);
 

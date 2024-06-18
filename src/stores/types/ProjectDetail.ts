@@ -1,14 +1,12 @@
-import { IKnowledge } from "@/types/interfaces/Knowledge"
-import { IProject } from "@/types/interfaces/Project"
+import { IProjectRootDocument } from "@/types/interfaces/Project"
 
 export type TProjectDetailState = {
-    project: IProject,
-    knowledge: IKnowledge[]
+    documentRoot: IProjectRootDocument | undefined,
 }
 
 export type TProjectDetailAction = {
-    toggle: () => void
-    block: () => void
+    setDocumentRoot: (documentRoot: IProjectRootDocument) => void,
+    clearProjectData: () => void
 }
 
 export type TProjectDetailSlice = TProjectDetailState & TProjectDetailAction

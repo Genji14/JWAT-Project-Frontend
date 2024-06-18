@@ -1,5 +1,6 @@
 import { useDebounce } from '@/hooks/useDebounce';
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { DEBOUNCE_TIME } from '../constants/SettingSystem';
 
 interface ISearchProjectContext {
     debounceQuery: string;
@@ -10,7 +11,7 @@ const SearchProjectContext = createContext<ISearchProjectContext | undefined>(un
 
 export const SearchProjectProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [query, setQuery] = useState<string>("");
-    const debounceQuery = useDebounce(query, 500);
+    const debounceQuery = useDebounce(query, DEBOUNCE_TIME);
 
     return (
         <SearchProjectContext.Provider value={{ debounceQuery, setQuery }}>
@@ -18,7 +19,6 @@ export const SearchProjectProvider: React.FC<{ children: ReactNode }> = ({ child
         </SearchProjectContext.Provider>
     );
 };
-
 
 export const useSearchProjectContext = (): ISearchProjectContext => {
     const context = useContext(SearchProjectContext);

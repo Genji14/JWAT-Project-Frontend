@@ -58,3 +58,13 @@ export interface IAddUserToProjectForm {
     project: number,
     users: number[]
 }
+
+export interface ICreateDocumentForm {
+    files: File[]
+}
+
+export interface ICreateDocumentGroupForm {
+    parent: number,
+    name: string,
+    documents: number[]
+}
