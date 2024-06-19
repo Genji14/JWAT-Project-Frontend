@@ -15,6 +15,8 @@ export interface IProject {
 export interface IProjectRootDocument {
     id: number,
     name: string,
-    children: any[],
+    children: IChildrenDocumentGroup[],
     documents: Document[]
 }
+
+export interface IChildrenDocumentGroup extends IProjectRootDocument { }

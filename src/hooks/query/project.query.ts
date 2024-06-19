@@ -50,7 +50,7 @@ export const useGetDocument = () => {
     const projectId = Number(query.id);
 
     const { data, isFetching } = useQuery({
-        queryKey: [PROJECT_QUERY_KEY.SEARCH_USER_NOT_IN_PROJECT, projectId],
+        queryKey: [PROJECT_QUERY_KEY.GET_PROJECT_ROOT_DOCUMENT, projectId],
         queryFn: async ({ queryKey }) => {
             const [_key, projectId] = queryKey;
             const res = await projectService.getRootDocument(Number(projectId));

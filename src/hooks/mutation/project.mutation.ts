@@ -1,5 +1,7 @@
+import { KNOWLEDGE_QUERY_KEY, PROJECT_QUERY_KEY } from "@/lib/constants/QueryKey"
 import { projectService } from "@/services/project.service"
-import { useMutation } from "@tanstack/react-query"
+import { ICreateDocumentGroupForm } from "@/types/interfaces/Form"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/router"
 import { toast } from "sonner"
 
@@ -18,7 +20,6 @@ export const useCreateProject = () => {
         isPendingCreateProject: isPending,
     }
 }
-
 
 export const useInviteUser = () => {
     const { query } = useRouter();
@@ -43,18 +44,43 @@ export const useInviteUser = () => {
 
 export const useAddDocument = () => {
     const { query } = useRouter();
+    const queryClient = useQueryClient();
 
     const { mutateAsync, isPending } = useMutation({
         mutationFn: async (form: FormData) => {
             await projectService.addDocument(Number(query.id as string), form);
         },
         onSuccess: () => {
-            toast.success('Add new document successfully !!')
+            toast.success('Add new document successfully !!');
+            queryClient.invalidateQueries({
+                queryKey: [PROJECT_QUERY_KEY.GET_PROJECT_ROOT_DOCUMENT, Number(query.id)]
+            })
         },
     })
 
     return {
         mutateAddDocument: mutateAsync,
         isPendingAddDocument: isPending,
+    }
+}
+
+export const useAddDocumentGroup = () => {
+    const queryClient = useQueryClient();
+    const { query } = useRouter();
+
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: async (form: ICreateDocumentGroupForm) => {
+            await projectService.addDocumentGroup(form);
+        },
+        onSuccess: () => {
+            toast.success('Add new document group successfully !!');
+            queryClient.invalidateQueries({
+                queryKey: [PROJECT_QUERY_KEY.GET_PROJECT_ROOT_DOCUMENT, Number(query.id)]
+            })
+        },
+    })
+    return {
+        mutateAddDocumentGroup: mutateAsync,
+        isPendingAddDocumentGroup: isPending,
     }
 }
