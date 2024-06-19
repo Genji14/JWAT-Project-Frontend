@@ -5,6 +5,7 @@ import {
     FormControl,
     FormField,
     FormItem,
+    FormLabel,
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -51,26 +52,7 @@ const FilesInput = ({ form }: { form: UseFormReturn<ICreateDocumentForm, any, un
             name='files'
             render={() => (
                 <FormItem className='space-y-2'>
-                    {files.length > 0 && <h4 className="font-bold text-lg uppercase">Documents List</h4>}
-                    {files.length > 0 &&
-                        <ScrollArea className="h-32">
-                            <div className='space-y-2 pb-2'>
-                                {files.map((file, index) => (
-                                    <div key={index} className='flex items-center gap-2'>
-                                        <span className='flex-auto truncate text-muted-foreground text-sm'>{file.name}</span>
-                                        <Button
-                                            type='button'
-                                            variant={'destructive'}
-                                            className='px-2 py-1 '
-                                            onClick={() => handleRemoveFile(index)}
-                                        >
-                                            <X className='h-3 w-3' />
-                                        </Button>
-                                    </div>
-                                ))}
-                            </div>
-                        </ScrollArea>
-                    }
+                    <FormLabel>Document Files</FormLabel>
                     <div
                         onDragOver={(event) => {
                             event.preventDefault();
@@ -105,7 +87,28 @@ const FilesInput = ({ form }: { form: UseFormReturn<ICreateDocumentForm, any, un
                             </FormControl>
                         </Label>
                     </div>
+                    {files.length > 0 &&
+                        <div className="h-32">
+                            <ScrollArea className="h-full">
+                                <div className='space-y-2 pb-2'>
+                                    {files.map((file, index) => (
+                                        <div key={index} className='flex items-center gap-2'>
+                                            <span className='flex-auto truncate text-muted-foreground text-sm'>{file.name}</span>
+                                            <Button
+                                                type='button'
+                                                variant={'destructive'}
+                                                className='px-2 py-1 '
+                                                onClick={() => handleRemoveFile(index)}
+                                            >
+                                                <X className='h-3 w-3' />
+                                            </Button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </ScrollArea>
+                        </div>
 
+                    }
                     <FormMessage />
                 </FormItem>)}
         />

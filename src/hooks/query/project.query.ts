@@ -63,4 +63,25 @@ export const useGetDocument = () => {
         documentData: data,
         isFetchingDocument: isFetching
     }
-} 
+}
+
+export const useSearchDocument = (keyword: string) => {
+    const { query } = useRouter();
+    const { data, isFetching } = useQuery({
+        queryKey: [PROJECT_QUERY_KEY.SEARCH_DOCUMENT, keyword],
+        queryFn: async ({ queryKey }) => {
+            const [_key, keyword] = queryKey;
+            const res = await projectService.searchDocument(Number(query.id), {
+                name: keyword,
+            });
+            return res.data;
+        },
+        enabled: !!keyword,
+        refetchOnWindowFocus: false
+    })
+
+    return {
+        documentData: data,
+        isFetchingDocument: isFetching
+    }
+}

@@ -20,3 +20,12 @@ export interface IProjectRootDocument {
 }
 
 export interface IChildrenDocumentGroup extends IProjectRootDocument { }
+
+export interface IDocumentResult {
+    id: number,
+    name: string,
+    url: string,
+    createdAt: Date,
+    updatedAt: Date,
+    deleteAt: Date | null
+}

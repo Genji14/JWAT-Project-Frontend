@@ -1,5 +1,6 @@
 import { KNOWLEDGE_QUERY_KEY, PROJECT_QUERY_KEY } from "@/lib/constants/QueryKey"
 import { projectService } from "@/services/project.service"
+import { TUngroupDocument } from "@/types"
 import { ICreateDocumentGroupForm } from "@/types/interfaces/Form"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/router"
@@ -82,5 +83,31 @@ export const useAddDocumentGroup = () => {
     return {
         mutateAddDocumentGroup: mutateAsync,
         isPendingAddDocumentGroup: isPending,
+    }
+}
+
+export const useUngroupDocumentGroup = () => {
+    const queryClient = useQueryClient();
+    const { query } = useRouter();
+
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: async ({ docsId, groupId }: { docsId: number[], groupId: number }) => {
+            const req: TUngroupDocument = {
+                documents: docsId,
+                project: Number(query.id)
+            }
+            await projectService.ungroupDocument(req);
+            await projectService.deleteGroup(groupId);
+        },
+        onSuccess: () => {
+            toast.success('Ungroup successfully !!');
+            queryClient.invalidateQueries({
+                queryKey: [PROJECT_QUERY_KEY.GET_PROJECT_ROOT_DOCUMENT, Number(query.id)]
+            })
+        },
+    })
+    return {
+        mutateUnGroup: mutateAsync,
+        isPendingUnGroup: isPending,
     }
 }

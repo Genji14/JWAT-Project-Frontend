@@ -3,9 +3,13 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { FilePlus, FileSearch, FolderPlusIcon, Plus } from 'lucide-react';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic';
 import Spinner from '@/components/shared/Spinner';
+import { useDebounce } from '@/hooks/useDebounce';
+import { DEBOUNCE_TIME } from '@/lib/constants/SettingSystem';
+import { useSearchDocument } from '@/hooks/query/project.query';
+import { useStore } from '@/components/providers/StoreProvider';
 
 const AddDocumentDialog = dynamic(() => import('./AddDocumentDialog'), {
     loading: () => (
@@ -27,10 +31,31 @@ const AddDocumentGroupDialog = dynamic(() => import('./AddDocumentGroupDialog'),
 
 
 const DocumentHandleBar = () => {
+
+    const [query, setQuery] = useState<string>("");
+
+    const debounceQuery = useDebounce(query, DEBOUNCE_TIME);
+    const setDocumentResults = useStore((state) => state.setDocumentResults);
+    const clearDocumentResults = useStore((state) => state.clearDocumentResults);
+    const { documentData } = useSearchDocument(debounceQuery);
+
+    useEffect(() => {
+        if (debounceQuery && documentData) {
+            setDocumentResults(documentData);
+        }
+        if (!debounceQuery) {
+            clearDocumentResults();
+        }
+    }, [documentData, debounceQuery]);
+
     return (
         <div className="w-full flex gap-1 items-center">
             <div className='w-full'>
-                <Input icon={<FileSearch className="text-foreground/50 w-4 h-4" />} placeholder='Search Document...' className=" bg-accent/50 text-xs h-fit flex-auto dark:focus-visible:outline-none rounded dark:placeholder:text-foreground/50" />
+                <Input
+                    onChange={(evt) => setQuery(evt.target.value)}
+                    icon={<FileSearch className="text-foreground/50 w-4 h-4" />}
+                    placeholder='Search Document...'
+                    className=" bg-accent/50 text-xs h-fit flex-auto dark:focus-visible:outline-none rounded dark:placeholder:text-foreground/50" />
             </div>
             <Popover>
                 <PopoverTrigger asChild>

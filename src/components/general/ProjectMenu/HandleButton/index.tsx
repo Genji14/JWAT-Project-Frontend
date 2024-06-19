@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import {
@@ -14,16 +13,9 @@ import {
     UserRoundCogIcon,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
-=======
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { AlbumIcon, FolderPen, UserRoundCogIcon } from 'lucide-react';
-import React from 'react';
-import dynamic from 'next/dynamic';
-import { useRouter as useNavigate } from 'next/navigation';
-import { useRouter } from 'next/router';
->>>>>>> 1272912f89cdb59f16d06c4022d8ea4bcbf16af9
+import { useRouter } from 'next/router'
+
+import { useRouter as useNavigate } from 'next/navigation'
 
 const ManageKnowledgeDialog = dynamic(() => import('./ManageKnowledgeDialog'), {
     ssr: false,
@@ -98,7 +90,6 @@ const HandleButton = () => {
                     <ManageUserDialog />
                 </DialogContent>
             </Dialog>
-<<<<<<< HEAD
             <Dialog>
                 <TooltipProvider>
                     <Tooltip>
@@ -123,20 +114,6 @@ const HandleButton = () => {
                 >
                 </DialogContent>
             </Dialog>
-=======
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button onClick={handleGoToEditPage} variant={"ghost"} className="p-2">
-                            <FolderPen className="w-5 h-5" />
-                        </Button>
-                    </TooltipTrigger>
-                    <TooltipContent side="bottom">
-                        <p>Edit Project</p>
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
->>>>>>> 1272912f89cdb59f16d06c4022d8ea4bcbf16af9
             <Dialog>
                 <TooltipProvider>
                     <Tooltip>

@@ -19,17 +19,16 @@ export const PROJECT_ENDPOINTS = {
     SEARCH: `project/search`,
     SEARCH_USER_NOT_IN_PROJECT: `project/findUserNotIn`,
     INVITE_USER: `project/addUsers`,
-<<<<<<< HEAD
+    ADD_DOCUMENT: (id: number) => `project/document/${id}`,
+    ADD_DOCUMENT_GROUP: `project/document/grouping`,
+    GET_ROOT_DOCUMENT_GROUP: (id: number) => `project/document/group/${id}`,
+    UNGROUP_DOCUMENT: `project/document/grouping`,
+    DELETE_DOCUMENT_GROUP: (id: number) => `project/document/group/${id}`,
+    SEARCH_DOCUMENT: (id: number) => `project/document/${id}/search`
 }
 
 export const BLOG_ENDPOINTS = {
     CREATE_BLOG: `blog/create`,
-=======
-    ADD_DOCUMENT: (id: number) => `project/document/${id}`,
-    ADD_DOCUMENT_GROUP: `project/document/grouping`,
-    GET_ROOT_DOCUMENT_GROUP: (id: number) => `project/document/group/${id}`
-
->>>>>>> 1272912f89cdb59f16d06c4022d8ea4bcbf16af9
 }
 
 export const KNOWLEDGE_ENDPOINTS = {

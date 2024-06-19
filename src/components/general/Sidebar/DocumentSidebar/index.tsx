@@ -4,12 +4,14 @@ import { useGetDocument } from '@/hooks/query/project.query';
 import { useStore } from '@/components/providers/StoreProvider';
 import DocumentRootNode from './DocumentRootNode';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import DocumentResultList from './DocumentResultList';
 
 const DocumentSidebar = () => {
 
     const { documentData, isFetchingDocument } = useGetDocument();
     const setDocumentRoot = useStore((state) => state.setDocumentRoot);
     const clearProjectData = useStore((state) => state.clearProjectData);
+    const documentResults = useStore((state) => state.documentResults);
 
     useEffect(() => {
         if (documentData) {
@@ -24,7 +26,9 @@ const DocumentSidebar = () => {
         <div className="flex flex-col gap-2 w-full h-full">
             <DocumentHandleBar />
             <ScrollArea className="flex-auto">
-                <DocumentRootNode isFetching={isFetchingDocument} />
+                {
+                    documentResults ? <DocumentResultList /> : <DocumentRootNode isFetching={isFetchingDocument} />
+                }
             </ScrollArea>
         </div>
     )
