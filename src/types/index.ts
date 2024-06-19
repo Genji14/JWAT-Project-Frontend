@@ -32,3 +32,8 @@ export type Document = {
     updatedAt: Date,
     deleteAt: Date | null
 }
+
+export type TUngroupDocument = {
+    project: number,
+    documents: number[]
+}

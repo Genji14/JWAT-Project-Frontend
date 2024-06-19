@@ -4,6 +4,7 @@ import { IProject, IProjectRootDocument } from '@/types/interfaces/Project'
 import { AppService } from './app.service'
 import { ISearchUserNotInProjectParams } from '@/types/interfaces/Param'
 import { IAddUserToProjectForm, ICreateDocumentGroupForm } from '@/types/interfaces/Form'
+import { TUngroupDocument } from '@/types'
 
 class ProjectService extends AppService {
     constructor() {
@@ -46,6 +47,18 @@ class ProjectService extends AppService {
 
     getRootDocument = (projectId: number): Promise<AxiosResponse<IProjectRootDocument>> => {
         return this.get(PROJECT_ENDPOINTS.GET_ROOT_DOCUMENT_GROUP(projectId));
+    }
+
+    searchDocument = (projectId: number, param: { name: string }) => {
+        return this.get(PROJECT_ENDPOINTS.SEARCH_DOCUMENT(projectId), undefined, param);
+    }
+
+    ungroupDocument = (req: TUngroupDocument) => {
+        return this.delete(PROJECT_ENDPOINTS.UNGROUP_DOCUMENT, req);
+    }
+
+    deleteGroup = (groupId: number) => {
+        return this.delete(PROJECT_ENDPOINTS.DELETE_DOCUMENT_GROUP(groupId));
     }
 
 }

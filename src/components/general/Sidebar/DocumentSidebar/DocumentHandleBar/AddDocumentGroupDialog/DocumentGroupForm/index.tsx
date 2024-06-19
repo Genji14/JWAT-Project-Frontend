@@ -31,7 +31,8 @@ const DocumentGroupForm = () => {
         }
         try {
             await mutateAddDocumentGroup(values);
-            documentGroupForm.reset();
+            documentGroupForm.resetField("name");
+            documentGroupForm.setValue("documents", []);
         } catch (error) {
             console.error(error);
         }

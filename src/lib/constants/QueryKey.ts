@@ -8,7 +8,8 @@ export const PROJECT_QUERY_KEY = {
     GET_PROJECTS_BY_USER: "getProjectByUser",
     FIND_ONE: "findOneProject",
     SEARCH_USER_NOT_IN_PROJECT: "searchUserNotInProject",
-    GET_PROJECT_ROOT_DOCUMENT: "getProjectRootDocument"
+    GET_PROJECT_ROOT_DOCUMENT: "getProjectRootDocument",
+    SEARCH_DOCUMENT: "searchDocument",
 
 }
 

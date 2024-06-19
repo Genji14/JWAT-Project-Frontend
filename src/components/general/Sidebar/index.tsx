@@ -17,7 +17,7 @@ const Sidebar: FC<ISidebarProps> = ({ isBrowser, children }) => {
             className={cn(
                 'transition-all',
                 isBrowser &&
-                'fixed bottom-0 left-0 z-20 hidden h-[calc(100vh-4.5rem)] p-2 xl:block border-border',
+                'fixed bottom-0 left-0 z-20 hidden h-[calc(100vh-4.5rem)] p-2 xl:block border-border bg-background',
                 expanded ? 'w-72' : "w-fit",
                 pathname.startsWith("/projects") && "border-r"
             )}
