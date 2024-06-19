@@ -29,6 +29,13 @@ export interface IProjectForm {
     logo: File | undefined
 }
 
+export interface IBlogForm {
+    title: string
+    content: string
+    hashTags: string[]
+    media: File | undefined
+}
+
 // Create Knowledge
 export interface IKnowledgeForm {
     knowledgeName: string
