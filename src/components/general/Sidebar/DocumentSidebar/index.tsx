@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import DocumentHandleBar from './DocumentHandleBar';
-import DocumentList from './DocumentList';
 import { useGetDocument } from '@/hooks/query/project.query';
 import { useStore } from '@/components/providers/StoreProvider';
+import DocumentRootNode from './DocumentRootNode';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const DocumentSidebar = () => {
 
@@ -20,9 +21,11 @@ const DocumentSidebar = () => {
     }, [documentData])
 
     return (
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col gap-2 w-full h-full">
             <DocumentHandleBar />
-            <DocumentList isFetching={isFetchingDocument} />
+            <ScrollArea className="flex-auto">
+                <DocumentRootNode isFetching={isFetchingDocument} />
+            </ScrollArea>
         </div>
     )
 }

@@ -198,5 +198,7 @@ export const documentGroupSchema = z.object({
     parent: z.number(),
     name: z.string({
         required_error: "Document group must have a name"
+    }).min(1, {
+        message: "Document group must have a name"
     })
 })

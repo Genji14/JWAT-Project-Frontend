@@ -3,7 +3,7 @@ import { AxiosResponse } from 'axios'
 import { IProject, IProjectRootDocument } from '@/types/interfaces/Project'
 import { AppService } from './app.service'
 import { ISearchUserNotInProjectParams } from '@/types/interfaces/Param'
-import { IAddUserToProjectForm } from '@/types/interfaces/Form'
+import { IAddUserToProjectForm, ICreateDocumentGroupForm } from '@/types/interfaces/Form'
 
 class ProjectService extends AppService {
     constructor() {
@@ -40,9 +40,14 @@ class ProjectService extends AppService {
         return this.post(PROJECT_ENDPOINTS.ADD_DOCUMENT(projectId), form);
     }
 
+    addDocumentGroup = (form: ICreateDocumentGroupForm) => {
+        return this.post(PROJECT_ENDPOINTS.ADD_DOCUMENT_GROUP, form);
+    }
+
     getRootDocument = (projectId: number): Promise<AxiosResponse<IProjectRootDocument>> => {
         return this.get(PROJECT_ENDPOINTS.GET_ROOT_DOCUMENT_GROUP(projectId));
     }
+
 }
 
 export const projectService = new ProjectService();

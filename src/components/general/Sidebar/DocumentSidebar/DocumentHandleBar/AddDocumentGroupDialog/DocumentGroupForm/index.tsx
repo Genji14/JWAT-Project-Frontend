@@ -3,15 +3,19 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { useAddDocumentGroup } from '@/hooks/mutation/project.mutation';
 import { documentGroupSchema } from '@/lib/schemas';
 import { ICreateDocumentGroupForm } from '@/types/interfaces/Form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 import React from 'react'
 import { useForm } from 'react-hook-form';
 
 const DocumentGroupForm = () => {
 
     const documentRoot = useStore((state) => state.documentRoot);
+    const { mutateAddDocumentGroup, isPendingAddDocumentGroup } = useAddDocumentGroup();
+
     const documentGroupForm = useForm<ICreateDocumentGroupForm>({
         resolver: zodResolver(documentGroupSchema),
         defaultValues: {
@@ -22,7 +26,15 @@ const DocumentGroupForm = () => {
     })
 
     async function onSubmit(values: ICreateDocumentGroupForm) {
-        console.log(values)
+        if (!!documentGroupForm.getValues("documents")?.length) {
+            values = { ...values, documents: documentGroupForm.getValues("documents") }
+        }
+        try {
+            await mutateAddDocumentGroup(values);
+            documentGroupForm.reset();
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (
@@ -42,6 +54,7 @@ const DocumentGroupForm = () => {
                     )}
                 />
 
+
                 <FormField
                     control={documentGroupForm.control}
                     name="documents"
@@ -50,7 +63,7 @@ const DocumentGroupForm = () => {
                             <div className="mb-4">
                                 <FormLabel>Documents</FormLabel>
                                 <FormDescription>
-                                    Select the items you want to display in the sidebar.
+                                    Select the documents to add into this document group.
                                 </FormDescription>
                             </div>
                             {documentRoot?.documents.map((item) => (
@@ -68,13 +81,10 @@ const DocumentGroupForm = () => {
                                                     <Checkbox
                                                         checked={field.value?.includes(item.id)}
                                                         onCheckedChange={(checked) => {
-                                                            return checked
-                                                                ? field.onChange([...field.value, item.id])
-                                                                : field.onChange(
-                                                                    field.value?.filter(
-                                                                        (value) => value !== item.id
-                                                                    )
-                                                                )
+                                                            const newValues = checked
+                                                                ? [...field.value, item.id]
+                                                                : field.value?.filter((value) => value !== item.id);
+                                                            field.onChange(newValues);
                                                         }}
                                                     />
                                                 </FormControl>
@@ -92,7 +102,10 @@ const DocumentGroupForm = () => {
                 />
 
                 <div className='pt-4'>
-                    <Button className='w-full'>Add Document Group</Button>
+                    <Button className='w-full' disabled={isPendingAddDocumentGroup}>
+                        <span> Add Document Group</span>
+                        {isPendingAddDocumentGroup && <Loader2 className="w-4 h-4 animate-spin ml-3" />}
+                    </Button>
                 </div>
             </form>
         </Form>
