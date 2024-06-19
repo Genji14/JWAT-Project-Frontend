@@ -101,7 +101,7 @@ const MediaInput = ({
                                         width={3000}
                                         height={3000}
                                         src={media}
-                                        alt='Project Logo'
+                                        alt='Media'
                                         className='aspect-[25/9] object-cover'
                                     />
                                 </div>

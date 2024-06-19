@@ -1,4 +1,4 @@
-import { Media } from '..'
+import { Document, Media } from '..'
 
 export interface IProject {
     id: number
@@ -10,3 +10,13 @@ export interface IProject {
     deleteAt: Date | null
     owner: number
 }
+
+
+export interface IProjectRootDocument {
+    id: number,
+    name: string,
+    children: IChildrenDocumentGroup[],
+    documents: Document[]
+}
+
+export interface IChildrenDocumentGroup extends IProjectRootDocument { }

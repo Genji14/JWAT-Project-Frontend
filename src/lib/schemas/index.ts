@@ -1,13 +1,7 @@
 import { Gender, UserRole } from '@/types/enums'
 import { z } from 'zod'
 
-const passwordRegex =
-    /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
-
-export const loginSchema = z.object({
-    username: z.string().min(1),
-    password: z.string().min(1),
-})
+const passwordRegex = /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/
 
 const fileSchema = z.custom<File>(
     (file) => {
@@ -18,6 +12,7 @@ const fileSchema = z.custom<File>(
     }
 )
 
+<<<<<<< HEAD
 export const blogSchema = z.object({
     title: z
         .string({
@@ -35,6 +30,22 @@ export const blogSchema = z.object({
         }),
     hashTags: z.array(z.string()).optional(),
     media: fileSchema.optional(),
+=======
+const allowedFileTypes = [
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/vnd.ms-powerpoint',
+    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+    'application/pdf',
+    'text/plain',
+];
+
+export const loginSchema = z.object({
+    username: z.string().min(1),
+    password: z.string().min(1),
+>>>>>>> 1272912f89cdb59f16d06c4022d8ea4bcbf16af9
 })
 
 export const projectSchema = z.object({
@@ -194,5 +205,27 @@ export const knowledgeSchema = z.object({
         }),
     image: fileSchema.refine((file) => file !== undefined, {
         message: 'Image file is required',
+<<<<<<< HEAD
     }),
 })
+=======
+    })
+})
+
+export const documentSchema = z.object({
+    files: z.array(
+        z.instanceof(File).refine(file => allowedFileTypes.includes(file.type), {
+            message: "Invalid file type. Only Word, Excel, PPT, PDF, and TXT files are allowed."
+        })
+    ).nonempty('At least one file is required'),
+});
+
+export const documentGroupSchema = z.object({
+    parent: z.number(),
+    name: z.string({
+        required_error: "Document group must have a name"
+    }).min(1, {
+        message: "Document group must have a name"
+    })
+})
+>>>>>>> 1272912f89cdb59f16d06c4022d8ea4bcbf16af9

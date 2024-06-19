@@ -44,7 +44,6 @@ const AddBlogForm = () => {
             values.hashTags?.map((ht) => {
                 formData.append('hashTags', ht)
             })
-            console.log(values);
             setHashTags([])
             setHashTag('')
             await mutateCreateBlog(formData)

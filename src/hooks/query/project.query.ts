@@ -35,7 +35,8 @@ export const useSearchUserNotInProject = (userId: string) => {
             });
 
             return userId ? res.data : res.data.items;
-        }
+        },
+        refetchOnWindowFocus: false
     })
 
     return {
@@ -43,3 +44,23 @@ export const useSearchUserNotInProject = (userId: string) => {
         isFetchingUser: isFetching
     }
 }
+
+export const useGetDocument = () => {
+    const { query } = useRouter();
+    const projectId = Number(query.id);
+
+    const { data, isFetching } = useQuery({
+        queryKey: [PROJECT_QUERY_KEY.GET_PROJECT_ROOT_DOCUMENT, projectId],
+        queryFn: async ({ queryKey }) => {
+            const [_key, projectId] = queryKey;
+            const res = await projectService.getRootDocument(Number(projectId));
+            return res.data;
+        },
+        refetchOnWindowFocus: false
+    })
+
+    return {
+        documentData: data,
+        isFetchingDocument: isFetching
+    }
+} 

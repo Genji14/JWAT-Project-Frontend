@@ -6,7 +6,7 @@ import {
     SheetTrigger,
 } from '@/components/ui/sheet'
 import { cn } from '@/lib/utils'
-import { ChevronLeftIcon, Menu } from 'lucide-react'
+import { ArrowLeft, Menu } from 'lucide-react'
 import React, { useEffect } from 'react'
 import Sidebar from '../Sidebar'
 import { Separator } from '@/components/ui/separator'
@@ -36,7 +36,7 @@ const SidebarButton = () => {
                             variant={'ghost'}
                             className='p-2'
                         >
-                            <ChevronLeftIcon className='h-6 w-6' />
+                            <ArrowLeft className='h-6 w-6' />
                         </Button>
                     </Link>
                     :

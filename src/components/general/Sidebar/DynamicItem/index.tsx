@@ -6,6 +6,7 @@ import React from 'react'
 import SidebarItem from '../SidebarItem'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
+import DocumentSidebar from '../DocumentSidebar'
 const SidebarProjectList = dynamic(() => import('../ProjectList'), {
     ssr: false
 })
@@ -18,7 +19,9 @@ const SidebarDynamicItems = () => {
         <>
             {
                 role ? (role !== UserRole.ADMIN ? (
-                    pathname.startsWith("/projects/") ? <></> : <SidebarProjectList />
+                    pathname.startsWith("/projects/") ? <>
+                        <DocumentSidebar />
+                    </> : <SidebarProjectList />
                 ) : <>
                     <SidebarItem
                         href='/admin/dashboard'

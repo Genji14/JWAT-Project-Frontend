@@ -1,10 +1,6 @@
 import { UserRole } from '@/types/enums';
 import { AbilityBuilder, AbilityTuple, MongoAbility, MongoQuery, createMongoAbility } from '@casl/ability';
 
-type Actions = 'create' | 'read' | 'update' | 'delete' | 'reach';
-type Subjects = 'Admin' | 'General' | 'Project';
-
-
 export function defineAbilities() {
     const { build } = new AbilityBuilder(createMongoAbility);
     return build();
