@@ -18,6 +18,25 @@ const fileSchema = z.custom<File>(
     }
 )
 
+export const blogSchema = z.object({
+    title: z
+        .string({
+            required_error: 'Blog title is required',
+        })
+        .min(6, {
+            message: 'Blog title at least 6 characters',
+        }),
+    content: z
+        .string({
+            required_error: 'Blog content is required',
+        })
+        .min(6, {
+            message: 'Blog content at least 20 characters',
+        }),
+    hashTags: z.array(z.string()).optional(),
+    media: fileSchema.optional(),
+})
+
 export const projectSchema = z.object({
     projectName: z
         .string({
@@ -128,40 +147,42 @@ export const updateUserSchema = z.object({
         }),
 })
 
-export const passwordSchema = z.object({
-    oldPassword: z
-        .string({
-            required_error: 'Old password is required',
-        })
-        .min(1, {
-            message: 'Old password is required',
-        }),
-    password: z
-        .string({
-            required_error: 'Password is required',
-        })
-        .min(8, {
-            message: 'Password at least 8 characters',
-        })
-        .regex(passwordRegex, {
-            message:
-                'Password must contain uppercase, lowercase letter, numbers and special characters',
-        }),
-    confirm: z
-        .string({
-            required_error: 'Confirm password is required',
-        })
-        .min(8, {
-            message: 'Confirm password at least 8 characters',
-        })
-        .regex(passwordRegex, {
-            message:
-                'Password must contain uppercase, lowercase letter, numbers and special characters',
-        }),
-}).refine((values) => values.password === values.confirm, {
-    path: ['confirm'],
-    message: 'Passwords do not match',
-})
+export const passwordSchema = z
+    .object({
+        oldPassword: z
+            .string({
+                required_error: 'Old password is required',
+            })
+            .min(1, {
+                message: 'Old password is required',
+            }),
+        password: z
+            .string({
+                required_error: 'Password is required',
+            })
+            .min(8, {
+                message: 'Password at least 8 characters',
+            })
+            .regex(passwordRegex, {
+                message:
+                    'Password must contain uppercase, lowercase letter, numbers and special characters',
+            }),
+        confirm: z
+            .string({
+                required_error: 'Confirm password is required',
+            })
+            .min(8, {
+                message: 'Confirm password at least 8 characters',
+            })
+            .regex(passwordRegex, {
+                message:
+                    'Password must contain uppercase, lowercase letter, numbers and special characters',
+            }),
+    })
+    .refine((values) => values.password === values.confirm, {
+        path: ['confirm'],
+        message: 'Passwords do not match',
+    })
 
 export const knowledgeSchema = z.object({
     knowledgeName: z
@@ -173,5 +194,5 @@ export const knowledgeSchema = z.object({
         }),
     image: fileSchema.refine((file) => file !== undefined, {
         message: 'Image file is required',
-    })
+    }),
 })
