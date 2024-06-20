@@ -22,7 +22,7 @@ import { Loader2 } from 'lucide-react'
 import { useCreateProject } from '@/hooks/mutation/project.mutation'
 
 const ProjectForm = () => {
-    const { mutateCreateProject, isPendingCreateProject } = useCreateProject();
+    const { mutateCreateProject, isPendingCreateProject } = useCreateProject()
 
     const createProjectForm = useForm<IProjectForm>({
         resolver: zodResolver(projectSchema),
@@ -91,7 +91,7 @@ const ProjectForm = () => {
                                 </FormControl>
                                 <FormDescription className='text-xs'>
                                     Describe about this project to understand
-                                    what we're doing.
+                                    what we&lsquo;re doing.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>

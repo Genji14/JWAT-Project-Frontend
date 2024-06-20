@@ -8,26 +8,37 @@ import { useGetKnowledgeByProjectId } from '@/hooks/query/knowledge.query'
 import { useStore } from '@/components/providers/StoreProvider'
 
 const ManageKnowledgeDialog = () => {
-    const { project } = useProjectDetailContext();
-    const { knowledgeListData, isFetchingKnowledgeList } = useGetKnowledgeByProjectId();
-    const isAddingMode = useStore(state => state.isAddingMode);
-    const defaultAddingMode = useStore(state => state.defaultAddingMode);
+    const { project } = useProjectDetailContext()
+    const { knowledgeListData, isFetchingKnowledgeList } =
+        useGetKnowledgeByProjectId()
+    const isAddingMode = useStore((state) => state.isAddingMode)
+    const defaultAddingMode = useStore((state) => state.defaultAddingMode)
 
     useEffect(() => {
-        defaultAddingMode();
+        defaultAddingMode()
     }, [])
 
     return (
         <>
             <DialogHeader className='space-y-0'>
-                <h3 className='text-xl font-bold uppercase'><span className="text-primary underline underline-offset-2">{project.name}</span>'s knowledge</h3>
+                <h3 className='text-xl font-bold uppercase'>
+                    <span className='text-primary underline underline-offset-2'>
+                        {project.name}
+                    </span>
+                    &lsquo;s knowledge
+                </h3>
                 <DialogDescription>
                     Add or remove knowledge tech stacks in this project.
                 </DialogDescription>
             </DialogHeader>
             <Separator />
             <AddKnowledgeSection />
-            {!isAddingMode && <KnowledgeList data={knowledgeListData} isFetching={isFetchingKnowledgeList} />}
+            {!isAddingMode && (
+                <KnowledgeList
+                    data={knowledgeListData}
+                    isFetching={isFetchingKnowledgeList}
+                />
+            )}
         </>
     )
 }
