@@ -28,7 +28,7 @@ export default function Dasshboard() {
             </Head>
             <SearchProjectProvider>
                 <div className='flex items-center justify-between'>
-                    <h2 className='text-2xl font-bold uppercase'>My projects</h2>
+                    <h2 className='text-2xl font-bold uppercase invisible md:visible'>My projects</h2>
                     <HandleBar />
                 </div>
                 <div className='my-4'>

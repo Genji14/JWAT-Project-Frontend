@@ -16,6 +16,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 
 import { useRouter as useNavigate } from 'next/navigation'
+import { Can, useAbility } from '@/components/providers/AbilityProvider'
 
 const ManageKnowledgeDialog = dynamic(() => import('./ManageKnowledgeDialog'), {
     ssr: false,
@@ -31,12 +32,7 @@ const AddBlogDialog = dynamic(() => import('./AddBlogDialog'), {
 
 const HandleButton = () => {
 
-    const router = useNavigate();
-    const { query } = useRouter();
-
-    function handleGoToEditPage() {
-        router.push(`/projects/${query.id}/edit`);
-    }
+    const ability = useAbility();
 
     return (
         <div className='flex items-center gap-1'>
@@ -65,31 +61,10 @@ const HandleButton = () => {
                     <AddBlogDialog />
                 </DialogContent>
             </Dialog>
-            <Dialog>
-                <TooltipProvider>
-                    <Tooltip>
-                        <DialogTrigger asChild>
-                            <TooltipTrigger asChild>
-                                <Button variant={'ghost'} className='p-2'>
-                                    <UserRoundCogIcon className='h-5 w-5' />
-                                </Button>
-                            </TooltipTrigger>
-                        </DialogTrigger>
-                        <TooltipContent side='bottom'>
-                            <p>Manage Member</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-                <DialogContent
-                    styledCard={true}
-                    className='p-6 lg:w-2/5'
-                    onInteractOutside={(e) => {
-                        e.preventDefault()
-                    }}
-                >
-                    <ManageUserDialog />
-                </DialogContent>
-            </Dialog>
+            <Can I="invite" a="User" ability={ability}>
+                <ManageUserDialog />
+            </Can>
+
             <Dialog>
                 <TooltipProvider>
                     <Tooltip>

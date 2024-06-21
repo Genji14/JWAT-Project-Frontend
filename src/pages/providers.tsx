@@ -5,6 +5,11 @@ import { Toaster } from '@/components/ui/sonner'
 import { ThemeProvider } from '@/components/shared/ThemeProvider'
 import { StoreProvider } from '@/components/providers/StoreProvider'
 import { AbilityProvider } from '@/components/providers/AbilityProvider'
+import dynamic from 'next/dynamic'
+
+const ExpireAlertDialog = dynamic(() => import('@/components/general/ExpireAlertDialog'), {
+    ssr: false
+})
 
 type IProvidersProps = PropsWithChildren<{
     children: React.ReactNode
@@ -20,10 +25,10 @@ const Providers: FC<IProvidersProps> = ({ children }) => {
                     <ThemeProvider attribute='class' defaultTheme={LIGHT_THEME} enableSystem disableTransitionOnChange>
                         {children}
                         <Toaster richColors />
+                        <ExpireAlertDialog />
                     </ThemeProvider>
                 </AbilityProvider>
             </StoreProvider>
-
         </QueryClientProvider>
     )
 }
