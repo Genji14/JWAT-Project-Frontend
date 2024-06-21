@@ -17,6 +17,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import UngroupActionDialog from './UngroupActionDialog'
+import { Can, useAbility } from '@/components/providers/AbilityProvider'
 
 const DocumentNode = ({
     node,
@@ -25,7 +26,8 @@ const DocumentNode = ({
     node: IChildrenDocumentGroup
     isRoot?: boolean
 }) => {
-    const [expanded, setExpanded] = useState(isRoot || false)
+    const [expanded, setExpanded] = useState(isRoot || false);
+    const ability = useAbility();
 
     return (
         <div className='flex flex-col gap-1'>
@@ -42,67 +44,69 @@ const DocumentNode = ({
                         )}
                         <h3 className='text-sm font-semibold'>{node.name}</h3>
                     </div>
-                    <Popover>
-                        <PopoverTrigger asChild>
-                            <Button
-                                className='z-10 h-fit w-fit p-1'
-                                variant={'ghost'}
+                    <Can I={"manage"} a={"Document"} ability={ability}>
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button
+                                    className='z-10 h-fit w-fit p-1'
+                                    variant={'ghost'}
+                                    onClick={(evt) => evt.stopPropagation()}
+                                >
+                                    <Ellipsis className='h-3 w-3' />
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent
+                                align='end'
+                                className='mt-1 w-48 p-1'
                                 onClick={(evt) => evt.stopPropagation()}
                             >
-                                <Ellipsis className='h-3 w-3' />
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent
-                            align='end'
-                            className='mt-1 w-48 p-1'
-                            onClick={(evt) => evt.stopPropagation()}
-                        >
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <div className='flex cursor-pointer items-center gap-2 rounded px-3 py-1.5 text-sm font-semibold hover:bg-accent'>
-                                        <FilePlus className='h-4 w-4' />
-                                        <span className='text-xs'>
-                                            Add Document
-                                        </span>
-                                    </div>
-                                </DialogTrigger>
-                                <DialogContent
-                                    styledCard={true}
-                                    className='p-6 lg:w-1/3'
-                                    onInteractOutside={(e) => {
-                                        e.preventDefault()
-                                    }}
-                                >
-                                    {/* <AddDocumentDialog /> */}
-                                </DialogContent>
-                            </Dialog>
-                            <Dialog>
-                                <DialogTrigger asChild>
-                                    <div className='flex cursor-pointer items-center gap-2 rounded px-3 py-1.5 text-sm font-semibold hover:bg-accent'>
-                                        <FolderPlusIcon className='h-4 w-4' />
-                                        <span className='text-xs'>
-                                            Add Document Group{' '}
-                                        </span>
-                                    </div>
-                                </DialogTrigger>
-                                <DialogContent
-                                    styledCard={true}
-                                    className='p-6 lg:w-1/3'
-                                    onInteractOutside={(e) => {
-                                        e.preventDefault()
-                                    }}
-                                >
-                                    {/* <AddDocumentGroupDialog /> */}
-                                </DialogContent>
-                            </Dialog>
-                            {node.id && (
-                                <UngroupActionDialog
-                                    documents={node.documents}
-                                    groupId={node.id}
-                                />
-                            )}
-                        </PopoverContent>
-                    </Popover>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <div className='flex cursor-pointer items-center gap-2 rounded px-3 py-1.5 text-sm font-semibold hover:bg-accent'>
+                                            <FilePlus className='h-4 w-4' />
+                                            <span className='text-xs'>
+                                                Add Document
+                                            </span>
+                                        </div>
+                                    </DialogTrigger>
+                                    <DialogContent
+                                        styledCard={true}
+                                        className='p-6 lg:w-1/3'
+                                        onInteractOutside={(e) => {
+                                            e.preventDefault()
+                                        }}
+                                    >
+                                        {/* <AddDocumentDialog /> */}
+                                    </DialogContent>
+                                </Dialog>
+                                <Dialog>
+                                    <DialogTrigger asChild>
+                                        <div className='flex cursor-pointer items-center gap-2 rounded px-3 py-1.5 text-sm font-semibold hover:bg-accent'>
+                                            <FolderPlusIcon className='h-4 w-4' />
+                                            <span className='text-xs'>
+                                                Add Document Group{' '}
+                                            </span>
+                                        </div>
+                                    </DialogTrigger>
+                                    <DialogContent
+                                        styledCard={true}
+                                        className='p-6 lg:w-1/3'
+                                        onInteractOutside={(e) => {
+                                            e.preventDefault()
+                                        }}
+                                    >
+                                        {/* <AddDocumentGroupDialog /> */}
+                                    </DialogContent>
+                                </Dialog>
+                                {node.id && (
+                                    <UngroupActionDialog
+                                        documents={node.documents}
+                                        groupId={node.id}
+                                    />
+                                )}
+                            </PopoverContent>
+                        </Popover>
+                    </Can>
                 </div>
             )}
             {expanded && (
