@@ -3,7 +3,8 @@ import { DOMAIN_NAME, SERVICE_NAME } from './SettingSystem'
 import { getAccessToken } from '../utils'
 
 export const API_INSTANCE = axios.create({
-    baseURL: SERVICE_NAME,
+    baseURL: DOMAIN_NAME,
+    // baseURL: SERVICE_NAME, //For deployment purpose only
 })
 
 export const authorizeSSR = (req: any) => {
