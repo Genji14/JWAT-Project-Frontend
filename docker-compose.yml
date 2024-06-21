@@ -72,43 +72,17 @@ services:
         condition: service_healthy
       elasticsearch:
         condition: service_healthy
-      # postgres:
-      #   condition: service_healthy
-    # healthcheck:
-    #   test: [ "CMD", "curl", "-f", "http://localhost:3001/api/health" ]
-    #   interval: 2s
-    #   timeout: 2s
-    #   retries: 2
+
   frontend:
     image: rockyoperation/knowledge-sharing-frontend
     ports:
       - 3000:3000
     environment:
       PORT: 3000
-      NEXT_PUBLIC_API_SERVER: http://localhost:3001
-      NEXT_PUBLIC_SERVER_URL_CLIENT_COMPONENT: http://localhost:3001
+      NEXT_PUBLIC_API_SERVER: ${NEXT_PUBLIC_API_SERVER}
+      NEXT_PUBLIC_API_SERVICE: ${NEXT_PUBLIC_API_SERVICE}
 
-# postgres:
-  #   image: postgres
-  #   restart: always
-  #   environment:
-  #     POSTGRES_PASSWORD: 992002
-  #     POSTGRES_DB: jwat_knowledge_sharing
-  #   ports:
-  #     - 5432:5432
-  #   volumes:
-  #     - postgres-data:/var/lib/postgresql/data
-  #   healthcheck:
-  #     test:
-  #       [
-  #         "CMD-SHELL",
-  #         "pg_isready -U postgres -d jwat_knowledge_sharing"
-  #       ]
-  #     interval: 2s
-  #     timeout: 2s
-  #     retries: 2
 volumes:
   redis-data:
   esdata:
     driver: local
-  # postgres-data:
