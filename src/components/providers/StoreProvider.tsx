@@ -2,14 +2,14 @@ import { type ReactNode, createContext, useRef, useContext } from 'react'
 import { type StoreApi, useStore as useZustandStore, create } from 'zustand'
 import { createRoleSlice } from '@/stores/slices/RoleSlice'
 import { createExpandedSlice } from '@/stores/slices/ExpandedSlice'
-import { createAddingModeSlice } from '@/stores/slices/AddingModeSlice'
 import { createProjectDetailSlice } from '@/stores/slices/ProjectDetailSlice'
+import { createUtilitySlice } from '@/stores/slices/UtilityStore'
 import { TRoleSlice } from '@/stores/types/Role'
 import { TExpandedSlice } from '@/stores/types/Expand'
-import { TAddingModeSlice } from '@/stores/types/AddingMode'
 import { TProjectDetailSlice } from '@/stores/types/ProjectDetail'
+import { TUtilitySlice } from '@/stores/types/Utility'
 
-export type TStore = TRoleSlice & TExpandedSlice & TAddingModeSlice & TProjectDetailSlice;
+export type TStore = TRoleSlice & TExpandedSlice & TUtilitySlice & TProjectDetailSlice;
 
 export const StoreContext = createContext<StoreApi<TStore> | null>(null)
 
@@ -23,7 +23,7 @@ export const StoreProvider = ({ children }: StoreProviderProps) => {
         storeRef.current = create<TStore>((...a) => ({
             ...createRoleSlice(...a),
             ...createExpandedSlice(...a),
-            ...createAddingModeSlice(...a),
+            ...createUtilitySlice(...a),
             ...createProjectDetailSlice(...a)
         }))
     }

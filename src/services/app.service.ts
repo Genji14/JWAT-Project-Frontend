@@ -13,10 +13,10 @@ axios.interceptors.request.use(async (config) => {
 axios.interceptors.response.use(
     (response) => response,
     async (error) => {
-        const originalRequest = error.config
+        const originalRequest = error.config;
         if (error.response.status === 419 && !originalRequest._retry) {
-            originalRequest._retry = true
-            const newAccessToken = await refreshToken()
+            originalRequest._retry = true;
+            const newAccessToken = await refreshToken();
             if (newAccessToken) {
                 originalRequest.headers['Authorization'] =
                     `Bearer ${newAccessToken}`

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { DOMAIN_NAME, SERVICE_NAME } from './SettingSystem'
-import { getAccessToken } from '../utils'
+import { getAccessTokenSSR } from '../utils'
 
 export const API_INSTANCE = axios.create({
     baseURL: DOMAIN_NAME,
@@ -8,11 +8,13 @@ export const API_INSTANCE = axios.create({
 })
 
 export const authorizeSSR = (req: any) => {
-    const accessToken = getAccessToken(req)
+    const accessToken = getAccessTokenSSR(req)
     API_INSTANCE.interceptors.request.use(async (config) => {
-        config.headers.Authorization = `Bearer ${accessToken}`
-        return config
-    })
+        if (accessToken) {
+            config.headers.Authorization = `Bearer ${accessToken}`;
+        }
+        return config;
+    });
 
     // API_INSTANCE.interceptors.response.use(
     //     (response) => response,

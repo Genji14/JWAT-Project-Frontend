@@ -23,16 +23,22 @@ const ProjectDetailPage = ({ project }: { project: IProject }) => {
     )
 }
 
-export async function getServerSideProps({ req, params }: any) {
+export const getServerSideProps = async ({ req, params }: any) => {
     try {
-        const { id } = params;
+        const { id } = params as { id: number };
         authorizeSSR(req);
-        const res = await API_INSTANCE.get(PROJECT_ENDPOINTS.FIND_ONE(id));
-        return { props: { project: res.data } };
+        const response = await API_INSTANCE.get(PROJECT_ENDPOINTS.FIND_ONE(id));
+        return { props: { project: response.data } };
     } catch (error) {
         console.error(error);
+        req.headers.cookies = "";
+        return {
+            redirect: {
+                destination: '/sign-in',
+                permanent: false,
+            },
+        };
     }
-    return { props: { project: null } };
+};
 
-}
 export default ProjectDetailPage;

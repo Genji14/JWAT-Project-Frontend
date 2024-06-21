@@ -1,9 +1,11 @@
 import { type ClassValue, clsx } from 'clsx'
 import Cookies from 'js-cookie'
-import { toast } from 'sonner'
 import { twMerge } from 'tailwind-merge'
-import axios from 'axios'
 import { authService } from '@/services/auth.service'
+import { API_INSTANCE } from './constants/ApiInstance'
+import { AUTH_ENDPOINTS } from './constants/EndPoints'
+import { useStore } from '@/components/providers/StoreProvider'
+
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
@@ -19,41 +21,51 @@ export function convertAlt(fullName: string): string {
 }
 
 export const refreshToken = async () => {
+
+    console.log(Cookies.get('refreshToken'))
     const refreshToken = Cookies.get('refreshToken') ?? ''
     try {
-        const { data } = await authService.refreshToken(refreshToken)
+        const { data } = await authService.refreshToken(refreshToken);
+        if (data) {
+            Cookies.set('accessToken', data.accessToken, { path: '/' });
+            Cookies.set('refreshToken', data.refreshToken, { path: '/' });
+            console.log(Cookies.get('refreshToken'))
+            return data.accessToken;
+        }
+    } catch (error) {
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
+        Cookies.set("expired", 'true', { path: '/' });
+        return null;
+    }
+}
+export const refreshTokenSSR = async (accessToken: string, refreshToken: string, req: any) => {
+    console.log(req.headers.cookie);
+    try {
+        const { data } = await API_INSTANCE.post(AUTH_ENDPOINTS.REFRESH_TOKEN, {
+            refreshToken
+        }, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
         if (data) {
             Cookies.set('accessToken', data.accessToken)
             Cookies.set('refreshToken', data.refreshToken)
-            return data.accessToken
+            req.headers.cookie = "accessToken=" + data.accessToken + "; refreshToken=" + data.refreshToken;
+            console.log(req.headers.cookie);
+            return data.accessToken;
         }
-    } catch {
-        Cookies.remove('accessToken')
-        Cookies.remove('refreshToken')
-        toast.message('Token expired', {
-            description:
-                'Your working session is expired, please sign in again.',
-        })
-        setTimeout(() => {
-            window.location.href = '/sign-in'
-        }, 3000)
+    } catch (error) {
+        console.log(error);
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
+        return null;
     }
-}
+};
 
-export const authorizeServerHeader = (accessToken: string) => {
-    axios.interceptors.request.use(async (config) => {
-        config.headers.Authorization = accessToken
-            ? `Bearer ${accessToken}`
-            : ''
-
-        console.log(config.headers.Authorization)
-        return config
-    })
-
-}
-
-export const getAccessToken = (req: any) => {
-    const cookies = req.headers.cookie;
+export const getAccessTokenSSR = (req: any) => {
+    const cookies = req.headers.cookie || '';
     const cookieArray = cookies.split(';');
 
     let accessToken = '';
@@ -64,4 +76,18 @@ export const getAccessToken = (req: any) => {
         }
     }
     return accessToken;
-}
+};
+
+export const getRefreshTokenSSR = (req: any) => {
+    const cookies = req.headers.cookie || '';
+    const cookieArray = cookies.split(';');
+
+    let refreshToken = '';
+    for (let i = 0; i < cookieArray.length; i++) {
+        if (cookieArray[i].trim().startsWith('refreshToken=')) {
+            refreshToken = cookieArray[i].split('=')[1];
+            break;
+        }
+    }
+    return refreshToken;
+};
