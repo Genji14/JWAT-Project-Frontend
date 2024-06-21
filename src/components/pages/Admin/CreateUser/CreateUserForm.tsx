@@ -41,7 +41,8 @@ import { useStore } from '@/components/providers/StoreProvider'
 const CreateUserForm = () => {
     const expanded = useStore((state) => state.expanded)
 
-    const { mutateCreateUser, isPendingCreateUser, isSuccessCreateUser } = useCreateUser()
+    const { mutateCreateUser, isPendingCreateUser, isSuccessCreateUser } =
+        useCreateUser()
 
     const createUserForm = useForm<ICreateUserForm>({
         resolver: zodResolver(createUserSchema),
@@ -58,7 +59,10 @@ const CreateUserForm = () => {
     })
 
     async function onSubmit(values: ICreateUserForm) {
-        const createUserReq: ICreateUserRequest = { ...values, password: values.username };
+        const createUserReq: ICreateUserRequest = {
+            ...values,
+            password: values.username,
+        }
         await mutateCreateUser(createUserReq).catch((ex) => {
             if (ex.response.status === HttpStatusCode.Conflict) {
                 createUserForm.setError('username', {
@@ -67,12 +71,12 @@ const CreateUserForm = () => {
             }
 
             if (ex.response.status === HttpStatusCode.BadRequest) {
-                if (ex.response.data.message === "phoneNumber") {
+                if (ex.response.data.message === 'phoneNumber') {
                     createUserForm.setError('phoneNumber', {
                         message: USER_RESPONSE_MESSAGE.CREATE.PHONE_CONFLICT,
                     })
                 }
-                if (ex.response.data.message === "email") {
+                if (ex.response.data.message === 'email') {
                     createUserForm.setError('email', {
                         message: USER_RESPONSE_MESSAGE.CREATE.EMAIL_CONFLICT,
                     })
@@ -215,11 +219,13 @@ const CreateUserForm = () => {
                                             <FormControl>
                                                 <Button
                                                     variant={'outline'}
-                                                    disabled={isPendingCreateUser}
+                                                    disabled={
+                                                        isPendingCreateUser
+                                                    }
                                                     className={cn(
                                                         'w-full text-left font-normal',
                                                         !field.value &&
-                                                        'text-muted-foreground'
+                                                            'text-muted-foreground'
                                                     )}
                                                 >
                                                     {field.value ? (
@@ -250,7 +256,7 @@ const CreateUserForm = () => {
                                                 disabled={(date) =>
                                                     date > new Date() ||
                                                     date <
-                                                    new Date('1900-01-01')
+                                                        new Date('1900-01-01')
                                                 }
                                                 initialFocus
                                             />
@@ -279,7 +285,7 @@ const CreateUserForm = () => {
                                 </FormControl>
                                 <FormDescription>
                                     Created employee will receive the account,
-                                    make sure it's correct.
+                                    make sure it&lsquo;s correct.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>

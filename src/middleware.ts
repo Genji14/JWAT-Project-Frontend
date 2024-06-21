@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
     const isSignInPage = pathname.startsWith('/sign-in');
 
 
-    if (accessToken && !isSignInPage) {
+    if (!accessToken && !isSignInPage) {
         return NextResponse.redirect(new URL('/sign-in', request.url))
     }
 
