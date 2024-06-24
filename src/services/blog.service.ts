@@ -6,7 +6,7 @@ class BlogService {
     getBlogList = () => {
         return API_INSTANCE.get(BLOG_ENDPOINTS.GET_BLOG_LIST, {
             params: {
-                limit: 8
+                limit: 2
             }
         });
     }

@@ -10,13 +10,13 @@ const BlogList = () => {
     }, [data])
 
     return <>
-        {/* {data?.pages.map((page, i) => (
+        {data?.pages.map((page, i) => (
             <React.Fragment key={i}>
-                {group.data.map((project) => (
-                    <p key={project.id}>{project.name}</p>
+                {page.items?.map((blog: any) => (
+                    <p key={blog.id}>{blog.title}</p>
                 ))}
             </React.Fragment>
-        ))} */}
+        ))}
         <div>
             <Button onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
                 {isFetchingNextPage

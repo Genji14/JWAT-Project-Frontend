@@ -1,6 +1,6 @@
 import { BLOG_QUERY_KEY } from "@/lib/constants/QueryKey";
 import { blogService } from "@/services/blog.service";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 
 export const useGetBlogList = () => {
     const { data, status, isFetching, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteQuery({
@@ -10,7 +10,8 @@ export const useGetBlogList = () => {
             return res.data;
         },
         initialPageParam: 1,
-        getNextPageParam: (lastPage) => lastPage.nextCursor
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+        refetchOnWindowFocus: false
     });
 
     return { status, data, isFetching, isFetchingNextPage, hasNextPage, fetchNextPage }
