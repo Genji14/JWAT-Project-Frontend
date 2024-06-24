@@ -1,25 +1,21 @@
 import StyledCard from '@/components/shared/StyledCard'
 import { Button } from '@/components/ui/button'
 import { useGetBlogList } from '@/hooks/query/blog.query'
-import React, { useEffect } from 'react'
+import { IBlog } from '@/types/interfaces/Blog'
+import React from 'react'
 import BlogItem from './BlogItem'
 
 const BlogList = () => {
     const { isFetching, isFetchingNextPage, data, hasNextPage, fetchNextPage } =
         useGetBlogList()
-
-    useEffect(() => {
-        console.log(data)
-    }, [data])
-
     return (
         <>
             {data?.pages.map((page, i) => (
                 <React.Fragment key={i}>
-                    {page.items?.map((blog: any) => (
+                    {page.items?.map((blog: IBlog) => (
                         // <p key={blog.id}>{blog.title}</p>
                         <StyledCard key={blog.id} className='mb-10'>
-                            <BlogItem />
+                            <BlogItem blog={blog} />
                         </StyledCard>
                     ))}
                 </React.Fragment>
