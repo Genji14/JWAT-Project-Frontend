@@ -22,7 +22,7 @@ const ProjectList = () => {
     return (
         <>
             {
-                projectListData && projectListData.length > 0 ? <div className='my-4 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4'>
+                projectListData && projectListData.length > 0 ? <div className='my-4 grid sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4'>
                     {
                         projectListData?.map((project: IProject) => {
                             return <Link href={`/projects/${project.id}`} key={project.id} >
