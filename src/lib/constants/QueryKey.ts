@@ -16,3 +16,7 @@ export const PROJECT_QUERY_KEY = {
 export const KNOWLEDGE_QUERY_KEY = {
     GET_KNOWLEDGES_BY_PROJECT: "getKnowledgesByProject",
 }
+
+export const BLOG_QUERY_KEY = {
+    GET_BLOG_LIST: "getBlogList"
+}
