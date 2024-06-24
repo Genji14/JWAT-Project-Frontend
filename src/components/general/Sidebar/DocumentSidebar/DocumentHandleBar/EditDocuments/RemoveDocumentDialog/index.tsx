@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { useRemoveDocument } from '@/hooks/mutation/project.mutation'
 import { Document } from '@/types'
-import { Trash2 } from 'lucide-react'
+import { Loader2, Trash2 } from 'lucide-react'
 import React from 'react'
 
 const RemoveDocumentDialog = ({ document }: { document: Document }) => {
@@ -42,16 +42,20 @@ const RemoveDocumentDialog = ({ document }: { document: Document }) => {
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    {!isPendingRemoveDocument && (
-                        <Button
-                            variant='destructive'
-                            onClick={() => onSubmit(document.id)}
-                        >
-                            {' '}
-                            Confirm
-                        </Button>
-                    )}
+                    <AlertDialogCancel disabled={isPendingRemoveDocument}>
+                        Cancel
+                    </AlertDialogCancel>
+                    <Button
+                        variant='destructive'
+                        onClick={() => onSubmit(document.id)}
+                        disabled={isPendingRemoveDocument}
+                    >
+                        {' '}
+                        Confirm{' '}
+                        {isPendingRemoveDocument && (
+                            <Loader2 className='ml-3 h-4 w-4 animate-spin' />
+                        )}
+                    </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
