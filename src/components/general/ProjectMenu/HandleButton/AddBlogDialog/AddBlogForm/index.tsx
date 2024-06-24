@@ -32,7 +32,7 @@ const AddBlogForm = () => {
             title: '',
             content: '',
             hashTags: [],
-            media: undefined,
+            media: [],
         },
     })
 
@@ -66,7 +66,7 @@ const AddBlogForm = () => {
         <Form {...createBlogForm}>
             <form
                 onSubmit={createBlogForm.handleSubmit(onSubmit)}
-                className='space-y-4'
+                className='space-y-2'
             >
                 <FormField
                     control={createBlogForm.control}
@@ -107,11 +107,19 @@ const AddBlogForm = () => {
                     render={({ field }) => (
                         <TagInput
                             {...field}
-                            placeholder="Enter the tags"
-                            tags={tags}
+                            placeholder="Enter blog tags..."
+                            maxTags={5}
+                            showCount
+                            tags={
+                                tags.map((tag) => {
+                                    return {
+                                        id: tag.id, text: removeVietnameseAccents(tag.text).toLowerCase().replace(/\s+/g, '')
+                                    }
+                                })
+                            }
                             setTags={(newTags) => {
                                 setTags(newTags);
-                                const newHashTags: string[] = newTags.map((tag: Tag) => tag.text);
+                                const newHashTags: string[] = tags.map((tag: Tag) => tag.text);
                                 field.onChange(newHashTags);
                             }}
                             activeTagIndex={activeTagIndex}

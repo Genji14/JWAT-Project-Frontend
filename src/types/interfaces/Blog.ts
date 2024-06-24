@@ -1,6 +1,9 @@
 export interface IBlog {
-    id: number
+    id: number,
     title: string
-    content: string
+    content: string,
     createdAt: Date
+    user: {
+        id: number
+    }
 }

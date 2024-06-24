@@ -33,7 +33,7 @@ export interface IBlogForm {
     title: string
     content: string
     hashTags: string[]
-    media: File | undefined
+    media: File[]
 }
 
 // Create Knowledge
@@ -57,7 +57,6 @@ export interface ICreateUserForm {
 export interface ICreateUserRequest extends ICreateUserForm {
     password: string
 }
-
 
 // Invite User 
 

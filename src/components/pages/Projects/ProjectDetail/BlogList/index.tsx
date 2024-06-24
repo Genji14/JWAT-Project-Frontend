@@ -11,14 +11,13 @@ const BlogList = () => {
     return (
         <>
             {data?.pages.map((page, i) => (
-                <React.Fragment key={i}>
+                <div className='space-y-6' key={i}>
                     {page.items?.map((blog: IBlog) => (
-                        // <p key={blog.id}>{blog.title}</p>
-                        <StyledCard key={blog.id} className='mb-10'>
+                        <StyledCard key={blog.id}>
                             <BlogItem blog={blog} />
                         </StyledCard>
                     ))}
-                </React.Fragment>
+                </div>
             ))}
             <div>
                 <Button
@@ -28,8 +27,8 @@ const BlogList = () => {
                     {isFetchingNextPage
                         ? 'Loading more...'
                         : hasNextPage
-                          ? 'Load More'
-                          : 'Nothing more to load'}
+                            ? 'Load More'
+                            : 'Nothing more to load'}
                 </Button>
             </div>
             <div>

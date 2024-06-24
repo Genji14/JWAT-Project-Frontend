@@ -21,8 +21,8 @@ const BlogItem = ({ blog }: { blog: IBlog }) => {
                     </Avatar>
                     <div className='flex pl-2'>
                         <div>
-                            <p>Trần Ngọc Phước Hoàng</p>
-                            <p className='text-sm'>
+                            <h3 className="font-bold">Trần Ngọc Phước Hoàng</h3>
+                            <p className='text-sm text-muted-foreground'>
                                 {format(blog.createdAt, 'dd/MM/yyyy HH:MM')}
                             </p>
                         </div>
@@ -36,7 +36,7 @@ const BlogItem = ({ blog }: { blog: IBlog }) => {
                 <p className='my-3 line-clamp-3 text-xl font-bold'>
                     {blog.title}
                 </p>
-                <p className='text-justify'>{blog.content}</p>
+                <p className='text-justify text-muted-foreground'>{blog.content}</p>
             </div>
             <div className='mt-3 flex justify-between'></div>
             <Separator className='my-3 bg-black' />

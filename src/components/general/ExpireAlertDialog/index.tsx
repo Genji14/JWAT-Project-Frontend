@@ -30,7 +30,7 @@ const ExpireAlertDialog = () => {
 
     return (
         <AlertDialog open={isExpired}>
-            <AlertDialogContent>
+            <AlertDialogContent className='max-w-lg'>
                 <AlertDialogHeader>
                     <AlertDialogTitle>Token expired</AlertDialogTitle>
                     <AlertDialogDescription>
