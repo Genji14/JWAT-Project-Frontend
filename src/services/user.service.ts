@@ -25,7 +25,11 @@ class UserService {
     }
 
     updateProfile = (form: FormData) => {
-        return API_INSTANCE.patch(USER_ENDPOINTS.UPDATE_PROFILE, form)
+        return API_INSTANCE.patch(USER_ENDPOINTS.UPDATE_PROFILE, form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
 
     changePassword = (form: IChangePasswordForm) => {

@@ -3,14 +3,14 @@ import { DialogDescription, DialogHeader } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 import { useEffect } from 'react'
 import AddBlogForm from './AddBlogForm'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 const AddBlogDialog = () => {
     const defaultAddingMode = useStore((state) => state.defaultAddingMode)
-    const isAddingMode = useStore((state) => state.isAddingMode)
 
     useEffect(() => {
         defaultAddingMode()
-    }, [])
+    }, []);
 
     return (
         <>
@@ -21,7 +21,9 @@ const AddBlogDialog = () => {
                 </DialogDescription>
             </DialogHeader>
             <Separator />
-            <AddBlogForm />
+            <ScrollArea className="max-h-[75vh] pr-4">
+                <AddBlogForm />
+            </ScrollArea>
         </>
     )
 }
