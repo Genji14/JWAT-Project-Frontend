@@ -10,7 +10,11 @@ class KnowledgeService {
     }
 
     createKnowledge = (form: FormData) => {
-        return API_INSTANCE.post(KNOWLEDGE_ENDPOINTS.CREATE_KNOWLEDGE, form);
+        return API_INSTANCE.post(KNOWLEDGE_ENDPOINTS.CREATE_KNOWLEDGE, form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 }
 
