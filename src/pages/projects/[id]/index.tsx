@@ -1,9 +1,10 @@
 import ProjectDetailLayout from "@/components/layouts/ProjectDetail";
 import ProjectContainer from "@/components/pages/Projects/ProjectDetail/ProjectContainer";
-import API_INSTANCE from "@/lib/api";
-import { PROJECT_ENDPOINTS } from "@/lib/constants/EndPoints";
+import { setContext } from "@/lib/api";
 import { ProjectDetailProvider } from "@/lib/contexts/ProjectDetailProject";
+import { projectService } from "@/services/project.service";
 import { IProject } from "@/types/interfaces/Project";
+import { GetServerSideProps } from "next";
 import Head from "next/head";
 
 const ProjectDetailPage = ({ project }: { project: IProject }) => {
@@ -23,21 +24,11 @@ const ProjectDetailPage = ({ project }: { project: IProject }) => {
     )
 }
 
-export const getServerSideProps = async ({ req, params }: any) => {
-    try {
-        const { id } = params as { id: number };
-        const response = await API_INSTANCE.get(PROJECT_ENDPOINTS.FIND_ONE(id));
-        return { props: { project: response.data } };
-    } catch (error) {
-        console.error(error);
-        req.headers.cookies = "";
-        return {
-            redirect: {
-                destination: '/sign-in',
-                permanent: false,
-            },
-        };
-    }
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    setContext(context);
+    const { id } = context.query;
+    const res = await projectService.findOne(Number(id));
+    return { props: { project: res.data } };
 };
 
 export default ProjectDetailPage;
