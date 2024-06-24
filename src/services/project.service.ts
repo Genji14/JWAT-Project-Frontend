@@ -60,6 +60,10 @@ class ProjectService {
         return API_INSTANCE.post(PROJECT_ENDPOINTS.ADD_DOCUMENT_GROUP, form)
     }
 
+    removeDocument = (id: number) => {
+        return API_INSTANCE.delete(PROJECT_ENDPOINTS.REMOVE_DOCUMENT(id))
+    }
+
     getRootDocument = (
         projectId: number
     ): Promise<AxiosResponse<IProjectRootDocument>> => {
