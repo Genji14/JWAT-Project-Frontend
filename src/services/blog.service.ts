@@ -1,8 +1,7 @@
+import API_INSTANCE from '@/lib/api'
 import { BLOG_ENDPOINTS } from '@/lib/constants/EndPoints'
-import API_INSTANCE from '@/lib/api';
 
 class BlogService {
-
     getBlogList = (page: number) => {
         return API_INSTANCE.get(BLOG_ENDPOINTS.GET_BLOG_LIST, {
             params: {
