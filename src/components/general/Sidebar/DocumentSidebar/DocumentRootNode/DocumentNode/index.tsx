@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import UngroupActionDialog from './UngroupActionDialog'
-import { Can, useAbility } from '@/components/providers/AbilityProvider'
+import RemoveDocumentDialog from '../../DocumentHandleBar/EditDocuments/RemoveDocumentDialog'
 
 const DocumentNode = ({
     node,
@@ -29,7 +29,6 @@ const DocumentNode = ({
     isInDialog: boolean
 }) => {
     const [expanded, setExpanded] = useState(isRoot || false)
-    const ability = useAbility()
 
     return (
         <div className='flex flex-col gap-1'>
@@ -124,7 +123,9 @@ const DocumentNode = ({
                     ))}
                     <div className='flex flex-col'>
                         {node.documents?.map((doc) => {
-                            const fileUrl = `http://localhost:3001/api/project/document/file/${doc.url}`
+                            const fileUrl = isInDialog
+                                ? undefined
+                                : `http://localhost:3001/api/project/document/file/${doc.url}`
                             return (
                                 <a
                                     key={doc.url}
@@ -139,6 +140,9 @@ const DocumentNode = ({
                                     <span className='w-3/4 flex-auto truncate text-xs'>
                                         {doc.name}
                                     </span>
+                                    {isInDialog && (
+                                        <RemoveDocumentDialog document={doc} />
+                                    )}
                                 </a>
                             )
                         })}

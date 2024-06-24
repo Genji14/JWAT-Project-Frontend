@@ -47,6 +47,10 @@ class ProjectService {
         )
     }
 
+    removeDocument = (id: number) => {
+        return API_INSTANCE.delete(PROJECT_ENDPOINTS.REMOVE_DOCUMENT(id))
+    }
+
     addDocumentGroup = (form: ICreateDocumentGroupForm) => {
         return API_INSTANCE.post(PROJECT_ENDPOINTS.ADD_DOCUMENT_GROUP, form)
     }

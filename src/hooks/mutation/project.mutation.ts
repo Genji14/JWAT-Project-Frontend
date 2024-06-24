@@ -76,11 +76,8 @@ export const useRemoveDocument = () => {
     const queryClient = useQueryClient()
 
     const { mutateAsync, isPending } = useMutation({
-        mutationFn: async (form: FormData) => {
-            await projectService.removeDocument(
-                Number(query.id as string),
-                form
-            )
+        mutationFn: async (id: number) => {
+            await projectService.removeDocument(id)
         },
         onSuccess: () => {
             toast.success('Removes document successfully !!')
@@ -94,8 +91,8 @@ export const useRemoveDocument = () => {
     })
 
     return {
-        mutateAddDocument: mutateAsync,
-        isPendingAddDocument: isPending,
+        mutateRemoveDocument: mutateAsync,
+        isPendingRemoveDocument: isPending,
     }
 }
 
