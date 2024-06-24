@@ -1,13 +1,18 @@
 import { BLOG_ENDPOINTS } from '@/lib/constants/EndPoints'
-import { AppService } from './app.service'
+import API_INSTANCE from '@/lib/api';
 
-class BlogService extends AppService {
-    constructor() {
-        super()
+class BlogService {
+
+    getBlogList = () => {
+        return API_INSTANCE.get(BLOG_ENDPOINTS.GET_BLOG_LIST, {
+            params: {
+                limit: 8
+            }
+        });
     }
 
     createBlog = (form: FormData) => {
-        return this.post(BLOG_ENDPOINTS.CREATE_BLOG, form)
+        return API_INSTANCE.post(BLOG_ENDPOINTS.CREATE_BLOG, form)
     }
 }
 

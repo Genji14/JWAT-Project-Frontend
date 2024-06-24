@@ -27,7 +27,7 @@ const HandleBar = () => {
             <SearchInput />
             <Can I="create" a="Project" ability={ability}>
                 <Dialog>
-                    <DialogTrigger>
+                    <DialogTrigger asChild>
                         <Button className='gap-2'>
                             <PackagePlus className='h-5 w-5' />
                             <span>New Project</span>

@@ -30,6 +30,7 @@ export const PROJECT_ENDPOINTS = {
 
 export const BLOG_ENDPOINTS = {
     CREATE_BLOG: `blog/create`,
+    GET_BLOG_LIST: `blog/all`
 }
 
 export const KNOWLEDGE_ENDPOINTS = {
