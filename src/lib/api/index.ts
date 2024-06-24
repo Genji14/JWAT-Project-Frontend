@@ -132,7 +132,7 @@ const refreshToken = async (error: AxiosError & { response: { config: { __isRetr
                         processQueue(err, null);
                         if (!isServer()) {
                             removeUserAuth();
-                            router.push('/sign-in');
+                            Cookies.set("expired", (true).toString());
                         } else if (context && !context.res.headersSent) {
                             context.res.setHeader('Set-Cookie', [
                                 `accessToken=; Max-Age=0; SameSite=Lax; Path=/`,
@@ -151,8 +151,7 @@ const refreshToken = async (error: AxiosError & { response: { config: { __isRetr
                 processQueue(new Error('Refresh token not found'), null);
                 if (!isServer()) {
                     removeUserAuth();
-                    Cookies.set("expired", (true).toString())
-                    router.push('/sign-in');
+                    Cookies.set("expired", (true).toString());
                 } else if (context && !context.res.headersSent) {
                     context.res.setHeader('Set-Cookie', [
                         `accessToken=; Max-Age=0; SameSite=Lax; Path=/`,

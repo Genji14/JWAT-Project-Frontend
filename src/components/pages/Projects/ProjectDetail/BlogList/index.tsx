@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { useGetBlogList } from '@/hooks/query/blog.query'
 import React, { useEffect } from 'react'
 import BlogItem from './BlogItem'
+import { IBlog } from '@/types/interfaces/Blog'
 
 const BlogList = () => {
     const { isFetching, isFetchingNextPage, data, hasNextPage, fetchNextPage } =
@@ -15,14 +16,13 @@ const BlogList = () => {
     return (
         <>
             {data?.pages.map((page, i) => (
-                <React.Fragment key={i}>
-                    {page.items?.map((blog: any) => (
-                        // <p key={blog.id}>{blog.title}</p>
-                        <StyledCard key={blog.id} className='mb-10'>
+                <div key={i} className="space-y-4">
+                    {page.items?.map((blog: IBlog) => (
+                        <StyledCard key={blog.id}>
                             <BlogItem />
                         </StyledCard>
                     ))}
-                </React.Fragment>
+                </div>
             ))}
             <div>
                 <Button
@@ -32,8 +32,8 @@ const BlogList = () => {
                     {isFetchingNextPage
                         ? 'Loading more...'
                         : hasNextPage
-                          ? 'Load More'
-                          : 'Nothing more to load'}
+                            ? 'Load More'
+                            : 'Nothing more to load'}
                 </Button>
             </div>
             <div>

@@ -1,9 +1,10 @@
 import ProjectDetailLayout from '@/components/layouts/ProjectDetail'
 import { AspectRatio } from '@/components/ui/aspect-ratio'
-import { API_INSTANCE, authorizeSSR } from '@/lib/constants/ApiInstance'
-import { PROJECT_ENDPOINTS } from '@/lib/constants/EndPoints'
+import { setContext } from '@/lib/api'
 import { ProjectDetailProvider } from '@/lib/contexts/ProjectDetailProject'
+import { projectService } from '@/services/project.service'
 import { IProject } from '@/types/interfaces/Project'
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -39,16 +40,12 @@ const AboutProjectPage = ({ project }: { project: IProject }) => {
 }
 
 
-export async function getServerSideProps({ req, params }: any) {
-    try {
-        const { id } = params;
-        authorizeSSR(req);
-        const res = await API_INSTANCE.get(PROJECT_ENDPOINTS.FIND_ONE(id));
-        return { props: { project: res.data } };
-    } catch (error) {
-        console.error(error);
-    }
-    return { props: { project: null } };
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    setContext(context);
+    const { id } = context.query;
+    const res = await projectService.findOne(Number(id));
+    return { props: { project: res.data } };
+};
 
-}
+
 export default AboutProjectPage;

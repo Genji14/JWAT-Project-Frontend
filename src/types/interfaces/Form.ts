@@ -58,7 +58,6 @@ export interface ICreateUserRequest extends ICreateUserForm {
     password: string
 }
 
-
 // Invite User 
 
 export interface IAddUserToProjectForm {

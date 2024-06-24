@@ -8,11 +8,12 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { IBlogForm } from '@/types/interfaces/Form'
 import { FilePlus2, X } from 'lucide-react'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 
 const MediaInput = ({
@@ -20,123 +21,102 @@ const MediaInput = ({
 }: {
     form: UseFormReturn<IBlogForm, any, undefined>
 }) => {
-    const [media, setMedia] = useState<string>('')
-    const [isDragging, setIsDragging] = useState<boolean>(false)
 
-    useEffect(() => {
-        const notFoundMedia = () => {
-            if (!form.getValues('media')) {
-                setMedia('')
-            }
-        }
-        notFoundMedia()
-    }, [form.getValues('media')])
+    const [isDragging, setIsDragging] = useState<boolean>(false);
+    const media = form.watch('media');
 
-    const handleChangeMedia = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
-            const file = event.target.files[0]
-            if (
-                file &&
-                (file.type === 'image/jpeg' || file.type === 'image/png')
-            ) {
-                form.setValue('media', file)
-                setMedia(URL.createObjectURL(file))
-            }
+            const newFiles = Array.from(event.target.files);
+            const updatedFiles = [...form.getValues('media'), ...newFiles];
+            form.setValue('media', updatedFiles);
         }
-    }
+    };
 
     const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-        event.preventDefault()
-        if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
-            const file = event.dataTransfer.items[0].getAsFile()
-            if (
-                file &&
-                (file.type === 'image/jpeg' || file.type === 'image/png')
-            ) {
-                form.setValue('media', file)
-                setMedia(URL.createObjectURL(file))
-            }
+        event.preventDefault();
+        if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+            const newFiles = Array.from(event.dataTransfer.files);
+            const updatedFiles = [...form.getValues('media'), ...newFiles];
+            form.setValue('media', updatedFiles);
+            setIsDragging(false);
         }
-        setIsDragging(false)
-    }
+    };
 
-    const handleRemoveMedia = () => {
-        setMedia('')
-        form.setValue('media', undefined)
-    }
+    const handleRemoveFile = (index: number) => {
+        const updatedFiles = form.getValues('media').filter((_, i) => i !== index);
+        form.setValue('media', updatedFiles);
+    };
+
 
     return (
+
         <FormField
             control={form.control}
             name='media'
             render={() => (
                 <FormItem className='space-y-2'>
-                    <FormLabel>Attach Media</FormLabel>
+                    <FormLabel>Attached media</FormLabel>
                     <div
                         onDragOver={(event) => {
-                            event.preventDefault()
-                            setIsDragging(true)
+                            event.preventDefault();
+                            setIsDragging(true);
                         }}
                         onDragLeave={() => setIsDragging(false)}
-                        onDrop={(evt) => handleDrop(evt)}
+                        onDrop={handleDrop}
                         className={cn(
                             'relative rounded border-2 border-dashed border-muted-foreground/50 p-3 text-sm font-medium text-muted-foreground/50 hover:border-primary hover:bg-accent hover:text-primary hover:shadow-lg',
-                            isDragging &&
-                                'cursor-copy border-primary bg-accent text-primary shadow-lg',
-                            !media && 'cursor-pointer'
+                            isDragging && 'cursor-copy border-primary bg-accent text-primary shadow-lg',
+                            'cursor-pointer'
                         )}
                     >
-                        {media && (
-                            <>
-                                <Button
-                                    type='button'
-                                    variant={'destructive'}
-                                    className='absolute right-1.5 top-1.5 p-1'
-                                    onClick={handleRemoveMedia}
-                                >
-                                    <X className='h-3 w-3' />
-                                </Button>
-                                <div className='h-full w-full'>
-                                    <Image
-                                        width={3000}
-                                        height={3000}
-                                        src={media}
-                                        alt='Media'
-                                        className='aspect-[25/9] object-cover'
-                                    />
-                                </div>
-                            </>
-                        )}
-                        {!media && (
-                            <Label
-                                htmlFor='project-logo-input'
-                                className='flex cursor-pointer items-center justify-center gap-1'
-                            >
-                                <FilePlus2 className='h-5 w-5' />
-                                <span className='flex items-center gap-1'>
-                                    Attach{' '}
-                                    <span className='hidden lg:block'>
-                                        {' '}
-                                        or drag{' '}
-                                    </span>{' '}
-                                    the file
-                                </span>
-                                <FormControl>
-                                    <Input
-                                        id='project-logo-input'
-                                        type='file'
-                                        className='hidden'
-                                        onChange={handleChangeMedia}
-                                        multiple
-                                    />
-                                </FormControl>
-                            </Label>
-                        )}
+                        <Label
+                            htmlFor='document-input'
+                            className='flex items-center justify-center gap-1 cursor-pointer'
+                        >
+                            <FilePlus2 className='h-5 w-5' />
+                            <span className='flex items-center gap-1'>
+                                Attach{' '}
+                                <span className='hidden lg:block'> or drag </span> the file(s)
+                            </span>
+                            <FormControl>
+                                <Input
+                                    id='document-input'
+                                    type='file'
+                                    multiple
+                                    accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.txt"
+                                    className='hidden'
+                                    onChange={handleChangePhoto}
+                                />
+                            </FormControl>
+                        </Label>
                     </div>
+                    {media.length > 0 &&
+                        <div className="h-32">
+                            <ScrollArea className="h-full">
+                                <div className='space-y-2 pb-2'>
+                                    {media.map((file, index) => (
+                                        <div key={index} className='flex items-center gap-2'>
+                                            <span className='flex-auto truncate text-muted-foreground text-sm'>{file.name}</span>
+                                            <Button
+                                                type='button'
+                                                variant={'destructive'}
+                                                className='px-2 py-1 '
+                                                onClick={() => handleRemoveFile(index)}
+                                            >
+                                                <X className='h-3 w-3' />
+                                            </Button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </ScrollArea>
+                        </div>
+
+                    }
                     <FormMessage />
-                </FormItem>
-            )}
+                </FormItem>)}
         />
+
     )
 }
 
