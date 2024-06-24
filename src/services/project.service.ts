@@ -9,7 +9,11 @@ import API_INSTANCE from '@/lib/api'
 class ProjectService {
 
     createProject = (form: FormData) => {
-        return API_INSTANCE.post(PROJECT_ENDPOINTS.CREATE_PROJECT, form)
+        return API_INSTANCE.post(PROJECT_ENDPOINTS.CREATE_PROJECT, form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
 
     findOne = (id: number) => {
@@ -39,7 +43,11 @@ class ProjectService {
     }
 
     addDocument = (projectId: number, form: FormData) => {
-        return API_INSTANCE.post(PROJECT_ENDPOINTS.ADD_DOCUMENT(projectId), form);
+        return API_INSTANCE.post(PROJECT_ENDPOINTS.ADD_DOCUMENT(projectId), form, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 
     addDocumentGroup = (form: ICreateDocumentGroupForm) => {
