@@ -84,14 +84,14 @@ const MediaInput = ({
                                     id='document-input'
                                     type='file'
                                     multiple
-                                    accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx,.pdf,.txt"
+                                    accept=".mp4,.png,.jpeg"
                                     className='hidden'
                                     onChange={handleChangePhoto}
                                 />
                             </FormControl>
                         </Label>
                     </div>
-                    {media.length > 0 &&
+                    {!!media.length &&
                         <div className="h-32">
                             <ScrollArea className="h-full">
                                 <div className='space-y-2 pb-2'>

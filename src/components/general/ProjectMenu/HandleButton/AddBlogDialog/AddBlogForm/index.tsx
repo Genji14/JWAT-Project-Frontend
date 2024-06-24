@@ -32,7 +32,7 @@ const AddBlogForm = () => {
             title: '',
             content: '',
             hashTags: [],
-            media: undefined,
+            media: [],
         },
     })
 

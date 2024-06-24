@@ -224,5 +224,7 @@ export const blogSchema = z.object({
             message: 'Blog content at least 20 characters',
         }),
     hashTags: z.array(z.string()).optional(),
-    media: fileSchema.optional(),
+    media: z.array(
+        z.instanceof(File)
+    ),
 });
