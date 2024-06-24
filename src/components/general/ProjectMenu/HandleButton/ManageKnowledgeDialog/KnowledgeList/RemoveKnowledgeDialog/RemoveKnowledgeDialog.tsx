@@ -9,49 +9,49 @@ import {
     AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { useRemoveDocument } from '@/hooks/mutation/project.mutation'
-import { Document } from '@/types'
-import { Loader2, Trash2 } from 'lucide-react'
+import { useRemoveKnowledge } from '@/hooks/mutation/knowledge.mutation'
+import { IKnowledge } from '@/types/interfaces/Knowledge'
+import { Loader2 } from 'lucide-react'
 import React from 'react'
 
-const RemoveDocumentDialog = ({ document }: { document: Document }) => {
-    const { mutateRemoveDocument, isPendingRemoveDocument } =
-        useRemoveDocument()
+const RemoveKnowledgeDialog = ({ knowledge }: { knowledge: IKnowledge }) => {
+    const { mutateRemoveKnowledge, isPendingRemoveKnowledge } =
+        useRemoveKnowledge()
     async function onSubmit(id: number) {
         try {
-            await mutateRemoveDocument(id)
+            await mutateRemoveKnowledge(id)
         } catch (error) {
             console.error(error)
         }
     }
     return (
         <AlertDialog>
-            <AlertDialogTrigger>
-                <Trash2 className='h-4 w-4' />
+            <AlertDialogTrigger asChild>
+                <Button variant={'destructive'}>Delete</Button>
             </AlertDialogTrigger>
             <AlertDialogContent styledCard className='w-fit'>
                 <AlertDialogHeader>
                     <AlertDialogTitle className='flex w-full flex-col'>
-                        <span>Are you absolutely sure to delete document</span>
-                        <span className=''>{document.name}?</span>
+                        <span>Are you absolutely sure to delete knowledge</span>
+                        <span className=''>{knowledge.name}?</span>
                     </AlertDialogTitle>
                     <AlertDialogDescription className='text-wrap'>
                         This action cannot be undone. This will permanently
-                        delete your document
+                        delete your TechStack
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel disabled={isPendingRemoveDocument}>
+                    <AlertDialogCancel disabled={isPendingRemoveKnowledge}>
                         Cancel
                     </AlertDialogCancel>
                     <Button
                         variant='destructive'
-                        onClick={() => onSubmit(document.id)}
-                        disabled={isPendingRemoveDocument}
+                        onClick={() => onSubmit(knowledge.id)}
+                        disabled={isPendingRemoveKnowledge}
                     >
                         {' '}
                         Confirm{' '}
-                        {isPendingRemoveDocument && (
+                        {isPendingRemoveKnowledge && (
                             <Loader2 className='ml-3 h-4 w-4 animate-spin' />
                         )}
                     </Button>
@@ -61,4 +61,4 @@ const RemoveDocumentDialog = ({ document }: { document: Document }) => {
     )
 }
 
-export default RemoveDocumentDialog
+export default RemoveKnowledgeDialog

@@ -30,10 +30,11 @@ export const PROJECT_ENDPOINTS = {
 
 export const BLOG_ENDPOINTS = {
     CREATE_BLOG: `blog/create`,
-    GET_BLOG_LIST: `blog/all`
+    GET_BLOG_LIST: `blog/all`,
 }
 
 export const KNOWLEDGE_ENDPOINTS = {
     CREATE_KNOWLEDGE: `project/knowledge`,
+    REMOVE_KNOWLEDGE: (id: number) => `project/knowledge/${id}`,
     GET_KNOWLEDGE_BY_PROJECT: (id: number) => `project/knowledge/${id}`,
 }

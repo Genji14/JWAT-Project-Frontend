@@ -1,7 +1,4 @@
-import {
-    KNOWLEDGE_QUERY_KEY,
-    PROJECT_QUERY_KEY,
-} from '@/lib/constants/QueryKey'
+import { PROJECT_QUERY_KEY } from '@/lib/constants/QueryKey'
 import { projectService } from '@/services/project.service'
 import { TUngroupDocument } from '@/types'
 import { ICreateDocumentGroupForm } from '@/types/interfaces/Form'
