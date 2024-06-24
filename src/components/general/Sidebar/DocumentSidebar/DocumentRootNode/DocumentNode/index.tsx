@@ -17,17 +17,18 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import UngroupActionDialog from './UngroupActionDialog'
-import { Can, useAbility } from '@/components/providers/AbilityProvider'
+import RemoveDocumentDialog from '../../DocumentHandleBar/EditDocuments/RemoveDocumentDialog'
 
 const DocumentNode = ({
     node,
     isRoot,
+    isInDialog,
 }: {
     node: IChildrenDocumentGroup
     isRoot?: boolean
+    isInDialog: boolean
 }) => {
-    const [expanded, setExpanded] = useState(isRoot || false);
-    const ability = useAbility();
+    const [expanded, setExpanded] = useState(isRoot || false)
 
     return (
         <div className='flex flex-col gap-1'>
@@ -44,7 +45,7 @@ const DocumentNode = ({
                         )}
                         <h3 className='text-sm font-semibold'>{node.name}</h3>
                     </div>
-                    <Can I={"manage"} a={"Document"} ability={ability}>
+                    {isInDialog && (
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button
@@ -106,19 +107,25 @@ const DocumentNode = ({
                                 )}
                             </PopoverContent>
                         </Popover>
-                    </Can>
+                    )}
                 </div>
             )}
             {expanded && (
                 <div className={cn(!isRoot && 'ml-2.5 border-l')}>
                     {node.children?.map((child) => (
                         <div className={cn(!isRoot && 'ml-1')} key={child.id}>
-                            <DocumentNode key={child.id} node={child} />
+                            <DocumentNode
+                                key={child.id}
+                                node={child}
+                                isInDialog={isInDialog}
+                            />
                         </div>
                     ))}
                     <div className='flex flex-col'>
                         {node.documents?.map((doc) => {
-                            const fileUrl = `http://localhost:3001/api/project/document/file/${doc.url}`
+                            const fileUrl = isInDialog
+                                ? undefined
+                                : `http://localhost:3001/api/project/document/file/${doc.url}`
                             return (
                                 <a
                                     key={doc.url}
@@ -133,6 +140,9 @@ const DocumentNode = ({
                                     <span className='w-3/4 flex-auto truncate text-xs'>
                                         {doc.name}
                                     </span>
+                                    {isInDialog && (
+                                        <RemoveDocumentDialog document={doc} />
+                                    )}
                                 </a>
                             )
                         })}
