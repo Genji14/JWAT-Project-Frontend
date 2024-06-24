@@ -1,19 +1,16 @@
 import { KNOWLEDGE_ENDPOINTS } from "@/lib/constants/EndPoints";
-import { AppService } from "./app.service";
 import { AxiosResponse } from "axios";
 import { IKnowledge } from "@/types/interfaces/Knowledge";
+import API_INSTANCE from "@/lib/api";
 
-class KnowledgeService extends AppService {
-    constructor() {
-        super();
-    }
+class KnowledgeService {
 
     getKnowledgeByProjectId = (projectId: number): Promise<AxiosResponse<IKnowledge[]>> => {
-        return this.get(KNOWLEDGE_ENDPOINTS.GET_KNOWLEDGE_BY_PROJECT(projectId));
+        return API_INSTANCE.get(KNOWLEDGE_ENDPOINTS.GET_KNOWLEDGE_BY_PROJECT(projectId));
     }
 
     createKnowledge = (form: FormData) => {
-        return this.post(KNOWLEDGE_ENDPOINTS.CREATE_KNOWLEDGE, form);
+        return API_INSTANCE.post(KNOWLEDGE_ENDPOINTS.CREATE_KNOWLEDGE, form);
     }
 }
 

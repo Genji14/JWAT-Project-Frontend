@@ -1,21 +1,18 @@
 import { ISignInForm } from '@/types/interfaces/Form'
 import { AUTH_ENDPOINTS } from '@/lib/constants/EndPoints'
-import { AppService } from './app.service'
+import API_INSTANCE from '@/lib/api'
 
-class AuthService extends AppService {
-    constructor() {
-        super()
-    }
+class AuthService {
 
     signIn = (userLogin: ISignInForm) => {
-        return this.post(AUTH_ENDPOINTS.SIGN_IN, userLogin)
+        return API_INSTANCE.post(AUTH_ENDPOINTS.SIGN_IN, userLogin)
     }
 
     refreshToken = (refreshToken: string) => {
-        return this.post(AUTH_ENDPOINTS.REFRESH_TOKEN, {
+        return API_INSTANCE.post(AUTH_ENDPOINTS.REFRESH_TOKEN, {
             refreshToken,
         })
     }
 }
 
-export const authService = new AuthService()
+export const authService = new AuthService();

@@ -1,6 +1,6 @@
 import ProjectDetailLayout from "@/components/layouts/ProjectDetail";
 import ProjectContainer from "@/components/pages/Projects/ProjectDetail/ProjectContainer";
-import { API_INSTANCE, authorizeSSR } from "@/lib/constants/ApiInstance";
+import API_INSTANCE from "@/lib/api";
 import { PROJECT_ENDPOINTS } from "@/lib/constants/EndPoints";
 import { ProjectDetailProvider } from "@/lib/contexts/ProjectDetailProject";
 import { IProject } from "@/types/interfaces/Project";
@@ -26,7 +26,6 @@ const ProjectDetailPage = ({ project }: { project: IProject }) => {
 export const getServerSideProps = async ({ req, params }: any) => {
     try {
         const { id } = params as { id: number };
-        authorizeSSR(req);
         const response = await API_INSTANCE.get(PROJECT_ENDPOINTS.FIND_ONE(id));
         return { props: { project: response.data } };
     } catch (error) {
