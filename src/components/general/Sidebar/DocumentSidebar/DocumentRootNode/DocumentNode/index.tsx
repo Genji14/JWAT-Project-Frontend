@@ -22,12 +22,14 @@ import { Can, useAbility } from '@/components/providers/AbilityProvider'
 const DocumentNode = ({
     node,
     isRoot,
+    isInDialog,
 }: {
     node: IChildrenDocumentGroup
     isRoot?: boolean
+    isInDialog: boolean
 }) => {
-    const [expanded, setExpanded] = useState(isRoot || false);
-    const ability = useAbility();
+    const [expanded, setExpanded] = useState(isRoot || false)
+    const ability = useAbility()
 
     return (
         <div className='flex flex-col gap-1'>
@@ -44,7 +46,7 @@ const DocumentNode = ({
                         )}
                         <h3 className='text-sm font-semibold'>{node.name}</h3>
                     </div>
-                    <Can I={"manage"} a={"Document"} ability={ability}>
+                    {isInDialog && (
                         <Popover>
                             <PopoverTrigger asChild>
                                 <Button
@@ -106,14 +108,18 @@ const DocumentNode = ({
                                 )}
                             </PopoverContent>
                         </Popover>
-                    </Can>
+                    )}
                 </div>
             )}
             {expanded && (
                 <div className={cn(!isRoot && 'ml-2.5 border-l')}>
                     {node.children?.map((child) => (
                         <div className={cn(!isRoot && 'ml-1')} key={child.id}>
-                            <DocumentNode key={child.id} node={child} />
+                            <DocumentNode
+                                key={child.id}
+                                node={child}
+                                isInDialog={isInDialog}
+                            />
                         </div>
                     ))}
                     <div className='flex flex-col'>

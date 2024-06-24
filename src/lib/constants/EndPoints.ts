@@ -20,11 +20,12 @@ export const PROJECT_ENDPOINTS = {
     SEARCH_USER_NOT_IN_PROJECT: `project/findUserNotIn`,
     INVITE_USER: `project/addUsers`,
     ADD_DOCUMENT: (id: number) => `project/document/${id}`,
+    REMOVE_DOCUMENT: (id: number) => `project/document/${id}`,
     ADD_DOCUMENT_GROUP: `project/document/grouping`,
     GET_ROOT_DOCUMENT_GROUP: (id: number) => `project/document/group/${id}`,
     UNGROUP_DOCUMENT: `project/document/grouping`,
     DELETE_DOCUMENT_GROUP: (id: number) => `project/document/group/${id}`,
-    SEARCH_DOCUMENT: (id: number) => `project/document/${id}/search`
+    SEARCH_DOCUMENT: (id: number) => `project/document/${id}/search`,
 }
 
 export const BLOG_ENDPOINTS = {
