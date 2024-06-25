@@ -6,17 +6,11 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from '@/components/ui/tooltip'
-import {
-    AlbumIcon,
-    FolderPen,
-    PencilLine,
-    UserRoundCogIcon,
-} from 'lucide-react'
+import { AlbumIcon, FolderPen, PencilLine } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-
-import { useRouter as useNavigate } from 'next/navigation'
 import { Can, useAbility } from '@/components/providers/AbilityProvider'
+import { useGetProjectDetail } from '@/hooks/query/project.query'
 
 const ManageKnowledgeDialog = dynamic(() => import('./ManageKnowledgeDialog'), {
     ssr: false,
@@ -30,9 +24,14 @@ const AddBlogDialog = dynamic(() => import('./AddBlogDialog'), {
     ssr: false,
 })
 
-const HandleButton = () => {
+const EditProjectDialog = dynamic(() => import('./EditProjectDialog'))
 
-    const ability = useAbility();
+const HandleButton = () => {
+    const ability = useAbility()
+    const { query } = useRouter()
+    const { projectDetailData, isFetchingProjectDetail } = useGetProjectDetail(
+        Number(query.id)
+    )
 
     return (
         <div className='flex items-center gap-1'>
@@ -61,7 +60,7 @@ const HandleButton = () => {
                     <AddBlogDialog />
                 </DialogContent>
             </Dialog>
-            <Can I="invite" a="User" ability={ability}>
+            <Can I='invite' a='User' ability={ability}>
                 <ManageUserDialog />
             </Can>
 
@@ -87,6 +86,9 @@ const HandleButton = () => {
                         e.preventDefault()
                     }}
                 >
+                    {!isFetchingProjectDetail && (
+                        <EditProjectDialog project={projectDetailData} />
+                    )}
                 </DialogContent>
             </Dialog>
             <Dialog>
