@@ -1,9 +1,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import {
+    useGetCommentOfBlog,
+    useGetHashTagOfBlog,
+    useGetMediaOfBlog,
+    useGetStarOfBlog,
+} from '@/hooks/query/blog.query'
 import { IBlog } from '@/types/interfaces/Blog'
 import { format } from 'date-fns'
 import { Ellipsis } from 'lucide-react'
+import { useEffect } from 'react'
 import Comment from './Comment'
 import Stars from './Star'
 import React, { useState } from 'react'
@@ -14,6 +21,21 @@ const BlogItem = ({ blog }: { blog: IBlog }) => {
     // const {} = useGetBlogDetail();
     const [isExpandedText, setIsExpandedText] = useState<boolean>(false);
 
+    const { starData, isFetchingStar } = useGetStarOfBlog(blog.id)
+    const { hashTagData, isFetchingHashTag } = useGetHashTagOfBlog(blog.id)
+    const { commentData, isFetchingComment } = useGetCommentOfBlog(blog.id)
+    const { mediaData, isFetchingMedia } = useGetMediaOfBlog(blog.id)
+
+    useEffect(() => {
+        console.log('star')
+        console.log(starData)
+        console.log('comment')
+        console.log(commentData)
+        console.log('hashTagData')
+        console.log(hashTagData)
+        console.log('mediaData')
+        console.log(mediaData)
+    })
     return (
         <div className='p-3'>
             <div className='flex items-center justify-between'>
