@@ -15,8 +15,9 @@ import Comment from './Comment'
 import Stars from './Star'
 import React, { useState } from 'react'
 import { cn } from '@/lib/utils'
+import StyledCard from '@/components/shared/StyledCard'
 
-const BlogItem = ({ blog }: { blog: IBlog }) => {
+const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any }) => {
 
     // const {} = useGetBlogDetail();
     const [isExpandedText, setIsExpandedText] = useState<boolean>(false);
@@ -37,8 +38,8 @@ const BlogItem = ({ blog }: { blog: IBlog }) => {
         console.log(mediaData)
     })
     return (
-        <div className='p-3'>
-            <div className='flex items-center justify-between'>
+        <StyledCard className='p-4'>
+            <div ref={innerRef} className='flex items-center justify-between'>
                 <div className='flex items-center'>
                     <Avatar>
                         <AvatarImage
@@ -84,7 +85,7 @@ const BlogItem = ({ blog }: { blog: IBlog }) => {
                 <Stars />
                 <Comment />
             </div>
-        </div>
+        </StyledCard>
     )
 }
 
