@@ -24,7 +24,9 @@ const AddBlogDialog = dynamic(() => import('./AddBlogDialog'), {
     ssr: false,
 })
 
-const EditProjectDialog = dynamic(() => import('./EditProjectDialog'))
+const EditProjectDialog = dynamic(() => import('./EditProjectDialog'), {
+    ssr: false,
+})
 
 const HandleButton = () => {
     const ability = useAbility()
@@ -62,60 +64,37 @@ const HandleButton = () => {
             </Dialog>
             <Can I='invite' a='User' ability={ability}>
                 <ManageUserDialog />
-            </Can>
-
-            <Dialog>
-                <TooltipProvider>
-                    <Tooltip>
-                        <DialogTrigger asChild>
-                            <TooltipTrigger asChild>
-                                <Button variant={'ghost'} className='p-2'>
-                                    <FolderPen className='h-5 w-5' />
-                                </Button>
-                            </TooltipTrigger>
-                        </DialogTrigger>
-                        <TooltipContent side='bottom'>
-                            <p>Edit Project</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-                <DialogContent
-                    styledCard={true}
-                    className='p-6 lg:w-2/5'
-                    onInteractOutside={(e) => {
-                        e.preventDefault()
-                    }}
-                >
-                    {!isFetchingProjectDetail && (
-                        <EditProjectDialog project={projectDetailData} />
-                    )}
-                </DialogContent>
-            </Dialog>
-            <Dialog>
-                <TooltipProvider>
-                    <Tooltip>
-                        <DialogTrigger asChild>
-                            <TooltipTrigger asChild>
-                                <Button variant={'ghost'} className='p-2'>
-                                    <AlbumIcon className='h-5 w-5' />
-                                </Button>
-                            </TooltipTrigger>
-                        </DialogTrigger>
-                        <TooltipContent side='bottom' align='end'>
-                            <p>Manage Knowledge</p>
-                        </TooltipContent>
-                    </Tooltip>
-                </TooltipProvider>
-                <DialogContent
-                    styledCard={true}
-                    className='p-6 lg:w-2/5'
-                    onInteractOutside={(e) => {
-                        e.preventDefault()
-                    }}
-                >
+                <Dialog>
+                    <TooltipProvider>
+                        <Tooltip>
+                            <DialogTrigger asChild>
+                                <TooltipTrigger asChild>
+                                    <Button variant={'ghost'} className='p-2'>
+                                        <FolderPen className='h-5 w-5' />
+                                    </Button>
+                                </TooltipTrigger>
+                            </DialogTrigger>
+                            <TooltipContent side='bottom'>
+                                <p>Edit Project</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
+                    <DialogContent
+                        styledCard={true}
+                        className='p-6 lg:w-2/5'
+                        onInteractOutside={(e) => {
+                            e.preventDefault()
+                        }}
+                    >
+                        {!isFetchingProjectDetail && (
+                            <EditProjectDialog project={projectDetailData} />
+                        )}
+                    </DialogContent>
+                </Dialog>
+                <Dialog>
                     <ManageKnowledgeDialog />
-                </DialogContent>
-            </Dialog>
+                </Dialog>
+            </Can>
         </div>
     )
 }
