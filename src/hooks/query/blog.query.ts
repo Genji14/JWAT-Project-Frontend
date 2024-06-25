@@ -1,6 +1,6 @@
-import { BLOG_QUERY_KEY } from '@/lib/constants/QueryKey'
-import { blogService } from '@/services/blog.service'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { BLOG_QUERY_KEY } from "@/lib/constants/QueryKey"
+import { blogService } from "@/services/blog.service"
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 
 export const useGetBlogList = () => {
     const {
@@ -24,15 +24,20 @@ export const useGetBlogList = () => {
         refetchOnWindowFocus: false,
     })
 
-    return {
-        status,
-        data,
-        isFetching,
-        isFetchingNextPage,
-        hasNextPage,
-        fetchNextPage,
-    }
+    return { status, data, isFetching, isFetchingNextPage, hasNextPage, fetchNextPage }
 }
+
+// export const getGetBlogDetail = (blogId: number, userId: number) => {
+//     const { data, isFetching } = useQuery({
+//         queryKey: [BLOG_QUERY_KEY.GET_BLOG_ITEM, blogId],
+//         queryFn: async () => {
+//             const [{data: comments}, {}] = await Promise.all([
+//                 userService.findOne(userId),
+//                 blogService.
+//             ])
+//         }
+//     })
+// }
 
 export const useGetStarOfBlog = (id: number) => {
     const { data, isFetching } = useQuery({

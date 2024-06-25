@@ -13,8 +13,14 @@ import { Ellipsis } from 'lucide-react'
 import { useEffect } from 'react'
 import Comment from './Comment'
 import Stars from './Star'
+import React, { useState } from 'react'
+import { cn } from '@/lib/utils'
 
 const BlogItem = ({ blog }: { blog: IBlog }) => {
+
+    // const {} = useGetBlogDetail();
+    const [isExpandedText, setIsExpandedText] = useState<boolean>(false);
+
     const { starData, isFetchingStar } = useGetStarOfBlog(blog.id)
     const { hashTagData, isFetchingHashTag } = useGetHashTagOfBlog(blog.id)
     const { commentData, isFetchingComment } = useGetCommentOfBlog(blog.id)
@@ -43,10 +49,10 @@ const BlogItem = ({ blog }: { blog: IBlog }) => {
                     </Avatar>
                     <div className='flex pl-2'>
                         <div>
-                            <h3 className='font-bold'>Trần Ngọc Phước Hoàng</h3>
-                            <p className='text-sm text-muted-foreground'>
+                            <h3 className="font-semibold">Trần Ngọc Phước Hoàng</h3>
+                            <h5 className='text-sm text-muted-foreground'>
                                 {format(blog.createdAt, 'dd/MM/yyyy HH:MM')}
-                            </p>
+                            </h5>
                         </div>
                     </div>
                 </div>
@@ -54,16 +60,26 @@ const BlogItem = ({ blog }: { blog: IBlog }) => {
                     <Ellipsis />
                 </Button>
             </div>
-            <div>
-                <p className='my-3 line-clamp-3 text-xl font-bold'>
+            <div className='space-y-4 flex flex-col'>
+                <p className='mt-4 line-clamp-3 text-xl font-semibold leading-0'>
                     {blog.title}
                 </p>
-                <p className='text-justify text-muted-foreground'>
-                    {blog.content}
+                <p className={cn("text-sm text-muted-foreground text-justify px-4", !isExpandedText && "line-clamp-5")}>
+                    {blog.content && blog.content.split('\n').map((line, index) => (
+                        <React.Fragment key={index}>
+                            {line}
+                            <br />
+                        </React.Fragment>
+                    ))}
                 </p>
+                {
+                    (blog.content.split('\n').length > 4 || blog.content.length > 256)
+                    && <span className='font-semibold cursor-pointer text-sm text-primary/80 hover:text-primary' onClick={() => setIsExpandedText((prev) => !prev)}>
+                        {!isExpandedText ? "Show more" : "Show less"}
+                    </span>
+                }
             </div>
-            <div className='mt-3 flex justify-between'></div>
-            <Separator className='my-3 bg-black' />
+            <Separator className='my-3 bg-black dark:bg-border' />
             <div className='flex justify-end gap-5'>
                 <Stars />
                 <Comment />
