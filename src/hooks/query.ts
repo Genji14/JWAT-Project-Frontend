@@ -6,14 +6,16 @@ import { userService } from '@/services/user.service'
 import { useQuery } from '@tanstack/react-query'
 
 export const useCurrentUserInfo = () => {
-    const setRole = useStore((state) => state.setRole)
+    const setRole = useStore((state) => state.setRole);
+    const setCurrentUserId = useStore((state) => state.setCurrentUserId);
 
     const { data, isFetching } = useQuery({
         queryKey: [USER_QUERY_KEY.CURRENT],
         queryFn: async () => {
             const res = await userService.current()
-            setRole(res.data.role)
-            return res.data
+            setRole(res.data.role);
+            setCurrentUserId(res.data.id);
+            return res.data;
         },
         staleTime: 0,
         refetchOnWindowFocus: false,

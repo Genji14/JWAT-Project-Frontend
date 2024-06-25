@@ -28,7 +28,9 @@ const EditProfileDialog = dynamic(() => import('./EditProfileDialog'), {
 
 const ProfileMenu = () => {
     const router = useRouter()
-    const removeRole = useStore((state) => state.removeRole)
+    const removeRole = useStore((state) => state.removeRole);
+    const removeCurrentUserId = useStore((state) => state.removeCurrentUserId);
+
     const { currentUserInfoData, isFetchingCurrentUserInfo } =
         useCurrentUserInfo()
 
@@ -37,6 +39,7 @@ const ProfileMenu = () => {
         Cookies.remove('refreshToken')
         router.push('/sign-in')
         removeRole()
+        removeCurrentUserId()
     }
 
     if (isFetchingCurrentUserInfo) {

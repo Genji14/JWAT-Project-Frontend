@@ -1,8 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { GetServerSidePropsContext } from 'next'
-import router from 'next/router'
 import { getUserAuth, removeUserAuth, setUserAuth } from '../utils'
-import { DOMAIN_NAME, SERVICE_NAME } from '../constants/SettingSystem'
+import { DOMAIN_NAME } from '../constants/SettingSystem'
 import { AUTH_ENDPOINTS } from '../constants/EndPoints'
 import Cookies from 'js-cookie'
 
