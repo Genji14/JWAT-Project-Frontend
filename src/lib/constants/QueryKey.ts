@@ -18,5 +18,6 @@ export const KNOWLEDGE_QUERY_KEY = {
 }
 
 export const BLOG_QUERY_KEY = {
-    GET_BLOG_LIST: "getBlogList"
+    GET_BLOG_LIST: "getBlogList",
+    GET_BLOG_ITEM: "getBlogItem"
 }

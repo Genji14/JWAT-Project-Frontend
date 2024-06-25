@@ -16,6 +16,7 @@ const KnowledgeList = ({ data, isFetching }: { data: IKnowledge[] | undefined, i
                         })}
                     </> : <KnowledgeLoading />
                 }
+                {!data?.length && <h3 className='text-center text-muted-foreground text-sm'>No knowledge avaiable</h3>}
             </div>
 
         </ScrollArea>
