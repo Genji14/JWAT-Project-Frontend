@@ -8,7 +8,7 @@ export const useCreateBlog = () => {
             await blogService.createBlog(form)
         },
         onSuccess: () => {
-            toast.success('Add Blog successfully!!')
+            toast.success('Add Blog successfully!!');
         },
     })
 
