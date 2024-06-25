@@ -4,6 +4,7 @@ import React, { useEffect } from 'react'
 import BlogItem from './BlogItem'
 import { useInView } from "react-intersection-observer"
 import { Skeleton } from '@/components/ui/skeleton'
+import { useCurrentUserInfo } from '@/hooks/query'
 
 const BlogList = () => {
     const { data, isFetching, hasNextPage, fetchNextPage } = useGetBlogList();

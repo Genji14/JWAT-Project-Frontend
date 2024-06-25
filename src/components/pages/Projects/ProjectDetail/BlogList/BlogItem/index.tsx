@@ -11,15 +11,20 @@ import { cn, convertAlt } from '@/lib/utils'
 import StyledCard from '@/components/shared/StyledCard'
 import { Skeleton } from '@/components/ui/skeleton'
 import StarButton from './StarButton'
+import BlogMedia from '../BlogMedia'
+import { useStore } from '@/components/providers/StoreProvider'
 
 const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any }) => {
 
+    const currentUserId = useStore(state => state.currentUserId);
     const { blogItemData, isFetchingBlogItem } = useGetBlogDetail(blog.id, blog.user.id);
     const [isExpandedText, setIsExpandedText] = useState<boolean>(false);
 
     useEffect(() => {
-        console.log(blogItemData)
-    }, [blogItemData])
+        console.log(currentUserId)
+    }, [currentUserId])
+
+    const isStarred = blogItemData?.stars.some(star => star.user.id === currentUserId) ?? false;
 
     return (
         <StyledCard className='p-4'>
@@ -71,9 +76,27 @@ const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any }) => {
                         {!isExpandedText ? "Show more" : "Show less"}
                     </span>
                 }
+
+                {!!blogItemData?.media.length && <BlogMedia media={blogItemData?.media} />}
+                {!!blogItemData?.hashTags.length && <div className='flex flex-wrap gap-1.5'>
+                    {
+                        blogItemData?.hashTags.map((tag) => {
+                            return <React.Fragment key={tag.id}>
+                                <div className='border border-primary h-fit px-2 bg-primary/30 rounded'>
+                                    <span className='text-xs font-semibold text-primary'>{tag.hashTagName}</span>
+                                </div>
+                            </React.Fragment>
+                        })
+                    }
+                </div>
+                }
             </div>
             <Separator className='my-3 bg-black dark:bg-border' />
             <div className='flex justify-between gap-5'>
+                <div className='flex gap-2 items-center'>
+                    <StarButton blogId={blog.id} initialState={isStarred} />
+                    <Comment />
+                </div>
                 <div className='flex gap-1.5 items-center'>
                     {
                         !!blogItemData?.stars.length &&
@@ -87,10 +110,6 @@ const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any }) => {
                         !!blogItemData?.comments.length &&
                         <span className='text-xs text-muted-foreground'>{blogItemData?.comments.length} Commments</span>
                     }
-                </div>
-                <div className='flex gap-2 items-center'>
-                    <StarButton />
-                    <Comment />
                 </div>
             </div>
         </StyledCard>

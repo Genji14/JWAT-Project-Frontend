@@ -43,3 +43,7 @@ export const KNOWLEDGE_ENDPOINTS = {
     REMOVE_KNOWLEDGE: (id: number) => `project/knowledge/${id}`,
     GET_KNOWLEDGE_BY_PROJECT: (id: number) => `project/knowledge/${id}`,
 }
+
+export const STAR_ENDPOINTS = {
+    CREATE_OR_REMOVE: (id: number) => `star-detail/${id}`
+}

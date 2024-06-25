@@ -5,7 +5,6 @@ import { ISearchUserNotInProjectParams } from '@/types/interfaces/Param'
 import {
     IAddUserToProjectForm,
     ICreateDocumentGroupForm,
-    IProjectForm,
 } from '@/types/interfaces/Form'
 import { TUngroupDocument } from '@/types'
 import API_INSTANCE from '@/lib/api'
