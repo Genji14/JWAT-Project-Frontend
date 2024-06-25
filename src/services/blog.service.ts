@@ -5,17 +5,33 @@ class BlogService {
     getBlogList = (page: number) => {
         return API_INSTANCE.get(BLOG_ENDPOINTS.GET_BLOG_LIST, {
             params: {
-                page: page
-            }
-        });
+                page: page,
+            },
+        })
     }
 
     createBlog = (form: FormData) => {
         return API_INSTANCE.post(BLOG_ENDPOINTS.CREATE_BLOG, form, {
             headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+    }
+
+    getStarOfBlog = (id: number) => {
+        return API_INSTANCE.get(BLOG_ENDPOINTS.GET_STAR_BLOG(id))
+    }
+
+    getCommentOfBlog = (id: number) => {
+        return API_INSTANCE.get(BLOG_ENDPOINTS.GET_COMMENT_BLOG(id))
+    }
+
+    getHashTagOfBlog = (id: number) => {
+        return API_INSTANCE.get(BLOG_ENDPOINTS.GET_HASHTAG_BLOG(id))
+    }
+
+    getMediaOfBlog = (id: number) => {
+        return API_INSTANCE.get(BLOG_ENDPOINTS.GET_MEDIA_BLOG(id))
     }
 }
 
