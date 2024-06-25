@@ -1,15 +1,18 @@
 export type TUtilityState = {
-    isAddingMode: boolean,
+    isAddingMode: boolean
+    isManageMode: boolean
     tokens: {
-        accessToken: string,
+        accessToken: string
         refreshToken: string
     }
 }
 
 export type TUtilityAction = {
-    setToken: (token: "accessToken" | "refreshToken", value: string) => void
-    defaultAddingMode: () => void,
-    toggleAdding: () => void,
+    setToken: (token: 'accessToken' | 'refreshToken', value: string) => void
+    defaultAddingMode: () => void
+    toggleAdding: () => void
+    defaultManageMode: () => void
+    toggleManage: () => void
 }
 
 export type TUtilitySlice = TUtilityState & TUtilityAction

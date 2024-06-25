@@ -11,7 +11,6 @@ NEXT_PUBLIC_API_SERVER = http://localhost:3001/api/
 yarn
 #or
 npm install
-
 ```
 
 ## Now let's start the application
