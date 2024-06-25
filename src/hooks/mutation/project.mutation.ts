@@ -157,7 +157,7 @@ export const useUpdateProject = () => {
     const { query } = useRouter()
 
     const { mutateAsync, isPending } = useMutation({
-        mutationFn: async (form: IProjectForm) => {
+        mutationFn: async (form: FormData) => {
             await projectService.updateProject(Number(query.id), form)
         },
         onSuccess: () => {

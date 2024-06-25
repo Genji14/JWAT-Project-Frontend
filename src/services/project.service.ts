@@ -91,10 +91,15 @@ class ProjectService {
         )
     }
 
-    updateProject = (projectId: number, form: IProjectForm) => {
+    updateProject = (projectId: number, form: FormData) => {
         return API_INSTANCE.patch(
             PROJECT_ENDPOINTS.PATCH_PROJECT(projectId),
-            form
+            form,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
         )
     }
 }
