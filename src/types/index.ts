@@ -33,6 +33,26 @@ export type Document = {
     deleteAt: Date | null
 }
 
+export type HashTag = {
+    id: number,
+    hashTagName: string
+}
+
+export type Comment = {
+    id: number,
+    content: string,
+    user: {
+        id: number
+    }
+}
+
+export type Star = {
+    id: number,
+    user: {
+        id: number
+    }
+}
+
 export type TUngroupDocument = {
     project: number,
     documents: number[]

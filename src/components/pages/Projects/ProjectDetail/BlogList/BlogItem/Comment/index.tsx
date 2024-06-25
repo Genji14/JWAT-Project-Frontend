@@ -1,15 +1,15 @@
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { MessageCircle } from 'lucide-react'
+import { MessagesSquare } from 'lucide-react'
 import CommentDialog from './CommentDialog'
 const Comment = () => {
     return (
         <div>
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button variant={'ghost'}>
-                        <MessageCircle className='mr-1' />{' '}
-                        <span>30 Comment</span>
+                    <Button variant={'ghost'} className="items-center gap-1.5">
+                        <MessagesSquare className='w-4 h-4' />
+                        <span>Comment</span>
                     </Button>
                 </DialogTrigger>
                 <DialogContent
