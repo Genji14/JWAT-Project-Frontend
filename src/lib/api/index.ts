@@ -25,12 +25,9 @@ const API_INSTANCE = axios.create({
 
 API_INSTANCE.interceptors.request.use((config) => {
     if (isServer() && context) {
-        const cookies = context.req.headers.cookie || ''
-        const accessToken = getCookieValue(cookies, 'accessToken')
-        config.baseURL = SERVICE_NAME
-        console.log(accessToken)
-        if (accessToken)
-            config.headers['Authorization'] = `Bearer ${accessToken}`
+        const cookies = context.req.headers.cookie || '';
+        const accessToken = getCookieValue(cookies, 'accessToken');
+        if (accessToken) config.headers['Authorization'] = `Bearer ${accessToken}`;
     } else if (!isServer()) {
         const userAuth = getUserAuth()
         if (userAuth) {

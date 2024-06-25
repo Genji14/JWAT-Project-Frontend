@@ -29,7 +29,7 @@ const DocumentForm = () => {
             await mutateAddDocument(formData);
             documentForm.reset();
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
 
     }
