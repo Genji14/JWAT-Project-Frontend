@@ -1,5 +1,7 @@
 import { BLOG_QUERY_KEY } from "@/lib/constants/QueryKey"
 import { blogService } from "@/services/blog.service"
+import { userService } from "@/services/user.service"
+import { IBlogItemDetail } from "@/types/interfaces/Blog"
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 
 export const useGetBlogList = () => {
@@ -27,86 +29,34 @@ export const useGetBlogList = () => {
     return { status, data, isFetching, isFetchingNextPage, hasNextPage, fetchNextPage }
 }
 
-// export const getGetBlogDetail = (blogId: number, userId: number) => {
-//     const { data, isFetching } = useQuery({
-//         queryKey: [BLOG_QUERY_KEY.GET_BLOG_ITEM, blogId],
-//         queryFn: async () => {
-//             const [{data: comments}, {}] = await Promise.all([
-//                 userService.findOne(userId),
-//                 blogService.
-//             ])
-//         }
-//     })
-// }
-
-export const useGetStarOfBlog = (id: number) => {
+export const useGetBlogDetail = (blogId: number, userId: number) => {
     const { data, isFetching } = useQuery({
-        queryKey: [BLOG_QUERY_KEY.GET_STAR_BLOG, id],
-        queryFn: async ({ queryKey }) => {
-            const [_key, id] = queryKey
-            const res = await blogService.getStarOfBlog(Number(id))
-            return res.data
+        queryKey: [BLOG_QUERY_KEY.GET_BLOG_ITEM, blogId],
+        queryFn: async () => {
+            const [{ data: userInfoData }, { data: commentListData }, { data: starListData }, { data: hashTagListData }, { data: mediaListData }] = await Promise.all([
+                userService.findOne(userId),
+                blogService.getCommentOfBlog(blogId),
+                blogService.getStarOfBlog(blogId),
+                blogService.getHashTagOfBlog(blogId),
+                blogService.getMediaOfBlog(blogId)
+
+            ])
+            const result: IBlogItemDetail = {
+                userInfo: userInfoData,
+                comments: commentListData,
+                stars: starListData,
+                hashTags: hashTagListData,
+                media: mediaListData,
+            }
+
+            return result;
         },
+        enabled: !!blogId && !!userId,
         refetchOnWindowFocus: false,
-        enabled: !!id,
-    })
+    });
 
     return {
-        starData: data,
-        isFetchingStar: isFetching,
-    }
-}
-
-export const useGetCommentOfBlog = (id: number) => {
-    const { data, isFetching } = useQuery({
-        queryKey: [BLOG_QUERY_KEY.GET_COMMENT_BLOG, id],
-        queryFn: async ({ queryKey }) => {
-            const [_key, id] = queryKey
-            const res = await blogService.getCommentOfBlog(Number(id))
-            return res.data
-        },
-        refetchOnWindowFocus: false,
-        enabled: !!id,
-    })
-
-    return {
-        commentData: data,
-        isFetchingComment: isFetching,
-    }
-}
-
-export const useGetHashTagOfBlog = (id: number) => {
-    const { data, isFetching } = useQuery({
-        queryKey: [BLOG_QUERY_KEY.GET_HASHTAG_BLOG, id],
-        queryFn: async ({ queryKey }) => {
-            const [_key, id] = queryKey
-            const res = await blogService.getHashTagOfBlog(Number(id))
-            return res.data
-        },
-        refetchOnWindowFocus: false,
-        enabled: !!id,
-    })
-
-    return {
-        hashTagData: data,
-        isFetchingHashTag: isFetching,
-    }
-}
-
-export const useGetMediaOfBlog = (id: number) => {
-    const { data, isFetching } = useQuery({
-        queryKey: [BLOG_QUERY_KEY.GET_MEDIA_BLOG, id],
-        queryFn: async ({ queryKey }) => {
-            const [_key, id] = queryKey
-            const res = await blogService.getMediaOfBlog(Number(id))
-            return res.data
-        },
-        refetchOnWindowFocus: false,
-        enabled: !!id,
-    })
-
-    return {
-        mediaData: data,
-        isFetchingMedia: isFetching,
+        blogItemData: data,
+        isFetchingBlogItem: isFetching
     }
 }

@@ -1,40 +1,52 @@
-import StyledCard from '@/components/shared/StyledCard'
-import { Button } from '@/components/ui/button'
 import { useGetBlogList } from '@/hooks/query/blog.query'
 import { IBlog } from '@/types/interfaces/Blog'
-import React from 'react'
+import React, { useEffect } from 'react'
 import BlogItem from './BlogItem'
+import { useInView } from "react-intersection-observer"
+import { Skeleton } from '@/components/ui/skeleton'
 
 const BlogList = () => {
-    const { isFetching, isFetchingNextPage, data, hasNextPage, fetchNextPage } =
-        useGetBlogList()
+    const { data, isFetching, hasNextPage, fetchNextPage } = useGetBlogList();
+    const { ref, inView } = useInView();
+
+    useEffect(() => {
+        if (inView && hasNextPage) {
+            fetchNextPage();
+        }
+    }, [inView, hasNextPage])
+
     return (
-        <>
+        <div className='space-y-6'>
             {data?.pages.map((page, i) => (
                 <div className='space-y-6' key={i}>
-                    {page.items?.map((blog: IBlog) => (
-                        <StyledCard key={blog.id}>
-                            <BlogItem blog={blog} />
-                        </StyledCard>
+                    {page.items?.map((blog: IBlog, index: number) => (
+                        <React.Fragment key={blog.id}>
+                            {
+                                page.items.length === index + 1
+                                    ? <BlogItem blog={blog} innerRef={ref} />
+                                    : <BlogItem blog={blog} />
+                            }
+                        </React.Fragment>
                     ))}
                 </div>
             ))}
             <div>
-                <Button
-                    onClick={() => fetchNextPage()}
-                    disabled={!hasNextPage || isFetchingNextPage}
-                >
-                    {isFetchingNextPage
-                        ? 'Loading more...'
-                        : hasNextPage
-                            ? 'Load More'
-                            : 'Nothing more to load'}
-                </Button>
+                {
+                    isFetching && <div className='flex flex-col gap-6'>
+                        <Skeleton className='w-full aspect-[25/9] bg-accent dark:bg-border' />
+                        <Skeleton className='w-full aspect-[25/9] bg-accent dark:bg-border' />
+                        <Skeleton className='w-full aspect-[25/9] bg-accent dark:bg-border' />
+                    </div>
+                }
+                {
+                    !hasNextPage && <div className='text-center w-full my-2'>
+                        <span className='dark:text-muted-foreground text-sm '>
+                            You have read all blogs
+                        </span>
+                    </div>
+                }
             </div>
-            <div>
-                {isFetching && !isFetchingNextPage ? 'Fetching...' : null}
-            </div>
-        </>
+        </div>
     )
 }
 

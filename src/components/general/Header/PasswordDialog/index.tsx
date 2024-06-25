@@ -13,6 +13,7 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { PasswordInput } from '@/components/ui/password-input'
 import { Separator } from '@/components/ui/separator'
 import { useChangePassword } from '@/hooks/mutation'
 import { passwordSchema } from '@/lib/schemas'
@@ -78,8 +79,7 @@ const PasswordDialog: FC = () => {
                             <FormItem className='space-y-1'>
                                 <FormLabel>Old password</FormLabel>
                                 <FormControl>
-                                    <Input
-                                        type='password'
+                                    <PasswordInput
                                         disabled={isPendingChangePassword}
                                         placeholder='*******'
                                         {...field}
@@ -98,8 +98,7 @@ const PasswordDialog: FC = () => {
                                     <FormItem className='space-y-1'>
                                         <FormLabel>New password</FormLabel>
                                         <FormControl>
-                                            <Input
-                                                type='password'
+                                            <PasswordInput
                                                 disabled={
                                                     isPendingChangePassword
                                                 }
@@ -118,8 +117,7 @@ const PasswordDialog: FC = () => {
                                     <FormItem className='space-y-1'>
                                         <FormLabel>Confirm password</FormLabel>
                                         <FormControl>
-                                            <Input
-                                                type='password'
+                                            <PasswordInput
                                                 disabled={
                                                     isPendingChangePassword
                                                 }

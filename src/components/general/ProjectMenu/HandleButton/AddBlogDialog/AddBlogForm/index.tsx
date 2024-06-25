@@ -15,12 +15,12 @@ import { blogSchema } from '@/lib/schemas'
 import { IBlogForm } from '@/types/interfaces/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, X } from 'lucide-react'
-import { useState } from 'react'
+import React, { SetStateAction, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Tag, TagInput } from 'emblor';
 import MediaInput from './MediaInput'
 
-const AddBlogForm = () => {
+const AddBlogForm = ({ setOpen }: { setOpen: React.Dispatch<SetStateAction<boolean>> }) => {
     const { mutateCreateBlog, isPendingCreateBlog } = useCreateBlog();
 
     const [tags, setTags] = useState<Tag[]>([]);
@@ -49,14 +49,17 @@ const AddBlogForm = () => {
             const formData = new FormData()
             formData.append('title', values.title)
             formData.append('content', values.content)
-            if (values.media instanceof File) {
-                formData.append('files', values.media)
-            }
+            values.media.forEach((file) => {
+                formData.append('files', file);
+            });
             values.hashTags?.map((ht) => {
                 formData.append('hashTags', ht)
-            })
-            await mutateCreateBlog(formData)
-            createBlogForm.reset()
+            });
+            await mutateCreateBlog(formData);
+            createBlogForm.reset();
+            setTags([]);
+            setActiveTagIndex(null);
+            setOpen(false);
         } catch (error) {
             console.error(error)
         }
@@ -105,26 +108,29 @@ const AddBlogForm = () => {
                     name="hashTags"
                     control={createBlogForm.control}
                     render={({ field }) => (
-                        <TagInput
-                            {...field}
-                            placeholder="Enter blog tags..."
-                            maxTags={5}
-                            showCount
-                            tags={
-                                tags.map((tag) => {
-                                    return {
-                                        id: tag.id, text: removeVietnameseAccents(tag.text).toLowerCase().replace(/\s+/g, '')
-                                    }
-                                })
-                            }
-                            setTags={(newTags) => {
-                                setTags(newTags);
-                                const newHashTags: string[] = tags.map((tag: Tag) => tag.text);
-                                field.onChange(newHashTags);
-                            }}
-                            activeTagIndex={activeTagIndex}
-                            setActiveTagIndex={setActiveTagIndex}
-                        />
+                        <div className='mt-2 space-y-2'>
+                            <FormLabel>Tags</FormLabel>
+                            <TagInput
+                                {...field}
+                                placeholder="Enter blog tags..."
+                                maxTags={5}
+                                showCount
+                                tags={
+                                    tags.map((tag) => {
+                                        return {
+                                            id: tag.id, text: removeVietnameseAccents(tag.text).toLowerCase().replace(/\s+/g, '')
+                                        }
+                                    })
+                                }
+                                setTags={(newTags) => {
+                                    setTags(newTags);
+                                    const newHashTags: string[] = tags.map((tag: Tag) => tag.text);
+                                    field.onChange(newHashTags);
+                                }}
+                                activeTagIndex={activeTagIndex}
+                                setActiveTagIndex={setActiveTagIndex}
+                            />
+                        </div>
                     )}
                 />
                 <MediaInput form={createBlogForm} />
