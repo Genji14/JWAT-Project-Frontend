@@ -1,7 +1,7 @@
 import { PROJECT_QUERY_KEY } from '@/lib/constants/QueryKey'
 import { projectService } from '@/services/project.service'
 import { TUngroupDocument } from '@/types'
-import { ICreateDocumentGroupForm, IProjectForm } from '@/types/interfaces/Form'
+import { ICreateDocumentGroupForm } from '@/types/interfaces/Form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { toast } from 'sonner'
@@ -24,6 +24,7 @@ export const useCreateProject = () => {
 
 export const useInviteUser = () => {
     const { query } = useRouter()
+    const queryClient = useQueryClient()
 
     const { mutateAsync, isPending } = useMutation({
         mutationFn: async (userId: number) => {
@@ -31,9 +32,13 @@ export const useInviteUser = () => {
                 project: Number(query.id as string),
                 users: [userId],
             })
+            return userId
         },
         onSuccess: () => {
             toast.success('Invite user successfully !!')
+            queryClient.invalidateQueries({
+                queryKey: [PROJECT_QUERY_KEY.SEARCH_USER_NOT_IN_PROJECT],
+            })
         },
     })
 
@@ -171,5 +176,30 @@ export const useUpdateProject = () => {
     return {
         mutateUpdateProject: mutateAsync,
         isPendingUpdateProject: isPending,
+    }
+}
+
+export const useRemoveUser = () => {
+    const { query } = useRouter()
+    const queryClient = useQueryClient()
+
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: async (userId: number) => {
+            await projectService.removeUser({
+                project: Number(query.id as string),
+                users: [userId],
+            })
+        },
+        onSuccess: () => {
+            toast.success('Remove user successfully !!')
+            queryClient.invalidateQueries({
+                queryKey: [PROJECT_QUERY_KEY.SEARCH_USERS_IN_PROJECT],
+            })
+        },
+    })
+
+    return {
+        mutateRemoveUser: mutateAsync,
+        isPendingRemoveUser: isPending,
     }
 }

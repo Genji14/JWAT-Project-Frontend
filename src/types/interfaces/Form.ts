@@ -58,19 +58,26 @@ export interface ICreateUserRequest extends ICreateUserForm {
     password: string
 }
 
-// Invite User 
+// Invite User
 
 export interface IAddUserToProjectForm {
-    project: number,
+    project: number
     users: number[]
 }
+
+export interface IRemoveUsersFromProjectForm {
+    project: number
+    users: number[]
+}
+
+// Document
 
 export interface ICreateDocumentForm {
     files: File[]
 }
 
 export interface ICreateDocumentGroupForm {
-    parent: number,
-    name: string,
+    parent: number
+    name: string
     documents: number[]
 }
