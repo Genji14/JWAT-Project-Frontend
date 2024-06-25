@@ -17,10 +17,12 @@ import { UseFormReturn } from 'react-hook-form'
 
 const PhotoInput = ({
     form,
+    url = '',
 }: {
     form: UseFormReturn<IProjectForm, any, undefined>
+    url?: string
 }) => {
-    const [photo, setPhoto] = useState<string>('')
+    const [photo, setPhoto] = useState<string>(url)
     const [isDragging, setIsDragging] = useState<boolean>(false)
 
     const handleChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,7 +75,7 @@ const PhotoInput = ({
                         className={cn(
                             'relative rounded border-2 border-dashed border-muted-foreground/50 p-3 text-sm font-medium text-muted-foreground/50 hover:border-primary hover:bg-accent hover:text-primary hover:shadow-lg',
                             isDragging &&
-                            'cursor-copy border-primary bg-accent text-primary shadow-lg',
+                                'cursor-copy border-primary bg-accent text-primary shadow-lg',
                             !photo && 'cursor-pointer'
                         )}
                     >
@@ -101,7 +103,7 @@ const PhotoInput = ({
                         {!photo && (
                             <Label
                                 htmlFor='project-logo-input'
-                                className='flex items-center justify-center gap-1 cursor-pointer'
+                                className='flex cursor-pointer items-center justify-center gap-1'
                             >
                                 <FilePlus2 className='h-5 w-5' />
                                 <span className='flex items-center gap-1'>

@@ -1,7 +1,7 @@
 import { PROJECT_QUERY_KEY } from '@/lib/constants/QueryKey'
 import { projectService } from '@/services/project.service'
 import { TUngroupDocument } from '@/types'
-import { ICreateDocumentGroupForm } from '@/types/interfaces/Form'
+import { ICreateDocumentGroupForm, IProjectForm } from '@/types/interfaces/Form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { toast } from 'sonner'
@@ -149,5 +149,27 @@ export const useUngroupDocumentGroup = () => {
     return {
         mutateUnGroup: mutateAsync,
         isPendingUnGroup: isPending,
+    }
+}
+
+export const useUpdateProject = () => {
+    const queryClient = useQueryClient()
+    const { query } = useRouter()
+
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: async (form: FormData) => {
+            await projectService.updateProject(Number(query.id), form)
+        },
+        onSuccess: () => {
+            toast.success('Update project successfully!')
+            queryClient.invalidateQueries({
+                queryKey: [PROJECT_QUERY_KEY.FIND_ONE],
+            })
+        },
+    })
+
+    return {
+        mutateUpdateProject: mutateAsync,
+        isPendingUpdateProject: isPending,
     }
 }

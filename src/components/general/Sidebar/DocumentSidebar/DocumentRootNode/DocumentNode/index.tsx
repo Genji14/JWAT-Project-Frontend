@@ -18,6 +18,8 @@ import {
 import { useState } from 'react'
 import UngroupActionDialog from './UngroupActionDialog'
 import RemoveDocumentDialog from '../../DocumentHandleBar/EditDocuments/RemoveDocumentDialog'
+import AddDocumentDialog from '../../DocumentHandleBar/AddDocumentDialog'
+import AddDocumentGroupDialog from '../../DocumentHandleBar/AddDocumentGroupDialog'
 
 const DocumentNode = ({
     node,
@@ -61,7 +63,7 @@ const DocumentNode = ({
                                 className='mt-1 w-48 p-1'
                                 onClick={(evt) => evt.stopPropagation()}
                             >
-                                <Dialog>
+                                {/* <Dialog>
                                     <DialogTrigger asChild>
                                         <div className='flex cursor-pointer items-center gap-2 rounded px-3 py-1.5 text-sm font-semibold hover:bg-accent'>
                                             <FilePlus className='h-4 w-4' />
@@ -77,7 +79,7 @@ const DocumentNode = ({
                                             e.preventDefault()
                                         }}
                                     >
-                                        {/* <AddDocumentDialog /> */}
+                                        <AddDocumentDialog />
                                     </DialogContent>
                                 </Dialog>
                                 <Dialog>
@@ -96,9 +98,9 @@ const DocumentNode = ({
                                             e.preventDefault()
                                         }}
                                     >
-                                        {/* <AddDocumentGroupDialog /> */}
+                                        <AddDocumentGroupDialog />
                                     </DialogContent>
-                                </Dialog>
+                                </Dialog> */}
                                 {node.id && (
                                     <UngroupActionDialog
                                         documents={node.documents}

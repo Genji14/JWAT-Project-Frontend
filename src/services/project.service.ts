@@ -5,6 +5,7 @@ import { ISearchUserNotInProjectParams } from '@/types/interfaces/Param'
 import {
     IAddUserToProjectForm,
     ICreateDocumentGroupForm,
+    IProjectForm,
 } from '@/types/interfaces/Form'
 import { TUngroupDocument } from '@/types'
 import API_INSTANCE from '@/lib/api'
@@ -87,6 +88,18 @@ class ProjectService {
     deleteGroup = (groupId: number) => {
         return API_INSTANCE.delete(
             PROJECT_ENDPOINTS.DELETE_DOCUMENT_GROUP(groupId)
+        )
+    }
+
+    updateProject = (projectId: number, form: FormData) => {
+        return API_INSTANCE.patch(
+            PROJECT_ENDPOINTS.PATCH_PROJECT(projectId),
+            form,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            }
         )
     }
 }
