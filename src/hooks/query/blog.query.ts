@@ -60,3 +60,22 @@ export const useGetBlogDetail = (blogId: number, userId: number) => {
         isFetchingBlogItem: isFetching
     }
 }
+
+
+
+export const useGetBlogComments = (blogId: number) => {
+    const { data, isFetching } = useQuery({
+        queryKey: [BLOG_QUERY_KEY.GET_COMMENT_BLOG, blogId],
+        queryFn: async () => {
+            const { data } = await blogService.getCommentOfBlog(blogId);
+            return data;
+        },
+        enabled: !!blogId,
+        refetchOnWindowFocus: false,
+    });
+
+    return {
+        commentsData: data,
+        isFetchingComments: isFetching
+    }
+}

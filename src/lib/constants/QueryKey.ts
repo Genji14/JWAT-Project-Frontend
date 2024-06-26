@@ -1,6 +1,6 @@
 export const USER_QUERY_KEY = {
     CURRENT: 'getCurrentUser',
-    FIND_ONE: 'findOneUser',
+    FIND_ONE: 'findOneUser'
 }
 
 export const PROJECT_QUERY_KEY = {

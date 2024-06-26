@@ -74,3 +74,8 @@ export interface ICreateDocumentGroupForm {
     name: string,
     documents: number[]
 }
+
+export interface ICreateCommentForm {
+    blogId: number,
+    content: string
+}

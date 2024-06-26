@@ -31,6 +31,7 @@ export const PROJECT_ENDPOINTS = {
 
 export const BLOG_ENDPOINTS = {
     CREATE_BLOG: `blog/create`,
+    CREATE_COMMENT: `comment`,
     GET_BLOG_LIST: `blog/all`,
     GET_STAR_BLOG: (id: number) => `blog/get-stars/${id}`,
     GET_COMMENT_BLOG: (id: number) => `blog/get-comments/${id}`,

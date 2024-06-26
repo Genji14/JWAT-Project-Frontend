@@ -12,10 +12,10 @@ export const useCurrentUserInfo = () => {
     const { data, isFetching } = useQuery({
         queryKey: [USER_QUERY_KEY.CURRENT],
         queryFn: async () => {
-            const res = await userService.current()
-            setRole(res.data.role);
-            setCurrentUserId(res.data.id);
-            return res.data;
+            const { data } = await userService.current();
+            setCurrentUserId(data.id);
+            setRole(data.role);
+            return data;
         },
         staleTime: 0,
         refetchOnWindowFocus: false,

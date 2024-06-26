@@ -28,6 +28,8 @@ const SignInPage: NextPageWithLayout = () => {
                     FONT_POPPINS.className
                 )}
             >
+                <div className="absolute inset-0 -z-[9] bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+                <div className="absolute inset-0 -z-10 h-full w-full items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_50%,#2563eb_100%)]"></div>
                 <StyledCard className='w-[30rem] px-6 py-6'>
                     <h2 className='text-2xl font-bold uppercase'>Sign In</h2>
                     <h3 className='text-sm text-muted-foreground'>
