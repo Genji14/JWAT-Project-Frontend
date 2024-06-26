@@ -13,17 +13,23 @@ const AddBlogDialog = dynamic(() => import('./AddBlogDialog'), {
     ssr: false,
 })
 
-const HandleButton = () => {
+const EditProjectDialog = dynamic(() => import('./EditProjectDialog'), {
+    ssr: false,
+})
 
-    const ability = useAbility();
+const HandleButton = () => {
+    const ability = useAbility()
 
     return (
         <div className='flex items-center gap-1'>
             <AddBlogDialog />
-            <Can I="invite" a="User" ability={ability}>
+            <Can I='invite' a='User' ability={ability}>
+                <EditProjectDialog />
+            </Can>
+            <Can I='invite' a='User' ability={ability}>
                 <ManageUserDialog />
             </Can>
-            <Can I="invite" a="User" ability={ability}>
+            <Can I='invite' a='User' ability={ability}>
                 <ManageKnowledgeDialog />
             </Can>
         </div>
