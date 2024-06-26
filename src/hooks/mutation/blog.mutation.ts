@@ -8,12 +8,26 @@ export const useCreateBlog = () => {
             await blogService.createBlog(form)
         },
         onSuccess: () => {
-            toast.success('Add Blog successfully!!');
+            toast.success('Add Blog successfully!!')
         },
     })
 
     return {
         mutateCreateBlog: mutateAsync,
         isPendingCreateBlog: isPending,
+    }
+}
+
+export const useSearchBlog = () => {
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: async (text: string) => {
+            const result = await blogService.searchBlog(text)
+            return result.data
+        },
+    })
+
+    return {
+        mutateSearchBlog: mutateAsync,
+        isPendingSearchBlog: isPending,
     }
 }
