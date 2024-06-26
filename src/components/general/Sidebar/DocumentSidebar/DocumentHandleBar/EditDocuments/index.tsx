@@ -11,7 +11,7 @@ const EditDocumentsDialog = () => {
                     Edit the Document Group hierachy
                 </h3>
                 <DialogDescription>
-                    You can delete documents or ungroup a group of documents.
+                    You can delete, group or ungroup a group of documents.
                 </DialogDescription>
             </DialogHeader>
             <Separator />
