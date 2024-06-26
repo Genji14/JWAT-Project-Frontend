@@ -1,7 +1,6 @@
 import { KNOWLEDGE_QUERY_KEY } from '@/lib/constants/QueryKey'
 import { knowledgeService } from '@/services/knowledge.service'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useRouter } from 'next/router'
 import { toast } from 'sonner'
 
 export const useCreateKnowledge = () => {

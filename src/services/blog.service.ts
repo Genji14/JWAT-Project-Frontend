@@ -41,6 +41,10 @@ class BlogService {
             },
         })
     }
+
+    deleteBlog = (id: number) => {
+        return API_INSTANCE.delete(BLOG_ENDPOINTS.DELETE_BLOG(id))
+    }
 }
 
 export const blogService = new BlogService()

@@ -38,7 +38,8 @@ export const BLOG_ENDPOINTS = {
     GET_COMMENT_BLOG: (id: number) => `blog/get-comments/${id}`,
     GET_HASHTAG_BLOG: (id: number) => `blog/get-hashtags/${id}`,
     GET_MEDIA_BLOG: (id: number) => `blog/get-medias/${id}`,
-    SEARCH_BLOG: `blog/search`
+    SEARCH_BLOG: `blog/search`,
+    DELETE_BLOG: (id: number) => `blog/${id}`,
 }
 
 export const KNOWLEDGE_ENDPOINTS = {
