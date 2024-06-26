@@ -12,6 +12,7 @@ import {
 import { useStore } from "@/components/providers/StoreProvider"
 import HandleButton from "./HandleButton"
 import { useRouter } from "next/router"
+import SearchTool from "./SearchTool"
 
 export function ProjectMenu() {
     const expanded = useStore((state) => state.expanded);
@@ -44,6 +45,7 @@ export function ProjectMenu() {
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
+            <SearchTool/>
             <HandleButton />
         </div >
     )
