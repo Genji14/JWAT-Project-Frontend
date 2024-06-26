@@ -1,14 +1,13 @@
-import React from 'react'
+import Spinner from '@/components/shared/Spinner'
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from '@/components/ui/popover'
-import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { FilePlus, FolderCog, FolderPlusIcon, WrenchIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
-import Spinner from '@/components/shared/Spinner'
 
 const AddDocumentDialog = dynamic(() => import('../AddDocumentDialog'), {
     loading: () => (

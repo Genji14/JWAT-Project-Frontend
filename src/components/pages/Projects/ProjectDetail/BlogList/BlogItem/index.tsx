@@ -1,16 +1,16 @@
 import { useStore } from '@/components/providers/StoreProvider'
 import StyledCard from '@/components/shared/StyledCard'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetBlogDetail } from '@/hooks/query/blog.query'
 import { cn, convertAlt } from '@/lib/utils'
 import { IBlog } from '@/types/interfaces/Blog'
 import { format } from 'date-fns'
-import { Ellipsis, Star } from 'lucide-react'
+import { Star } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import BlogMedia from '../BlogMedia'
+import BlogItemActionButton from './BlogItemActionButton'
 import Comment from './Comment'
 import StarButton from './StarButton'
 
@@ -66,10 +66,7 @@ const BlogItem = ({ blog, innerRef }: { blog: IBlog; innerRef?: any }) => {
                         </div>
                     </div>
                 )}
-
-                <Button variant={'ghost'}>
-                    <Ellipsis />
-                </Button>
+                <BlogItemActionButton id={blog.id} />
             </div>
             <div className='flex flex-col space-y-4'>
                 <p className='leading-0 mt-4 line-clamp-3 text-xl font-semibold'>
