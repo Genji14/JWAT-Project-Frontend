@@ -33,6 +33,14 @@ class BlogService {
     getMediaOfBlog = (id: number) => {
         return API_INSTANCE.get(BLOG_ENDPOINTS.GET_MEDIA_BLOG(id))
     }
+
+    searchBlog = (text: string) => {
+        return API_INSTANCE.get(BLOG_ENDPOINTS.SEARCH_BLOG, {
+            params: {
+                text,
+            },
+        })
+    }
 }
 
 export const blogService = new BlogService()
