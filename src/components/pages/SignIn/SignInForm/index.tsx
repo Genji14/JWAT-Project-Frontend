@@ -84,7 +84,7 @@ const SignInForm: React.FC = () => {
                 />
                 <div className='flex justify-end'>
                     <Button disabled={isPendingSignIn}>
-                        <span>Continue</span>
+                        <span>Sign In</span>
                         {isPendingSignIn && (
                             <Loader2 className='ml-2 h-4 w-4 animate-spin' />
                         )}
