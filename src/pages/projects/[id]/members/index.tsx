@@ -1,5 +1,5 @@
 import ProjectDetailLayout from '@/components/layouts/ProjectDetail'
-import { AspectRatio } from '@/components/ui/aspect-ratio'
+import MembersComtainer from '@/components/pages/Projects/ProjectDetail/MembersContainer'
 import { setContext } from '@/lib/api'
 import { ProjectDetailProvider } from '@/lib/contexts/ProjectDetailProject'
 import { projectService } from '@/services/project.service'
@@ -7,16 +7,14 @@ import { IProject } from '@/types/interfaces/Project'
 import { IUserInfo } from '@/types/interfaces/User'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 
 const MembersPage = ({
     project,
-    // members,
+    members,
 }: {
     project: IProject
-    // members: IUserInfo[]
+    members: IUserInfo[]
 }) => {
     return (
         <>
@@ -25,9 +23,7 @@ const MembersPage = ({
             </Head>
             <ProjectDetailProvider initialData={project}>
                 <ProjectDetailLayout>
-                    <div className='flex flex-col justify-center gap-4'>
-                        <h1>This is Members page</h1>
-                    </div>
+                    <MembersComtainer members={members} />
                 </ProjectDetailLayout>
             </ProjectDetailProvider>
         </>
