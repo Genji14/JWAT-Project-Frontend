@@ -81,7 +81,7 @@ const DocumentNode = ({
                                     >
                                         <AddDocumentDialog />
                                     </DialogContent>
-                                </Dialog>
+                                </Dialog> */}
                                 <Dialog>
                                     <DialogTrigger asChild>
                                         <div className='flex cursor-pointer items-center gap-2 rounded px-3 py-1.5 text-sm font-semibold hover:bg-accent'>
@@ -98,14 +98,13 @@ const DocumentNode = ({
                                             e.preventDefault()
                                         }}
                                     >
-                                        <AddDocumentGroupDialog />
+                                        <AddDocumentGroupDialog
+                                            parent={node.id}
+                                        />
                                     </DialogContent>
-                                </Dialog> */}
+                                </Dialog>
                                 {node.id && (
-                                    <UngroupActionDialog
-                                        documents={node.documents}
-                                        groupId={node.id}
-                                    />
+                                    <UngroupActionDialog group={node} />
                                 )}
                             </PopoverContent>
                         </Popover>

@@ -10,7 +10,7 @@ export const useCreateBlog = () => {
             await blogService.createBlog(form)
         },
         onSuccess: () => {
-            toast.success('Add Blog successfully!!');
+            toast.success('Add Blog successfully!!')
         },
     })
 
@@ -20,6 +20,39 @@ export const useCreateBlog = () => {
     }
 }
 
+export const useSearchBlog = () => {
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: async (text: string) => {
+            const result = await blogService.searchBlog(text)
+            return result.data
+        },
+    })
+
+    return {
+        mutateSearchBlog: mutateAsync,
+        isPendingSearchBlog: isPending,
+    }
+}
+
+export const useDeleteBlog = () => {
+    const queryClient = useQueryClient()
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: async (id: number) => {
+            await blogService.deleteBlog(id)
+        },
+        onSuccess: () => {
+            toast.success('Delete Blog successfully!!')
+            queryClient.invalidateQueries({
+                queryKey: [BLOG_QUERY_KEY.GET_BLOG_LIST],
+            })
+        },
+    })
+
+    return {
+        mutateDeleteBlog: mutateAsync,
+        isPendingDeleteBlog: isPending,
+    }
+}
 
 export const useCreateComment = (blogId: number) => {
     const queryClient = useQueryClient();

@@ -40,6 +40,18 @@ class BlogService {
     createComment = (form: ICreateCommentForm) => {
         return API_INSTANCE.post(BLOG_ENDPOINTS.CREATE_COMMENT, form)
     }
+
+    searchBlog = (text: string) => {
+        return API_INSTANCE.get(BLOG_ENDPOINTS.SEARCH_BLOG, {
+            params: {
+                text,
+            },
+        })
+    }
+
+    deleteBlog = (id: number) => {
+        return API_INSTANCE.delete(BLOG_ENDPOINTS.DELETE_BLOG(id))
+    }
 }
 
 export const blogService = new BlogService()

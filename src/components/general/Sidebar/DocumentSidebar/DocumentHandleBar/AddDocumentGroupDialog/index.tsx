@@ -3,8 +3,7 @@ import { Separator } from '@/components/ui/separator'
 import React from 'react'
 import DocumentGroupForm from './DocumentGroupForm'
 
-const AddDocumentGroupDialog = () => {
-
+const AddDocumentGroupDialog = ({ parent }: { parent?: number }) => {
     return (
         <>
             <DialogHeader className='space-y-0'>
@@ -16,7 +15,7 @@ const AddDocumentGroupDialog = () => {
                 </DialogDescription>
             </DialogHeader>
             <Separator />
-            <DocumentGroupForm />
+            <DocumentGroupForm parent={parent} />
         </>
     )
 }

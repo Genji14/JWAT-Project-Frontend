@@ -19,7 +19,9 @@ export const PROJECT_ENDPOINTS = {
     FIND_ONE: (id: number) => `project/${id}`,
     SEARCH: `project/search`,
     SEARCH_USER_NOT_IN_PROJECT: `project/findUserNotIn`,
+    SEARCH_USERS_IN_PROJECT: (id: number) => `project/findUserIn/${id}`,
     INVITE_USER: `project/addUsers`,
+    REMOVE_USER: `project/removeUsers`,
     ADD_DOCUMENT: (id: number) => `project/document/${id}`,
     REMOVE_DOCUMENT: (id: number) => `project/document/${id}`,
     ADD_DOCUMENT_GROUP: `project/document/grouping`,
@@ -37,6 +39,8 @@ export const BLOG_ENDPOINTS = {
     GET_COMMENT_BLOG: (id: number) => `blog/get-comments/${id}`,
     GET_HASHTAG_BLOG: (id: number) => `blog/get-hashtags/${id}`,
     GET_MEDIA_BLOG: (id: number) => `blog/get-medias/${id}`,
+    SEARCH_BLOG: `blog/search`,
+    DELETE_BLOG: (id: number) => `blog/${id}`,
 }
 
 export const KNOWLEDGE_ENDPOINTS = {

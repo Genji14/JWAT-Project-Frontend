@@ -5,6 +5,7 @@ import { ISearchUserNotInProjectParams } from '@/types/interfaces/Param'
 import {
     IAddUserToProjectForm,
     ICreateDocumentGroupForm,
+    IRemoveUsersFromProjectForm,
 } from '@/types/interfaces/Form'
 import { TUngroupDocument } from '@/types'
 import API_INSTANCE from '@/lib/api'
@@ -100,6 +101,20 @@ class ProjectService {
                 },
             }
         )
+    }
+
+    searchUsersInProject = (projectId: number) => {
+        return API_INSTANCE.get(
+            PROJECT_ENDPOINTS.SEARCH_USERS_IN_PROJECT(projectId)
+        )
+    }
+
+    removeUser = (form: IRemoveUsersFromProjectForm) => {
+        return API_INSTANCE.delete(PROJECT_ENDPOINTS.REMOVE_USER, {
+            data: {
+                ...form,
+            },
+        })
     }
 }
 

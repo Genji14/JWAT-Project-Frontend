@@ -8,6 +8,7 @@ export const PROJECT_QUERY_KEY = {
     GET_PROJECTS_BY_USER: 'getProjectByUser',
     FIND_ONE: 'findOneProject',
     SEARCH_USER_NOT_IN_PROJECT: 'searchUserNotInProject',
+    SEARCH_USERS_IN_PROJECT: 'searchUsersInProject',
     GET_PROJECT_ROOT_DOCUMENT: 'getProjectRootDocument',
     SEARCH_DOCUMENT: 'searchDocument',
 }
@@ -17,10 +18,10 @@ export const KNOWLEDGE_QUERY_KEY = {
 }
 
 export const BLOG_QUERY_KEY = {
-    GET_BLOG_LIST: "getBlogList",
-    GET_BLOG_ITEM: "getBlogItem",
+    GET_BLOG_LIST: 'getBlogList',
+    GET_BLOG_ITEM: 'getBlogItem',
     GET_STAR_BLOG: 'getStarBlog',
     GET_COMMENT_BLOG: 'getCommentBlog',
     GET_HASHTAG_BLOG: 'getHashTagBlog',
-    GET_MEDIA_BLOG: 'getMediaBlog'
+    GET_MEDIA_BLOG: 'getMediaBlog',
 }

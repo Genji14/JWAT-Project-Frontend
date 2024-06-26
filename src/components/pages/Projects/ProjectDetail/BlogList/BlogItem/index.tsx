@@ -1,17 +1,18 @@
+import { useStore } from '@/components/providers/StoreProvider'
+import StyledCard from '@/components/shared/StyledCard'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useGetBlogDetail } from '@/hooks/query/blog.query'
+import { cn, convertAlt } from '@/lib/utils'
 import { IBlog } from '@/types/interfaces/Blog'
 import { format } from 'date-fns'
-import { Ellipsis, Star } from 'lucide-react'
+import { Star } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
-import { cn, convertAlt } from '@/lib/utils'
-import StyledCard from '@/components/shared/StyledCard'
-import { Skeleton } from '@/components/ui/skeleton'
-import StarButton from './StarButton'
 import BlogMedia from '../BlogMedia'
 import CommentDialog from './CommentDialog'
+import BlogItemActionButton from './BlogItemActionButton'
+import StarButton from './StarButton'
 
 const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any }) => {
     const { blogItemData, isFetchingBlogItem } = useGetBlogDetail(blog.id, blog.user.id);
@@ -51,28 +52,31 @@ const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any }) => {
                             <div>
                                 <h3 className="font-semibold">{blogItemData?.userInfo.fullName}</h3>
                                 <h5 className='text-sm text-muted-foreground'>
-                                    {format(blog.createdAt, 'dd/MM/yyyy HH:MM')}
+                                    {format(blog.createdAt, 'dd/MM/yyyy HH:mm')}
                                 </h5>
                             </div>
                         </div>
                     </div>
                 )}
-
-                <Button variant={'ghost'}>
-                    <Ellipsis />
-                </Button>
+                <BlogItemActionButton id={blog.id} />
             </div>
-            <div className='space-y-4 flex flex-col'>
-                <p className='mt-4 line-clamp-3 text-xl font-semibold leading-0'>
+            <div className='flex flex-col space-y-4'>
+                <p className='leading-0 mt-4 line-clamp-3 text-xl font-semibold'>
                     {blog.title}
                 </p>
-                <p className={cn("text-sm text-muted-foreground text-justify px-4", !isExpandedText && "line-clamp-5")}>
-                    {blog.content && blog.content.split('\n').map((line, index) => (
-                        <React.Fragment key={index}>
-                            {line}
-                            <br />
-                        </React.Fragment>
-                    ))}
+                <p
+                    className={cn(
+                        'px-4 text-justify text-sm text-muted-foreground',
+                        !isExpandedText && 'line-clamp-5'
+                    )}
+                >
+                    {blog.content &&
+                        blog.content.split('\n').map((line, index) => (
+                            <React.Fragment key={index}>
+                                {line}
+                                <br />
+                            </React.Fragment>
+                        ))}
                 </p>
 
                 {
