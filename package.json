@@ -29,7 +29,6 @@
         "@radix-ui/react-tooltip": "^1.0.7",
         "@tanstack/react-query": "^5.40.0",
         "@tanstack/react-table": "^8.17.3",
-        "@types/js-cookie": "^3.0.6",
         "axios": "^1.7.2",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
@@ -44,6 +43,7 @@
         "react": "18.2",
         "react-day-picker": "^8.10.1",
         "react-dom": "18.2",
+        "react-easy-sort": "1.5.3",
         "react-hook-form": "^7.51.5",
         "react-intersection-observer": "^9.10.3",
         "sonner": "^1.4.41",
@@ -54,6 +54,7 @@
         "zustand": "^4.5.2"
     },
     "devDependencies": {
+        "@types/js-cookie": "^3.0.6",
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",

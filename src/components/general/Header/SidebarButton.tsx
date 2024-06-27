@@ -31,7 +31,7 @@ const SidebarButton = () => {
         <div className={cn('flex h-full justify-center p-4 transition-all')}>
             {
                 pathname.startsWith("/projects") ?
-                    <Link href="/">
+                    <Link href="/" className='hidden lg:block'>
                         <Button
                             variant={'ghost'}
                             className='p-2'
