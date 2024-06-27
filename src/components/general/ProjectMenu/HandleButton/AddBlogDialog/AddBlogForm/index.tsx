@@ -16,7 +16,7 @@ import { IBlogForm } from '@/types/interfaces/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Tag, TagInput } from 'emblor'
 import { Loader2 } from 'lucide-react'
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import MediaInput from './MediaInput'
 
@@ -29,6 +29,13 @@ const AddBlogForm = ({
 
     const [tags, setTags] = useState<Tag[]>([])
     const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null)
+
+    useEffect(() => {
+        const newHashTags: string[] = tags.map(
+            (tag: Tag) => tag.text
+        )
+        createBlogForm.setValue('hashTags', newHashTags);
+    }, [tags])
 
     const createBlogForm = useForm<IBlogForm>({
         resolver: zodResolver(blogSchema),

@@ -46,7 +46,7 @@ const BlogItemActionButton = ({
                     <Ellipsis className='h-4 w-4' />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent align='start' className='w-30 mt-1 p-1'>
+            <PopoverContent align='end' className='w-36 mt-1 p-1'>
                 <EditBlogDialog blog={blog} media={media} hashTag={hashTag} />
                 <AlertDialog open={open} onOpenChange={setOpen}>
                     <AlertDialogTrigger asChild>

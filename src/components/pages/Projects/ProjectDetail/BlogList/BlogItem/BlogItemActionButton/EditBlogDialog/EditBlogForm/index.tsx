@@ -18,7 +18,7 @@ import { IBlogForm } from '@/types/interfaces/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Tag, TagInput } from 'emblor'
 import { Loader2 } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import AvaiableMedia from './AvaiableMedia'
 import MediaInput from './MediaInput'
@@ -47,8 +47,9 @@ const EditBlogForm = ({
 
     const [avaiableMedia, setAvaiableMedia] = useState(media)
     const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null)
+    const [deleteHashTagIds, setDeleteHashTagIds] = useState<number[]>([])
 
-    const createBlogForm = useForm<IBlogForm>({
+    const editBlogForm = useForm<IBlogForm>({
         resolver: zodResolver(blogSchema),
         defaultValues: {
             title: blog.title,
@@ -58,6 +59,21 @@ const EditBlogForm = ({
         },
     })
 
+    useEffect(() => {
+        editBlogForm.setValue('hashTags', tags.map(tag => tag.text));
+
+        const initialTagIds = new Set<string>(hashTag.map(ht => ht.id.toString()));
+        const currentTagIds = new Set<string>(tags.map(tag => tag.id));
+
+        const initialTagIdsArray: string[] = [];
+        initialTagIds.forEach(id => initialTagIdsArray.push(id));
+
+        const removedTagIds = initialTagIdsArray.filter(id => !currentTagIds.has(id));
+        setDeleteHashTagIds(removedTagIds.map(Number));
+
+    }, [tags, hashTag, editBlogForm])
+
+
     const removeVietnameseAccents = (str: string) => {
         return str
             .normalize('NFD')
@@ -66,7 +82,9 @@ const EditBlogForm = ({
             .replace(/Đ/g, 'D')
     }
 
+
     async function onSubmit(values: IBlogForm) {
+
         try {
             const formData = new FormData()
             formData.append('title', values.title)
@@ -74,11 +92,21 @@ const EditBlogForm = ({
             values.media.forEach((file) => {
                 formData.append('files', file)
             })
-            values.hashTags?.map((ht) => {
-                formData.append('hashTags', ht)
-            })
+            if (values.hashTags?.length > 0) {
+                values.hashTags?.map((ht) => {
+                    formData.append('hashTags', ht)
+                })
+                formData.append('hashTags', "hashTags")
+            }
+            if (deleteHashTagIds.length > 0) {
+                deleteHashTagIds.map((ht) => {
+                    formData.append('deleteHashTagIds', ht.toString())
+                })
+                formData.append('deleteHashTagIds', "0")
+            }
+
             await mutateUpdateBlog({ blogId: blog.id, form: formData })
-            createBlogForm.reset()
+            editBlogForm.reset()
             setTags([])
             setActiveTagIndex(null)
             setOpen(false)
@@ -88,13 +116,13 @@ const EditBlogForm = ({
     }
 
     return (
-        <Form {...createBlogForm}>
+        <Form {...editBlogForm}>
             <form
-                onSubmit={createBlogForm.handleSubmit(onSubmit)}
+                onSubmit={editBlogForm.handleSubmit(onSubmit)}
                 className='space-y-2'
             >
                 <FormField
-                    control={createBlogForm.control}
+                    control={editBlogForm.control}
                     name='title'
                     render={({ field }) => (
                         <FormItem>
@@ -110,7 +138,7 @@ const EditBlogForm = ({
                     )}
                 />
                 <FormField
-                    control={createBlogForm.control}
+                    control={editBlogForm.control}
                     name='content'
                     render={({ field }) => (
                         <FormItem>
@@ -132,7 +160,7 @@ const EditBlogForm = ({
                 />
                 <Controller
                     name='hashTags'
-                    control={createBlogForm.control}
+                    control={editBlogForm.control}
                     render={({ field }) => (
                         <div className='mt-2 space-y-2'>
                             <FormLabel>Tags</FormLabel>
@@ -151,10 +179,6 @@ const EditBlogForm = ({
                                 })}
                                 setTags={(newTags) => {
                                     setTags(newTags)
-                                    const newHashTags: string[] = tags.map(
-                                        (tag: Tag) => tag.text
-                                    )
-                                    field.onChange(newHashTags)
                                 }}
                                 activeTagIndex={activeTagIndex}
                                 setActiveTagIndex={setActiveTagIndex}
@@ -168,7 +192,7 @@ const EditBlogForm = ({
                         setMedia={setAvaiableMedia}
                     />
                 ) : (
-                    <MediaInput form={createBlogForm} />
+                    <MediaInput form={editBlogForm} />
                 )}
 
                 <div className='w-full pt-2'>
