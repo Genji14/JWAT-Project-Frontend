@@ -13,6 +13,7 @@ import { useStore } from "@/components/providers/StoreProvider"
 import HandleButton from "./HandleButton"
 import { useRouter } from "next/router"
 import SearchTool from "./SearchTool"
+import { Separator } from "@/components/ui/separator"
 
 export function ProjectMenu() {
     const expanded = useStore((state) => state.expanded);
@@ -45,8 +46,13 @@ export function ProjectMenu() {
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
-            <SearchTool/>
-            <HandleButton />
+            <div className="flex items-center gap-6">
+                <div className="hidden lg:block">
+                    <SearchTool />
+                </div>
+                <Separator orientation="vertical" className="h-3/4 hidden lg:block" />
+                <HandleButton />
+            </div>
         </div >
     )
 }

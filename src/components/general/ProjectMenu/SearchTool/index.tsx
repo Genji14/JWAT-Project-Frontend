@@ -2,41 +2,31 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useSearchBlog } from '@/hooks/mutation/blog.mutation'
 import { Search } from 'lucide-react'
-import { SetStateAction, useState } from 'react'
+import { useState } from 'react'
 
 const SearchTool = () => {
-    const [searchText, setSearchText] = useState('')
+    const [searchQuery, setSearchQuery] = useState('')
     const { mutateSearchBlog, isPendingSearchBlog } = useSearchBlog()
-
-    const handleSearchInputChange = (e: { target: { value: SetStateAction<string> } }) => {
-        setSearchText(e.target.value)
-    }
 
     const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault()
-        const data = await mutateSearchBlog(searchText)
+        const data = await mutateSearchBlog(searchQuery)
         console.log(data)
-        console.log('Search Term:', searchText)
+        console.log('Search Term:', searchQuery)
     }
 
     return (
-        <div>
-            {' '}
-            <form
-                onSubmit={handleSubmit}
-                className='flex max-w-xl items-center space-x-2'
-            >
-                <Input
-                    type='text'
-                    placeholder='Search'
-                    value={searchText}
-                    onChange={handleSearchInputChange}
-                />
-                <Button type='submit' variant={'outline'}>
-                    <Search />
-                </Button>
-            </form>
-        </div>
+        <form onSubmit={handleSubmit} className='flex items-center gap-2'>
+            <Input
+                type='text'
+                placeholder='Search blog...'
+                value={searchQuery}
+                onChange={(evt) => setSearchQuery(evt.target.value)}
+                className="bg-accent/50 text-xs h-fit w-96 dark:focus-visible:outline-none rounded dark:placeholder:text-foreground/50" />
+            <Button type='submit' className='w-fit h-fit p-2'>
+                <Search className='w-4 h-4' />
+            </Button>
+        </form>
     )
 }
 
