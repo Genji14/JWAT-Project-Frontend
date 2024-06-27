@@ -66,10 +66,10 @@ export const useCreateComment = (blogId: number) => {
                 queryKey: [BLOG_QUERY_KEY.GET_COMMENT_BLOG, blogId]
             })
         },
-      
+
     })
     return {
-       mutateCreateComment: mutateAsync,
+        mutateCreateComment: mutateAsync,
         isPendingCreateComment: isPending,
     }
 }
@@ -91,11 +91,15 @@ export const useUpdateBlog = () => {
             toast.success('Update Blog successfully!!')
             queryClient.invalidateQueries({
                 queryKey: [BLOG_QUERY_KEY.GET_BLOG_LIST],
+            })
+        }
+    })
+
     return {
         mutateUpdateBlog: mutateAsync,
         isPendingUpdateBlog: isPending,
     }
 }
 
-       
+
 
