@@ -1,5 +1,5 @@
 import { ScrollArea } from '@/components/ui/scroll-area'
-import React, { useState } from 'react'
+import React from 'react'
 import { IPaginationUserInfor } from '@/types/interfaces/User'
 import InviteUserLoading from './UserLoading'
 import InviteUserItem from './UserItem'
