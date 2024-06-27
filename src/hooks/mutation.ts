@@ -19,7 +19,8 @@ import { toast } from 'sonner'
 
 export const useSignIn = () => {
     const router = useRouter()
-    const setRole = useStore((state) => state.setRole)
+    const setRole = useStore((state) => state.setRole);
+
 
     const { mutateAsync, isPending } = useMutation({
         mutationFn: async (form: ISignInForm) => {
@@ -27,7 +28,7 @@ export const useSignIn = () => {
             Cookies.set('accessToken', data.accessToken)
             Cookies.set('refreshToken', data.refreshToken)
             const { data: role } = await userService.getRole()
-            setRole(role)
+            setRole(role);
             return role;
         },
         onSuccess: (data) => {

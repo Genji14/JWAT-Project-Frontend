@@ -26,7 +26,7 @@ const DashboardLayout: FC<TDashboardLayoutProps> = ({ children }) => {
                 </SideBar>
                 <main
                     className={cn(
-                        'ml-0 flex min-h-screen flex-auto flex-col bg-border p-2 transition-all dark:bg-border/50 sm:p-4 xl:p-6',
+                        'ml-0 flex min-h-screen flex-auto flex-col bg-border p-2 transition-all dark:bg-muted/50 sm:p-4 xl:p-6',
                         FONT_POPPINS.className,
                         expanded ? 'xl:ml-72' : 'xl:ml-header'
                     )}

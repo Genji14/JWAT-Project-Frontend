@@ -33,12 +33,14 @@ export const PROJECT_ENDPOINTS = {
 
 export const BLOG_ENDPOINTS = {
     CREATE_BLOG: `blog/create`,
+    CREATE_COMMENT: `comment`,
     GET_BLOG_LIST: `blog/all`,
     GET_STAR_BLOG: (id: number) => `blog/get-stars/${id}`,
     GET_COMMENT_BLOG: (id: number) => `blog/get-comments/${id}`,
     GET_HASHTAG_BLOG: (id: number) => `blog/get-hashtags/${id}`,
     GET_MEDIA_BLOG: (id: number) => `blog/get-medias/${id}`,
-    SEARCH_BLOG: `blog/search`
+    SEARCH_BLOG: `blog/search`,
+    DELETE_BLOG: (id: number) => `blog/${id}`,
 }
 
 export const KNOWLEDGE_ENDPOINTS = {
