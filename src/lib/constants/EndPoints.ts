@@ -40,6 +40,7 @@ export const BLOG_ENDPOINTS = {
     GET_HASHTAG_BLOG: (id: number) => `blog/get-hashtags/${id}`,
     GET_MEDIA_BLOG: (id: number) => `blog/get-medias/${id}`,
     SEARCH_BLOG: `blog/search`,
+    UPDATE_BLOG: (id: number) => `blog/${id}`,
     DELETE_BLOG: (id: number) => `blog/${id}`,
 }
 

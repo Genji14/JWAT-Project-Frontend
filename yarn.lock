@@ -3248,6 +3248,14 @@ react-dom@18.2:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
+react-easy-sort@1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/react-easy-sort/-/react-easy-sort-1.5.3.tgz#4d1ecc16ba48c7445cead1ddfa86b3f844bf88be"
+  integrity sha512-d5DVqmlqGfpRcE2blMkZ/H8AvsY6KZmUG5nOeUrV5INWMbqDIXTRBkkBnJvNOQT6mupAjl4wokgQcur5zRMYxw==
+  dependencies:
+    array-move "^3.0.1"
+    tslib "2.0.1"
+
 react-easy-sort@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/react-easy-sort/-/react-easy-sort-1.6.0.tgz#b40cce827913f0640c1b2e5438dd4d007e26db32"
