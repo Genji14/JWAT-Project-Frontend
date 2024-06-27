@@ -1,5 +1,8 @@
 import API_INSTANCE from '@/lib/api'
 import { BLOG_ENDPOINTS } from '@/lib/constants/EndPoints'
+import { Comment } from '@/types'
+import { ICreateCommentForm } from '@/types/interfaces/Form'
+import { AxiosResponse } from 'axios'
 
 class BlogService {
     getBlogList = (page: number) => {
@@ -22,7 +25,7 @@ class BlogService {
         return API_INSTANCE.get(BLOG_ENDPOINTS.GET_STAR_BLOG(id))
     }
 
-    getCommentOfBlog = (id: number) => {
+    getCommentOfBlog = (id: number): Promise<AxiosResponse<Comment[]>> => {
         return API_INSTANCE.get(BLOG_ENDPOINTS.GET_COMMENT_BLOG(id))
     }
 
@@ -32,6 +35,10 @@ class BlogService {
 
     getMediaOfBlog = (id: number) => {
         return API_INSTANCE.get(BLOG_ENDPOINTS.GET_MEDIA_BLOG(id))
+    }
+
+    createComment = (form: ICreateCommentForm) => {
+        return API_INSTANCE.post(BLOG_ENDPOINTS.CREATE_COMMENT, form)
     }
 
     searchBlog = (text: string) => {

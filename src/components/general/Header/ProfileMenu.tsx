@@ -32,7 +32,7 @@ const ProfileMenu = () => {
     const removeCurrentUserId = useStore((state) => state.removeCurrentUserId);
 
     const { currentUserInfoData, isFetchingCurrentUserInfo } =
-        useCurrentUserInfo()
+        useCurrentUserInfo();
 
     const handleLogOut = () => {
         Cookies.remove('accessToken')
