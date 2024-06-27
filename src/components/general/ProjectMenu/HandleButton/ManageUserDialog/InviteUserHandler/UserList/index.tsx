@@ -1,5 +1,5 @@
 import { ScrollArea } from '@/components/ui/scroll-area'
-import React from 'react'
+import React, { useState } from 'react'
 import { IPaginationUserInfor } from '@/types/interfaces/User'
 import InviteUserLoading from './UserLoading'
 import InviteUserItem from './UserItem'
@@ -8,16 +8,17 @@ import {
     Pagination,
     PaginationContent,
     PaginationItem,
-    PaginationNext,
-    PaginationPrevious,
 } from '@/components/ui/pagination'
+import { Button } from '@/components/ui/button'
 
 const InviteUserList = ({
     data,
     isFetching,
+    setPage,
 }: {
     data: IPaginationUserInfor | undefined
     isFetching: boolean
+    setPage: React.Dispatch<React.SetStateAction<number>>
 }) => {
     return (
         <ScrollArea className='max-h-56'>
@@ -41,10 +42,29 @@ const InviteUserList = ({
                         <Pagination>
                             <PaginationContent>
                                 <PaginationItem>
-                                    <PaginationPrevious href='#' />
+                                    <Button
+                                        variant={'outline'}
+                                        disabled={data?.meta.currentPage! <= 1}
+                                        onClick={() =>
+                                            setPage((prev) => prev - 1)
+                                        }
+                                    >
+                                        &lt; Previous
+                                    </Button>
                                 </PaginationItem>
                                 <PaginationItem>
-                                    <PaginationNext href='#' />
+                                    <Button
+                                        variant={'outline'}
+                                        disabled={
+                                            data?.meta.currentPage! >=
+                                            data?.meta.totalPages!
+                                        }
+                                        onClick={() =>
+                                            setPage((prev) => prev + 1)
+                                        }
+                                    >
+                                        Next &gt;
+                                    </Button>
                                 </PaginationItem>
                             </PaginationContent>
                         </Pagination>

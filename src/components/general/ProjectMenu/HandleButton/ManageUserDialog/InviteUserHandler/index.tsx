@@ -14,10 +14,12 @@ const InviteUserHandler = () => {
 
     const debounceQuery = useDebounce(query, DEBOUNCE_TIME)
 
-    const { isFetchingUser, userData } =
-        useSearchUserNotInProject(debounceQuery)
+    const [page, setPage] = useState(1)
+    const { isFetchingUser, userData } = useSearchUserNotInProject(
+        debounceQuery,
+        page
+    )
 
-    console.log(userData)
     return (
         <div className='flex flex-col gap-2'>
             <div className='flex items-center justify-between gap-2'>
@@ -37,7 +39,11 @@ const InviteUserHandler = () => {
                     </Button>
                 </div>
             </div>
-            <InviteUserList data={userData} isFetching={isFetchingUser} />
+            <InviteUserList
+                data={userData}
+                isFetching={isFetchingUser}
+                setPage={setPage}
+            />
         </div>
     )
 }

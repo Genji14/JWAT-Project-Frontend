@@ -24,13 +24,13 @@ export const useGetProjectDetail = (id: number) => {
 export const useSearchUserNotInProject = (userId: string, page: number = 1) => {
     const { query } = useRouter()
     const { data, isFetching } = useQuery({
-        queryKey: [PROJECT_QUERY_KEY.SEARCH_USER_NOT_IN_PROJECT, userId],
+        queryKey: [PROJECT_QUERY_KEY.SEARCH_USER_NOT_IN_PROJECT, page, userId],
         queryFn: async ({ queryKey }) => {
-            const [_key, userId] = queryKey
+            const [_key, page, userId] = queryKey
             const res = await projectService.searchUserNotInProject({
                 id: Number(query.id),
-                userId: userId,
-                page: page,
+                userId: userId.toString(),
+                page: Number(page),
                 limit: 5,
             })
             if (userId !== '')

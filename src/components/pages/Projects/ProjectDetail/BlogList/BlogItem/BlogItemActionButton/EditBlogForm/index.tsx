@@ -113,7 +113,7 @@ const EditBlogForm = () => {
                     render={({ field }) => (
                         <div className='mt-2 space-y-2'>
                             <FormLabel>Tags</FormLabel>
-                            <TagInput
+                            {/* <TagInput
                                 {...field}
                                 placeholder='Enter blog tags...'
                                 maxTags={5}
@@ -135,7 +135,7 @@ const EditBlogForm = () => {
                                 }}
                                 activeTagIndex={activeTagIndex}
                                 setActiveTagIndex={setActiveTagIndex}
-                            />
+                            /> */}
                         </div>
                     )}
                 />
