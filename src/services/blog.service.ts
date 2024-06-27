@@ -49,6 +49,14 @@ class BlogService {
         })
     }
 
+    updateBlog = (id: number, form: FormData) => {
+        return API_INSTANCE.patch(BLOG_ENDPOINTS.UPDATE_BLOG(id), form, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        })
+    }
+
     deleteBlog = (id: number) => {
         return API_INSTANCE.delete(BLOG_ENDPOINTS.DELETE_BLOG(id))
     }

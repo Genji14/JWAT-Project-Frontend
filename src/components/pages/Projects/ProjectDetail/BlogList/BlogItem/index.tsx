@@ -30,7 +30,7 @@ const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any }) => {
 
     return (
         <StyledCard className='p-4'>
-            <div ref={innerRef} className='flex items-center justify-between'>
+            <div ref={innerRef} className='flex items-start justify-between'>
                 {isFetchingBlogItem ? (
                     <div className='flex items-center gap-2'>
                         <Skeleton className='h-12 w-12 bg-border rounded-full' />
@@ -58,7 +58,11 @@ const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any }) => {
                         </div>
                     </div>
                 )}
-                <BlogItemActionButton id={blog.id} />
+                <BlogItemActionButton
+                    blog={blog}
+                    media={blogItemData?.media ?? []}
+                    hashTag={blogItemData?.hashTags ?? []}
+                />
             </div>
             <div className='flex flex-col space-y-4'>
                 <p className='leading-0 mt-4 line-clamp-3 text-xl font-semibold'>

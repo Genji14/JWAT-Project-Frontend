@@ -66,10 +66,36 @@ export const useCreateComment = (blogId: number) => {
                 queryKey: [BLOG_QUERY_KEY.GET_COMMENT_BLOG, blogId]
             })
         },
+      
     })
-
     return {
-        mutateCreateComment: mutateAsync,
+       mutateCreateComment: mutateAsync,
         isPendingCreateComment: isPending,
     }
 }
+
+export const useUpdateBlog = () => {
+    const queryClient = useQueryClient()
+
+    const { mutateAsync, isPending } = useMutation({
+        mutationFn: async ({
+            blogId,
+            form,
+        }: {
+            blogId: number
+            form: FormData
+        }) => {
+            await blogService.updateBlog(blogId, form)
+        },
+        onSuccess: () => {
+            toast.success('Update Blog successfully!!')
+            queryClient.invalidateQueries({
+                queryKey: [BLOG_QUERY_KEY.GET_BLOG_LIST],
+    return {
+        mutateUpdateBlog: mutateAsync,
+        isPendingUpdateBlog: isPending,
+    }
+}
+
+       
+
