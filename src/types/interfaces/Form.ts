@@ -36,6 +36,11 @@ export interface IBlogForm {
     media: File[]
 }
 
+export interface IEditBlogForm extends IBlogForm {
+    deleteMediaIds: number[]
+}
+
+
 // Create Knowledge
 export interface IKnowledgeForm {
     knowledgeName: string

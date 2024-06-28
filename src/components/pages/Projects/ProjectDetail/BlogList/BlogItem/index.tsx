@@ -25,6 +25,7 @@ const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any }) => {
         if (blogItemData) {
             setTotalStars(blogItemData.stars.length);
             setTotalComments(blogItemData.comments.length);
+            console.log(blogItemData)
         }
     }, [blogItemData])
 
