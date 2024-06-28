@@ -5,12 +5,16 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 export const useCreateBlog = () => {
+    const queryClient = useQueryClient()
     const { mutateAsync, isPending } = useMutation({
         mutationFn: async (form: FormData) => {
             await blogService.createBlog(form)
         },
         onSuccess: () => {
             toast.success('Add Blog successfully!!')
+            queryClient.invalidateQueries({
+                queryKey: [BLOG_QUERY_KEY.GET_BLOG_LIST],
+            })
         },
     })
 

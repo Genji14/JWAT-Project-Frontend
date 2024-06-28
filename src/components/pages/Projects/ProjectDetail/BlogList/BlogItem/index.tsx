@@ -14,7 +14,7 @@ import CommentDialog from './CommentDialog'
 import BlogItemActionButton from './BlogItemActionButton'
 import StarButton from './StarButton'
 
-const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any }) => {
+const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any}) => {
     const { blogItemData, isFetchingBlogItem } = useGetBlogDetail(blog.id, blog.user.id);
     const [isExpandedText, setIsExpandedText] = useState<boolean>(false);
     const [totalStars, setTotalStars] = useState<number>(0);
