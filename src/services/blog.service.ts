@@ -60,6 +60,16 @@ class BlogService {
     deleteBlog = (id: number) => {
         return API_INSTANCE.delete(BLOG_ENDPOINTS.DELETE_BLOG(id))
     }
+
+    getBlogListSearch = (page: number, text: string | string[]) => {
+        return API_INSTANCE.get(BLOG_ENDPOINTS.GET_BLOG_LIST_SEARCH, {
+            params: {
+                page: page,
+                text: text,
+                limit: 4,
+            },
+        })
+    }
 }
 
 export const blogService = new BlogService()
