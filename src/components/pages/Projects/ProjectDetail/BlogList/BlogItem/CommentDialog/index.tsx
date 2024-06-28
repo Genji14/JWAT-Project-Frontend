@@ -1,13 +1,21 @@
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { Loader2, MessagesSquare } from 'lucide-react'
-import { DialogDescription, DialogHeader } from '@/components/ui/dialog'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTrigger,
+} from '@/components/ui/dialog'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { useGetBlogComments } from '@/hooks/query/blog.query'
-import CommentItem from './CommentItem'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import { Loader2, MessagesSquare } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { io } from 'socket.io-client'
 import CommentInput from './CommentInput'
-import { useEffect } from 'react'
+import CommentItem from './CommentItem'
+
+const socket = io('http://localhost:3001')
 
 const CommentDialog = ({
     blogId,
@@ -17,13 +25,33 @@ const CommentDialog = ({
     setTotalComments: React.Dispatch<React.SetStateAction<number>>
 }) => {
     const { commentsData, isFetchingComments } = useGetBlogComments(blogId)
-
+    const [commentList, setCommentList] = useState<any[]>([])
+    const [open, setOpen] = useState(false)
     useEffect(() => {
-        if (commentsData) setTotalComments(commentsData.length)
+        if (commentsData) {
+            setTotalComments(commentsData.length)
+            setCommentList(commentsData)
+        }
     }, [commentsData])
 
+    useEffect(() => {
+        const blogIdString = blogId.toString() + 'socket'
+        if (open) {
+            socket.emit('joinBlog', { blogId: blogIdString })
+            socket.on('receiveComment', (comment) => {
+                console.log(comment)
+                if (blogId === comment.blog.id) {
+                    setCommentList((prev) => [...prev, comment])
+                }
+            })
+        }
+        return () => {
+            socket.off('receiveComment')
+        }
+    }, [open])
+
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button variant={'ghost'} className='items-center gap-1.5'>
                     <MessagesSquare className='h-4 w-4' />
@@ -51,7 +79,7 @@ const CommentDialog = ({
                         <Loader2 className='mx-auto h-8 w-8 animate-spin text-primary' />
                     ) : (
                         <>
-                            {!commentsData?.length ? (
+                            {!commentList?.length ? (
                                 <div className='flex items-center justify-center'>
                                     <span>
                                         Let&apos;s send the first comment in
@@ -61,7 +89,7 @@ const CommentDialog = ({
                             ) : (
                                 <ScrollArea className='h-[75vh] lg:h-[60vh]'>
                                     <div className='flex h-full w-full flex-col gap-4'>
-                                        {commentsData?.map((comment) => {
+                                        {commentList?.map((comment) => {
                                             return (
                                                 <CommentItem
                                                     comment={comment}
