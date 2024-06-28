@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button'
+import { Dialog, DialogContent } from '@/components/ui/dialog'
+import { cn } from '@/lib/utils'
 import { Media } from '@/types'
 import { MediaType } from '@/types/enums';
 import { PlayIcon, ZoomInIcon, ZoomOutIcon } from 'lucide-react';
@@ -8,10 +8,9 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 
 const BlogMedia = ({ media }: { media: Media[] }) => {
-
-    const [selectedImageIndex, setSelectedIamgeIndex] = useState(0);
-    const [open, setOpen] = useState(false);
-    const [zoom, setZoom] = useState<number>(1);
+    const [selectedImageIndex, setSelectedIamgeIndex] = useState(0)
+    const [open, setOpen] = useState(false)
+    const [zoom, setZoom] = useState<number>(1)
 
     const videoArr = media.filter(item => item.mediaType === MediaType.VIDEO);
     const iamgeArr = media.filter(item => item.mediaType === MediaType.IMAGE);
@@ -19,14 +18,14 @@ const BlogMedia = ({ media }: { media: Media[] }) => {
 
     useEffect(() => {
         if (!open) {
-            setZoom(1);
-            setSelectedIamgeIndex(0);
+            setZoom(1)
+            setSelectedIamgeIndex(0)
         }
     }, [open])
 
     const handleSelectImage = (index: number) => {
-        setOpen(true);
-        setSelectedIamgeIndex(index);
+        setOpen(true)
+        setSelectedIamgeIndex(index)
     }
 
     return (
@@ -100,13 +99,23 @@ const BlogMedia = ({ media }: { media: Media[] }) => {
                     </>
             }
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className='h-screen dark:bg-background/40 border-none flex flex-col gap-2 p-0'>
-                    <div className='absolute top-2 left-2 flex gap-1 z-10'>
-                        <Button disabled={zoom > 1.5} onClick={() => setZoom(prev => prev + 0.1)} className='p-2' variant={"outline"}>
-                            <ZoomInIcon className='w-5 h-5' />
+                <DialogContent className='flex h-screen flex-col gap-2 border-none p-0 dark:bg-background/40'>
+                    <div className='absolute left-2 top-2 z-10 flex gap-1'>
+                        <Button
+                            disabled={zoom > 1.5}
+                            onClick={() => setZoom((prev) => prev + 0.1)}
+                            className='p-2'
+                            variant={'outline'}
+                        >
+                            <ZoomInIcon className='h-5 w-5' />
                         </Button>
-                        <Button disabled={zoom < 0.5} onClick={() => setZoom(prev => prev - 0.1)} className='p-2' variant={"outline"}>
-                            <ZoomOutIcon className='w-5 h-5' />
+                        <Button
+                            disabled={zoom < 0.5}
+                            onClick={() => setZoom((prev) => prev - 0.1)}
+                            className='p-2'
+                            variant={'outline'}
+                        >
+                            <ZoomOutIcon className='h-5 w-5' />
                         </Button>
                     </div>
                     <div className='flex-auto flex justify-center items-center bg-border dark:bg-background rounded-lg overflow-hidden'>
@@ -139,10 +148,7 @@ const BlogMedia = ({ media }: { media: Media[] }) => {
                 </DialogContent>
             </Dialog>
         </>
-
     )
-
-
 }
 
 export default BlogMedia

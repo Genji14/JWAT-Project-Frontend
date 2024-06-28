@@ -9,20 +9,24 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import CommentInput from './CommentInput'
 import { useEffect } from 'react'
 
-const CommentDialog = ({ blogId, setTotalComments }: { blogId: number, setTotalComments: React.Dispatch<React.SetStateAction<number>> }) => {
-
-    const { commentsData, isFetchingComments } = useGetBlogComments(blogId);
+const CommentDialog = ({
+    blogId,
+    setTotalComments,
+}: {
+    blogId: number
+    setTotalComments: React.Dispatch<React.SetStateAction<number>>
+}) => {
+    const { commentsData, isFetchingComments } = useGetBlogComments(blogId)
 
     useEffect(() => {
-        if (commentsData)
-            setTotalComments(commentsData.length);
+        if (commentsData) setTotalComments(commentsData.length)
     }, [commentsData])
 
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant={'ghost'} className="items-center gap-1.5">
-                    <MessagesSquare className='w-4 h-4' />
+                <Button variant={'ghost'} className='items-center gap-1.5'>
+                    <MessagesSquare className='h-4 w-4' />
                     <span>Comments</span>
                 </Button>
             </DialogTrigger>
@@ -34,34 +38,42 @@ const CommentDialog = ({ blogId, setTotalComments }: { blogId: number, setTotalC
                 }}
             >
                 <DialogHeader className='space-y-0'>
-                    <h3 className='text-xl font-bold uppercase'>Blog Comments</h3>
+                    <h3 className='text-xl font-bold uppercase'>
+                        Blog Comments
+                    </h3>
                     <DialogDescription>
                         Sharing your knowledge in this blog content.
                     </DialogDescription>
                 </DialogHeader>
                 <Separator />
-                <div className="flex flex-col gap-4 h-full w-full">
-
-                    {
-                        isFetchingComments ? <Loader2 className="animate-spin w-8 h-8 text-primary mx-auto" /> :
-                            <>
-                                {
-                                    !commentsData?.length ?
-                                        <div className="justify-center items-center flex">
-                                            <span>Let's send the first comment in this blog</span>
-                                        </div>
-                                        : <ScrollArea className='h-[75vh] lg:h-[60vh]'>
-                                            <div className="flex flex-col gap-4 h-full w-full">
-                                                {
-                                                    commentsData?.map((comment) => {
-                                                        return <CommentItem comment={comment} key={comment.id} />
-                                                    })
-                                                }
-                                            </div>
-                                        </ScrollArea>
-                                }
-                            </>
-                    }
+                <div className='flex h-full w-full flex-col gap-4'>
+                    {isFetchingComments ? (
+                        <Loader2 className='mx-auto h-8 w-8 animate-spin text-primary' />
+                    ) : (
+                        <>
+                            {!commentsData?.length ? (
+                                <div className='flex items-center justify-center'>
+                                    <span>
+                                        Let&apos;s send the first comment in
+                                        this blog
+                                    </span>
+                                </div>
+                            ) : (
+                                <ScrollArea className='h-[75vh] lg:h-[60vh]'>
+                                    <div className='flex h-full w-full flex-col gap-4'>
+                                        {commentsData?.map((comment) => {
+                                            return (
+                                                <CommentItem
+                                                    comment={comment}
+                                                    key={comment.id}
+                                                />
+                                            )
+                                        })}
+                                    </div>
+                                </ScrollArea>
+                            )}
+                        </>
+                    )}
                 </div>
 
                 <CommentInput blogId={blogId} />

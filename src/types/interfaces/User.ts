@@ -18,15 +18,28 @@ export interface IUserInfo {
 
 export interface IUserNotInProject {
     id: number
-    fullName: string,
-    phoneNumber: string,
-    email: string,
-    gender: Gender,
-    dob: Date,
-    address: string,
-    username: string,
-    role: UserRole,
-    userCreateId: null | number,
-    userProjects: any[],
+    fullName: string
+    phoneNumber: string
+    email: string
+    gender: Gender
+    dob: Date
+    address: string
+    username: string
+    role: UserRole
+    userCreateId: null | number
+    userProjects: any[]
     media?: Media
+}
+
+export interface IMetaData {
+    currentPage: number
+    itemCount: number
+    itemsPerPage: number
+    totalItems: number
+    totalPages: number
+}
+
+export interface IPaginationUserInfor {
+    items: IUserNotInProject[]
+    meta: IMetaData
 }
