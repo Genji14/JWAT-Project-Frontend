@@ -57,3 +57,21 @@ export type TUngroupDocument = {
     project: number,
     documents: number[]
 }
+
+export type CommonParams = {
+    limit: number,
+    page: number
+}
+
+export type PaginationResponse = {
+    items: any[],
+    meta: TypeOrmPaginationMeta
+}
+
+export type TypeOrmPaginationMeta = {
+    currentPage: number,
+    itemCount: number,
+    itemsPerPage: number,
+    totalItems: number,
+    totalPages: number
+}

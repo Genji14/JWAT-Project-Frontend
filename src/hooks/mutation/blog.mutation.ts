@@ -92,9 +92,11 @@ export const useUpdateBlog = (blogId: number) => {
             queryClient.invalidateQueries({
                 queryKey: [BLOG_QUERY_KEY.GET_BLOG_LIST],
             })
-            queryClient.invalidateQueries({
-                queryKey: [BLOG_QUERY_KEY.GET_BLOG_ITEM, blogId]
-            })
+            setTimeout(() => {
+                queryClient.invalidateQueries({
+                    queryKey: [BLOG_QUERY_KEY.GET_BLOG_ITEM, blogId]
+                })
+            }, 1000)
         }
     })
 

@@ -38,7 +38,7 @@ const AvaiableMedia = ({
                                     width={1000}
                                     height={1000}
                                 /> :
-                                <div className=' absolute -top-8 right-16 aspect-square w-1/2 bg-background dark:bg-border object-cover cursor-pointer rounded-lg flex items-center justify-center'>
+                                <div className=' absolute -top-8 right-16 aspect-square w-1/2 bg-border object-cover cursor-pointer rounded-lg flex items-center justify-center'>
                                     <div className='bg-black/50 p-4 rounded-full'>
                                         <PlayIcon className='text-white w-8 h-8 fill-white' />
                                     </div>
@@ -61,7 +61,7 @@ const AvaiableMedia = ({
                                         width={1000}
                                         height={1000}
                                     /> :
-                                    <div className='aspect-square bg-background dark:bg-border object-cover cursor-pointer rounded-lg flex items-center justify-center'>
+                                    <div className='aspect-square bg-border object-cover cursor-pointer rounded-lg flex items-center justify-center'>
                                         <div className='bg-black/50 p-4 rounded-full'>
                                             <PlayIcon className='text-white w-8 h-8 fill-white' />
                                         </div>
@@ -80,7 +80,7 @@ const AvaiableMedia = ({
                                     width={1000}
                                     height={1000}
                                 /> :
-                                <div className='aspect-video bg-background dark:bg-border object-cover cursor-pointer rounded-lg flex items-center justify-center'>
+                                <div className='aspect-video bg-border object-cover cursor-pointer rounded-lg flex items-center justify-center'>
                                     <div className='bg-black/50 p-4 rounded-full'>
                                         <PlayIcon className='text-white w-8 h-8 fill-white' />
                                     </div>

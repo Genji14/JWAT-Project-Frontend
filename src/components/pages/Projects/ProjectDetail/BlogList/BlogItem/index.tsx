@@ -92,14 +92,30 @@ const BlogItem = ({ blog, innerRef }: { blog: IBlog, innerRef?: any }) => {
                     )
                 }
 
-                {!!blogItemData?.media.length && <BlogMedia media={blogItemData?.media} />}
+                {
+                    !!blogItemData?.media.length && <>
+                        {isFetchingBlogItem ? <Skeleton className='w-full bg-border aspect-[25/9]' /> : <BlogMedia media={blogItemData?.media} />}
+                    </>
+                }
                 {!!blogItemData?.hashTags.length && (
                     <div className='flex flex-wrap gap-1.5'>
-                        {blogItemData?.hashTags.map((tag) => (
-                            <div key={tag.id} className='border border-primary h-fit px-2 bg-primary/30 rounded'>
-                                <span className='text-xs font-semibold text-primary'>{tag.hashTagName}</span>
-                            </div>
-                        ))}
+                        {
+                            isFetchingBlogItem ?
+                                <>
+                                    <Skeleton className='w-16 h-6 bg-border' />
+                                    <Skeleton className='w-16 h-6 bg-border' />
+                                    <Skeleton className='w-16 h-6 bg-border' />
+                                </>
+                                :
+                                <>
+                                    {blogItemData?.hashTags.map((tag) => (
+                                        <div key={tag.id} className='border border-primary h-fit px-2 bg-primary/30 rounded'>
+                                            <span className='text-xs font-semibold text-primary'>{tag.hashTagName}</span>
+                                        </div>
+                                    ))}
+                                </>
+
+                        }
                     </div>
                 )}
             </div>
