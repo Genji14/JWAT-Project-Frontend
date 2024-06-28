@@ -22,8 +22,10 @@ import MediaInput from './MediaInput'
 
 const AddBlogForm = ({
     setOpen,
+    clientId,
 }: {
     setOpen: React.Dispatch<SetStateAction<boolean>>
+    clientId: string
 }) => {
     const { mutateCreateBlog, isPendingCreateBlog } = useCreateBlog()
 
@@ -31,10 +33,8 @@ const AddBlogForm = ({
     const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null)
 
     useEffect(() => {
-        const newHashTags: string[] = tags.map(
-            (tag: Tag) => tag.text
-        )
-        createBlogForm.setValue('hashTags', newHashTags);
+        const newHashTags: string[] = tags.map((tag: Tag) => tag.text)
+        createBlogForm.setValue('hashTags', newHashTags)
     }, [tags])
 
     const createBlogForm = useForm<IBlogForm>({
@@ -60,6 +60,7 @@ const AddBlogForm = ({
             const formData = new FormData()
             formData.append('title', values.title)
             formData.append('content', values.content)
+            formData.append('clientId', clientId)
             values.media.forEach((file) => {
                 formData.append('files', file)
             })
