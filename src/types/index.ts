@@ -1,4 +1,4 @@
-import { mediaType } from './enums'
+import { MediaType } from './enums'
 
 export type ExpandStore = {
     expanded: boolean
@@ -21,7 +21,7 @@ export type Media = {
     id: number
     url: string
     cloudId: string
-    mediaType: mediaType
+    mediaType: MediaType
 }
 
 export type Document = {

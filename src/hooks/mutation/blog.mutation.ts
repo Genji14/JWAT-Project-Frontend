@@ -74,7 +74,7 @@ export const useCreateComment = (blogId: number) => {
     }
 }
 
-export const useUpdateBlog = () => {
+export const useUpdateBlog = (blogId: number) => {
     const queryClient = useQueryClient()
 
     const { mutateAsync, isPending } = useMutation({
@@ -91,6 +91,9 @@ export const useUpdateBlog = () => {
             toast.success('Update Blog successfully!!')
             queryClient.invalidateQueries({
                 queryKey: [BLOG_QUERY_KEY.GET_BLOG_LIST],
+            })
+            queryClient.invalidateQueries({
+                queryKey: [BLOG_QUERY_KEY.GET_BLOG_ITEM, blogId]
             })
         }
     })
