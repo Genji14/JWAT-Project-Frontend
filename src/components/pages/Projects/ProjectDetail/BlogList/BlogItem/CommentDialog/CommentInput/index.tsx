@@ -23,7 +23,7 @@ const CommentInput = ({ blogId }: { blogId: number }) => {
             <div className='flex-auto'>
                 <Textarea value={content} onChange={(evt) => setContent(evt.target.value)} placeholder='Enter your comment ...' className='resize-none' />
             </div>
-            <Button disabled={!content || isPendingCreateComment} onClick={() => sendComment(content)}>
+            <Button className='h-fit' disabled={!content || isPendingCreateComment} onClick={() => sendComment(content)}>
                 <span>Send</span>
                 {
                     isPendingCreateComment ?

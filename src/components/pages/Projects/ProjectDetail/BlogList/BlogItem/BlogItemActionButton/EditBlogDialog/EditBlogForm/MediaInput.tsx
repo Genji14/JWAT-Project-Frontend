@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
-import { IBlogForm } from '@/types/interfaces/Form'
+import { IEditBlogForm } from '@/types/interfaces/Form'
 import { FilePlus2, X } from 'lucide-react'
 import React, { useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
@@ -18,10 +18,10 @@ import { UseFormReturn } from 'react-hook-form'
 const MediaInput = ({
     form,
 }: {
-    form: UseFormReturn<IBlogForm, any, undefined>
+    form: UseFormReturn<IEditBlogForm, any, undefined>
 }) => {
     const [isDragging, setIsDragging] = useState<boolean>(false)
-    const media = form.watch('media')
+    const media = form.watch('media');
 
     const handleChangePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files.length > 0) {
@@ -42,9 +42,7 @@ const MediaInput = ({
     }
 
     const handleRemoveFile = (index: number) => {
-        const updatedFiles = form
-            .getValues('media')
-            .filter((_, i) => i !== index)
+        const updatedFiles = form.getValues('media').filter((_, i) => i !== index)
         form.setValue('media', updatedFiles)
     }
 
@@ -65,7 +63,7 @@ const MediaInput = ({
                         className={cn(
                             'relative rounded border-2 border-dashed border-muted-foreground/50 p-3 text-sm font-medium text-muted-foreground/50 hover:border-primary hover:bg-accent hover:text-primary hover:shadow-lg',
                             isDragging &&
-                                'cursor-copy border-primary bg-accent text-primary shadow-lg',
+                            'cursor-copy border-primary bg-accent text-primary shadow-lg',
                             'cursor-pointer'
                         )}
                     >

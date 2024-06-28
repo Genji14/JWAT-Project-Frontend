@@ -1,20 +1,20 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useSearchBlog } from '@/hooks/mutation/blog.mutation'
 import { Search } from 'lucide-react'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 const SearchTool = () => {
     const [searchQuery, setSearchQuery] = useState('')
-    // const { mutateSearchBlog, isPendingSearchBlog } = useSearchBlog()
     const router = useRouter()
 
     const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault()
-        // const data = await mutateSearchBlog(searchQuery)
-        // console.log(data)
-        // console.log('Search Term:', searchQuery)
+        if (searchQuery.length === 0) {
+            toast.info('Please provide at least one character!')
+            return
+        }
         console.log(router.query)
         router.replace(
             `/projects/${router.query.id}/search?text=${searchQuery}`

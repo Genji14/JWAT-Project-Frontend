@@ -10,7 +10,7 @@ export enum UserRole {
     MANAGER = 'MANAGER',
 }
 
-export enum mediaType {
-    IMAGE = 'iamge',
+export enum MediaType {
+    IMAGE = 'image',
     VIDEO = 'video',
 }

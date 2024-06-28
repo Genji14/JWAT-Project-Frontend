@@ -35,6 +35,7 @@ export const BLOG_ENDPOINTS = {
     CREATE_BLOG: `blog/create`,
     CREATE_COMMENT: `comment`,
     GET_BLOG_LIST: `blog/all`,
+    GET_BLOG_LIST_SEARCH: `blog/search`,
     GET_STAR_BLOG: (id: number) => `blog/get-stars/${id}`,
     GET_COMMENT_BLOG: (id: number) => `blog/get-comments/${id}`,
     GET_HASHTAG_BLOG: (id: number) => `blog/get-hashtags/${id}`,
@@ -51,5 +52,5 @@ export const KNOWLEDGE_ENDPOINTS = {
 }
 
 export const STAR_ENDPOINTS = {
-    CREATE_OR_REMOVE: (id: number) => `star-detail/${id}`
+    CREATE_OR_REMOVE: (id: number) => `star-detail/${id}`,
 }

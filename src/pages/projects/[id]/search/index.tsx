@@ -19,7 +19,7 @@ const SearchBlogPage = ({
     return (
         <>
             <Head key={'member-project-detail'}>
-                <title>{`Members of ${project.name} - Sharing Knowledge`}</title>
+                <title>{`${project.name} - Sharing Knowledge`}</title>
             </Head>
             <ProjectDetailProvider initialData={project}>
                 <ProjectDetailLayout>

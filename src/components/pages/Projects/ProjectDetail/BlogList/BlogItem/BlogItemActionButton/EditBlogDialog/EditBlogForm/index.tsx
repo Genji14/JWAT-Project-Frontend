@@ -14,7 +14,7 @@ import { useUpdateBlog } from '@/hooks/mutation/blog.mutation'
 import { blogSchema } from '@/lib/schemas'
 import { HashTag, Media } from '@/types'
 import { IBlog } from '@/types/interfaces/Blog'
-import { IBlogForm } from '@/types/interfaces/Form'
+import { IEditBlogForm } from '@/types/interfaces/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Tag, TagInput } from 'emblor'
 import { Loader2 } from 'lucide-react'
@@ -34,7 +34,7 @@ const EditBlogForm = ({
     media: Media[]
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-    const { mutateUpdateBlog, isPendingUpdateBlog } = useUpdateBlog()
+    const { mutateUpdateBlog, isPendingUpdateBlog } = useUpdateBlog(blog.id)
 
     const [tags, setTags] = useState<Tag[]>(
         hashTag.map((ht) => {
@@ -45,34 +45,45 @@ const EditBlogForm = ({
         })
     )
 
-    const [avaiableMedia, setAvaiableMedia] = useState(media)
+    const [avaiableMedia, setAvaiableMedia] = useState(media);
     const [activeTagIndex, setActiveTagIndex] = useState<number | null>(null)
     const [deleteHashTagIds, setDeleteHashTagIds] = useState<number[]>([])
 
-    const editBlogForm = useForm<IBlogForm>({
+    const editBlogForm = useForm<IEditBlogForm>({
         resolver: zodResolver(blogSchema),
         defaultValues: {
             title: blog.title,
             content: blog.content,
-            hashTags: hashTag.map((ht) => ht.hashTagName),
+            hashTags: [],
             media: [],
+            deleteMediaIds: []
         },
     })
 
     useEffect(() => {
-        editBlogForm.setValue('hashTags', tags.map(tag => tag.text));
+        const handleAddDeletedHashTag = () => {
+            const initialTagIds = new Set<string>(hashTag.map(ht => ht.id.toString()));
+            const currentTagIds = new Set<string>(tags.map(tag => tag.id));
+            const initialTagIdsArray: string[] = [];
+            initialTagIds.forEach(id => initialTagIdsArray.push(id));
+            const removedTagIds = initialTagIdsArray.filter(id => !currentTagIds.has(id));
+            setDeleteHashTagIds(removedTagIds.map(Number));
+        }
 
-        const initialTagIds = new Set<string>(hashTag.map(ht => ht.id.toString()));
-        const currentTagIds = new Set<string>(tags.map(tag => tag.id));
+        const handleAddNewHashTag = () => {
+            const newTags = tags.filter(tag => !hashTag.some(ht => ht.hashTagName === tag.text));
+            editBlogForm.setValue('hashTags', newTags.map(tag => tag.text));
+        }
 
-        const initialTagIdsArray: string[] = [];
-        initialTagIds.forEach(id => initialTagIdsArray.push(id));
+        handleAddDeletedHashTag();
+        handleAddNewHashTag();
+    }, [tags, editBlogForm])
 
-        const removedTagIds = initialTagIdsArray.filter(id => !currentTagIds.has(id));
-        setDeleteHashTagIds(removedTagIds.map(Number));
-
-    }, [tags, hashTag, editBlogForm])
-
+    useEffect(() => {
+        if (avaiableMedia.length === 0 && media.length > 0) {
+            editBlogForm.setValue("deleteMediaIds", [...media.map(item => item.id)]);
+        }
+    }, [avaiableMedia, media])
 
     const removeVietnameseAccents = (str: string) => {
         return str
@@ -83,26 +94,29 @@ const EditBlogForm = ({
     }
 
 
-    async function onSubmit(values: IBlogForm) {
-
+    async function onSubmit(values: IEditBlogForm) {
         try {
             const formData = new FormData()
             formData.append('title', values.title)
             formData.append('content', values.content)
+
             values.media.forEach((file) => {
                 formData.append('files', file)
             })
             if (values.hashTags?.length > 0) {
                 values.hashTags?.map((ht) => {
-                    formData.append('hashTags', ht)
+                    formData.append(`hashTags[]`, ht)
                 })
-                formData.append('hashTags', "hashTags")
+            }
+            if (editBlogForm.getValues("deleteMediaIds").length > 0) {
+                editBlogForm.getValues("deleteMediaIds").map((item) => {
+                    formData.append(`deleteMediaIds[]`, item.toString())
+                })
             }
             if (deleteHashTagIds.length > 0) {
                 deleteHashTagIds.map((ht) => {
-                    formData.append('deleteHashTagIds', ht.toString())
+                    formData.append(`deleteHashTagIds[]`, ht.toString())
                 })
-                formData.append('deleteHashTagIds', "0")
             }
 
             await mutateUpdateBlog({ blogId: blog.id, form: formData })
@@ -186,7 +200,7 @@ const EditBlogForm = ({
                         </div>
                     )}
                 />
-                {media.length > 0 ? (
+                {avaiableMedia.length > 0 ? (
                     <AvaiableMedia
                         media={avaiableMedia}
                         setMedia={setAvaiableMedia}
