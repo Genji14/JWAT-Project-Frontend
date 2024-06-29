@@ -1,11 +1,17 @@
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { Loader2, MessagesSquare } from 'lucide-react'
-import { DialogDescription, DialogHeader } from '@/components/ui/dialog'
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTrigger,
+} from '@/components/ui/dialog'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { useGetBlogComments } from '@/hooks/query/blog.query'
-import CommentItem from './CommentItem'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import { Loader2, MessagesSquare } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { io } from 'socket.io-client'
 import CommentInput from './CommentInput'
 import { useEffect } from 'react'
 import { useStore } from '@/components/providers/StoreProvider'
@@ -31,9 +37,30 @@ const CommentDialog = ({
         }
     }, [])
 
+    const [commentList, setCommentList] = useState<any[]>([])
+    const [open, setOpen] = useState(false)
     useEffect(() => {
-        if (commentsData) setTotalComments(commentsData.length)
+        if (commentsData) {
+            setTotalComments(commentsData.length)
+            setCommentList(commentsData)
+        }
     }, [commentsData])
+
+    useEffect(() => {
+        const blogIdString = blogId.toString() + 'socket'
+        if (open) {
+            socket.emit('joinBlog', { blogId: blogIdString })
+            socket.on('receiveComment', (comment) => {
+                console.log(comment)
+                if (blogId === comment.blog.id) {
+                    setCommentList((prev) => [...prev, comment])
+                }
+            })
+        }
+        return () => {
+            socket.off('receiveComment')
+        }
+    }, [open])
 
     return (
         <DialogContent
