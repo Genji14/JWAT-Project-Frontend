@@ -5,6 +5,7 @@ export type TUtilityState = {
         accessToken: string
         refreshToken: string
     }
+    socket: any
 }
 
 export type TUtilityAction = {
@@ -13,6 +14,7 @@ export type TUtilityAction = {
     toggleAdding: () => void
     defaultManageMode: () => void
     toggleManage: () => void
+    createSocket: () => void
 }
 
 export type TUtilitySlice = TUtilityState & TUtilityAction

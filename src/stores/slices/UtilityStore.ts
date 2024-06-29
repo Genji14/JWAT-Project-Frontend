@@ -1,6 +1,8 @@
 import { StateCreator } from 'zustand'
 import { TUtilitySlice } from '../types/Utility'
 import Cookies from 'js-cookie'
+import { io } from 'socket.io-client'
+import API_INSTANCE from '@/lib/api'
 
 export const createUtilitySlice: StateCreator<TUtilitySlice> = (set) => ({
     isAddingMode: false,
@@ -9,6 +11,7 @@ export const createUtilitySlice: StateCreator<TUtilitySlice> = (set) => ({
         accessToken: Cookies.get('accessToken') ?? '',
         refreshToken: Cookies.get('refreshToken') ?? '',
     },
+    socket: null,
     setToken: (token: 'accessToken' | 'refreshToken', value: string) =>
         set((state) => {
             if (token === 'accessToken') {
@@ -27,4 +30,11 @@ export const createUtilitySlice: StateCreator<TUtilitySlice> = (set) => ({
     toggleAdding: () => set((state) => ({ isAddingMode: !state.isAddingMode })),
     defaultManageMode: () => set(() => ({ isManageMode: false })),
     toggleManage: () => set((state) => ({ isManageMode: !state.isManageMode })),
+    createSocket: () =>
+        set(() => {
+            const socket = io(`${API_INSTANCE.getUri()}`)
+            return {
+                socket: socket,
+            }
+        }),
 })
