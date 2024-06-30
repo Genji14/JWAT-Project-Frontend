@@ -2,7 +2,7 @@ import { StateCreator } from 'zustand'
 import { TUtilitySlice } from '../types/Utility'
 import Cookies from 'js-cookie'
 import { io } from 'socket.io-client'
-import API_INSTANCE from '@/lib/api'
+import { SERVICE_NAME } from '@/lib/constants/SettingSystem'
 
 export const createUtilitySlice: StateCreator<TUtilitySlice> = (set) => ({
     isAddingMode: false,
@@ -32,7 +32,7 @@ export const createUtilitySlice: StateCreator<TUtilitySlice> = (set) => ({
     toggleManage: () => set((state) => ({ isManageMode: !state.isManageMode })),
     createSocket: () =>
         set(() => {
-            const socket = io(`http://localhost:3001`)
+            const socket = io(SERVICE_NAME!)
             return {
                 socket: socket,
             }

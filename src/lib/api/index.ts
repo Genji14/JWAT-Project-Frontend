@@ -14,7 +14,7 @@ export const setContext = (_context: GetServerSidePropsContext) => {
 }
 
 const API_INSTANCE = axios.create({
-    baseURL: DOMAIN_NAME,
+    baseURL: DOMAIN_NAME + '/api/',
     timeout: 30000,
     headers: {
         Accept: 'application/json',
@@ -24,7 +24,7 @@ const API_INSTANCE = axios.create({
 
 API_INSTANCE.interceptors.request.use((config) => {
     if (isServer() && context) {
-        // config.baseURL = SERVICE_NAME
+        // config.baseURL = SERVICE_NAME + '/api/'
         const cookies = context.req.headers.cookie || ''
         const accessToken = getCookieValue(cookies, 'accessToken')
         if (accessToken)
