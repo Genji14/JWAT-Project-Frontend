@@ -5,12 +5,9 @@ import { useRouter } from 'next/router'
 import { CircleArrowLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import BlogList from './BlogList'
-import { useStore } from '@/components/providers/StoreProvider'
 
 const SearchBlogContainer = () => {
     const router = useRouter()
-    const connectSocket = useStore((state) => state.createSocket)
-    connectSocket()
     return (
         <div className='relative'>
             <div className='absolute top-20'>

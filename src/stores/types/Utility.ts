@@ -15,6 +15,7 @@ export type TUtilityAction = {
     defaultManageMode: () => void
     toggleManage: () => void
     createSocket: () => void
+    removeSocket: () => void
 }
 
 export type TUtilitySlice = TUtilityState & TUtilityAction

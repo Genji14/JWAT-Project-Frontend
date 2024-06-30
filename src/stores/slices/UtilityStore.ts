@@ -2,7 +2,7 @@ import { StateCreator } from 'zustand'
 import { TUtilitySlice } from '../types/Utility'
 import Cookies from 'js-cookie'
 import { io } from 'socket.io-client'
-import { SERVICE_NAME } from '@/lib/constants/SettingSystem'
+import { DOMAIN_NAME } from '@/lib/constants/SettingSystem'
 
 export const createUtilitySlice: StateCreator<TUtilitySlice> = (set) => ({
     isAddingMode: false,
@@ -32,9 +32,13 @@ export const createUtilitySlice: StateCreator<TUtilitySlice> = (set) => ({
     toggleManage: () => set((state) => ({ isManageMode: !state.isManageMode })),
     createSocket: () =>
         set(() => {
-            const socket = io(SERVICE_NAME!)
+            const socket = io(DOMAIN_NAME!)
             return {
                 socket: socket,
             }
         }),
+    removeSocket: () =>
+        set((state) => ({
+            socket: state.socket.disconnect(),
+        })),
 })

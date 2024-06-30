@@ -5,11 +5,7 @@ import {
 } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
-import { useGetBlogComments } from '@/hooks/query/blog.query'
-import { Loader2 } from 'lucide-react'
-import { useEffect } from 'react'
 import CommentInput from './CommentInput'
-import CommentItem from './CommentItem'
 import CommentListWhileACommnetSend from './CommentListSend'
 import CommentListFetch from './CommentListFetch'
 
