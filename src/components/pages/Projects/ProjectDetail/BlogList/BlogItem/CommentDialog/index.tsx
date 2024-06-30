@@ -1,21 +1,17 @@
-import { Button } from '@/components/ui/button'
 import {
-    Dialog,
     DialogContent,
     DialogDescription,
     DialogHeader,
-    DialogTrigger,
 } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { useGetBlogComments } from '@/hooks/query/blog.query'
-import { Loader2, MessagesSquare } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { io } from 'socket.io-client'
-import CommentInput from './CommentInput'
+import { Loader2 } from 'lucide-react'
 import { useEffect } from 'react'
-import { useStore } from '@/components/providers/StoreProvider'
-import { Comment } from '@/types'
+import CommentInput from './CommentInput'
+import CommentItem from './CommentItem'
+import CommentListWhileACommnetSend from './CommentListSend'
+import CommentListFetch from './CommentListFetch'
 
 const CommentDialog = ({
     blogId,
@@ -24,44 +20,6 @@ const CommentDialog = ({
     blogId: number
     setTotalComments: React.Dispatch<React.SetStateAction<number>>
 }) => {
-    const { commentsData, isFetchingComments } = useGetBlogComments(blogId)
-    const socket = useStore((state) => state.socket)
-
-    useEffect(() => {
-        socket.on(`comment/${blogId}`, (data: Comment) => {
-            console.log('Message receive!')
-        })
-
-        return () => {
-            socket.off(`comment/${blogId}`)
-        }
-    }, [])
-
-    const [commentList, setCommentList] = useState<any[]>([])
-    const [open, setOpen] = useState(false)
-    useEffect(() => {
-        if (commentsData) {
-            setTotalComments(commentsData.length)
-            setCommentList(commentsData)
-        }
-    }, [commentsData])
-
-    useEffect(() => {
-        const blogIdString = blogId.toString() + 'socket'
-        if (open) {
-            socket.emit('joinBlog', { blogId: blogIdString })
-            socket.on('receiveComment', (comment) => {
-                console.log(comment)
-                if (blogId === comment.blog.id) {
-                    setCommentList((prev) => [...prev, comment])
-                }
-            })
-        }
-        return () => {
-            socket.off('receiveComment')
-        }
-    }, [open])
-
     return (
         <DialogContent
             styledCard={true}
@@ -78,33 +36,10 @@ const CommentDialog = ({
             </DialogHeader>
             <Separator />
             <div className='flex h-full w-full flex-col gap-4'>
-                {isFetchingComments ? (
-                    <Loader2 className='mx-auto h-8 w-8 animate-spin text-primary' />
-                ) : (
-                    <>
-                        {!commentsData?.length ? (
-                            <div className='flex items-center justify-center'>
-                                <span>
-                                    Let&apos;s send the first comment in this
-                                    blog
-                                </span>
-                            </div>
-                        ) : (
-                            <ScrollArea className='h-[75vh] lg:h-[60vh]'>
-                                <div className='flex h-full w-full flex-col gap-4'>
-                                    {commentsData?.map((comment) => {
-                                        return (
-                                            <CommentItem
-                                                comment={comment}
-                                                key={comment.id}
-                                            />
-                                        )
-                                    })}
-                                </div>
-                            </ScrollArea>
-                        )}
-                    </>
-                )}
+                <ScrollArea className='h-[75vh] lg:h-[60vh]'>
+                    <CommentListWhileACommnetSend blogId={blogId} />
+                    <CommentListFetch blogId={blogId} />
+                </ScrollArea>
             </div>
 
             <CommentInput blogId={blogId} />

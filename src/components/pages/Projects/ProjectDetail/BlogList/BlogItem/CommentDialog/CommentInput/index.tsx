@@ -6,8 +6,7 @@ import React, { useState } from 'react'
 
 const CommentInput = ({ blogId }: { blogId: number }) => {
     const [content, setContent] = useState<string>('')
-    const { mutateCreateComment, isPendingCreateComment } =
-        useCreateComment(blogId)
+    const { mutateCreateComment, isPendingCreateComment } = useCreateComment()
 
     async function sendComment(content: string) {
         await mutateCreateComment({

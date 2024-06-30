@@ -32,7 +32,7 @@ export const createUtilitySlice: StateCreator<TUtilitySlice> = (set) => ({
     toggleManage: () => set((state) => ({ isManageMode: !state.isManageMode })),
     createSocket: () =>
         set(() => {
-            const socket = io(`${API_INSTANCE.getUri()}`)
+            const socket = io(`http://localhost:3001`)
             return {
                 socket: socket,
             }
