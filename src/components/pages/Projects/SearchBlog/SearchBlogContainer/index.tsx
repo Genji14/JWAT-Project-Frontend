@@ -8,7 +8,6 @@ import BlogList from './BlogList'
 
 const SearchBlogContainer = () => {
     const router = useRouter()
-
     return (
         <div className='relative'>
             <div className='absolute top-0'>

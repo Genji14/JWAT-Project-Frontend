@@ -58,18 +58,17 @@ export const useDeleteBlog = () => {
     }
 }
 
-export const useCreateComment = (blogId: number) => {
-    const queryClient = useQueryClient()
+export const useCreateComment = () => {
     const { mutateAsync, isPending } = useMutation({
         mutationFn: async (form: ICreateCommentForm) => {
             await blogService.createComment(form)
         },
-        onSuccess: () => {
-            toast.success('Send Comment successfully!!')
-            queryClient.invalidateQueries({
-                queryKey: [BLOG_QUERY_KEY.GET_COMMENT_BLOG, blogId],
-            })
-        },
+        // onSuccess: () => {
+        // toast.success('Send Comment successfully!!')
+        // queryClient.invalidateQueries({
+        //     queryKey: [BLOG_QUERY_KEY.GET_COMMENT_BLOG, blogId],
+        // })
+        // },
     })
     return {
         mutateCreateComment: mutateAsync,

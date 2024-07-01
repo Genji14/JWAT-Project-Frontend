@@ -28,11 +28,13 @@ const EditBlogForm = ({
     hashTag,
     media,
     setOpen,
+    clientId
 }: {
     blog: IBlog
     hashTag: HashTag[]
     media: Media[]
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+    clientId: string
 }) => {
     const { mutateUpdateBlog, isPendingUpdateBlog } = useUpdateBlog(blog.id)
 
@@ -99,6 +101,7 @@ const EditBlogForm = ({
             const formData = new FormData()
             formData.append('title', values.title)
             formData.append('content', values.content)
+            formData.append('clientId', clientId)
 
             values.media.forEach((file) => {
                 formData.append('files', file)

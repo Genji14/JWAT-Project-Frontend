@@ -25,36 +25,38 @@ export type Media = {
 }
 
 export type Document = {
-    id: number,
-    name: string,
-    url: string,
-    createdAt: Date,
-    updatedAt: Date,
+    id: number
+    name: string
+    url: string
+    createdAt: Date
+    updatedAt: Date
     deleteAt: Date | null
 }
 
 export type HashTag = {
-    id: number,
+    id: number
     hashTagName: string
 }
 
 export type Comment = {
-    id: number,
-    content: string,
+    id: number
+    content: string
     user: {
         id: number
+        fullName: string
+        media: string
     }
 }
 
 export type Star = {
-    id: number,
+    id: number
     user: {
         id: number
     }
 }
 
 export type TUngroupDocument = {
-    project: number,
+    project: number
     documents: number[]
 }
 
