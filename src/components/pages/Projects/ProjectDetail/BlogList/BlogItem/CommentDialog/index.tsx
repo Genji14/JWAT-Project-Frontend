@@ -31,12 +31,12 @@ const CommentDialog = ({
                 </DialogDescription>
             </DialogHeader>
             <Separator />
-            <div className='flex h-full w-full flex-col gap-4'>
-                <ScrollArea className='h-[75vh] lg:h-[60vh]'>
-                    <CommentListWhileACommnetSend blogId={blogId} />
-                    <CommentListFetch blogId={blogId} />
-                </ScrollArea>
-            </div>
+            <ScrollArea className='h-[75vh] lg:h-[60vh]'>
+                <div className='flex h-full w-full flex-col gap-4'>
+                    <CommentListWhileACommnetSend blogId={blogId} setTotalComments={setTotalComments} />
+                    <CommentListFetch blogId={blogId} setTotalComments={setTotalComments} />
+                </div>
+            </ScrollArea>
 
             <CommentInput blogId={blogId} />
         </DialogContent>

@@ -1,16 +1,18 @@
 import { useGetBlogComments } from '@/hooks/query/blog.query'
 import { Loader2 } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import CommentItem from '../CommentItem'
 
-const CommentListFetch = ({ blogId }: { blogId: number }) => {
+const CommentListFetch = ({ blogId, setTotalComments }: { blogId: number, setTotalComments: React.Dispatch<React.SetStateAction<number>> }) => {
     const { commentsData, isFetchingComments } = useGetBlogComments(blogId)
 
-    // useEffect(() => {
-    //     if (commentsData) {
-    //         setTotalComments(commentsData.length)
-    //     }
-    // }, [commentsData])
+    useEffect(() => {
+        if (commentsData) {
+            setTotalComments(commentsData.length)
+        }
+    }, [commentsData])
+
+
     return (
         <>
             {isFetchingComments ? (
