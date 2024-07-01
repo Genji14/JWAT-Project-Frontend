@@ -10,6 +10,7 @@ import { toast } from 'sonner'
 import { AUTH_RESPONSE_MESSAGE, SERVER_MESSAGE } from '@/lib/constants/RequestMessage'
 import { Button } from '@/components/ui/button'
 import { ISignInForm } from '@/types/interfaces/Form'
+import { PasswordInput } from '@/components/ui/password-input'
 
 const SignInForm: React.FC = () => {
     const loginForm = useForm<ISignInForm>({
@@ -69,13 +70,12 @@ const SignInForm: React.FC = () => {
                     render={({ field }) => (
                         <FormItem>
                             <FormControl>
-                                <Input
+                                <PasswordInput
                                     {...field}
                                     className='rounded-none border-0 border-b pl-0'
                                     icon={<KeyRound className='h-5 w-5' />}
                                     line={true}
                                     placeholder='********'
-                                    type='password'
                                     disabled={isPendingSignIn}
                                 />
                             </FormControl>
