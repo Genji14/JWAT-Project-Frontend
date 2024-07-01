@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useCreateComment } from '@/hooks/mutation/blog.mutation'
 import { Loader2Icon, MessageSquareShareIcon } from 'lucide-react'

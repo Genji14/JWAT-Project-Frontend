@@ -14,7 +14,7 @@ export const setContext = (_context: GetServerSidePropsContext) => {
 }
 
 const API_INSTANCE = axios.create({
-    baseURL: DOMAIN_NAME,
+    baseURL: DOMAIN_NAME + "/api/",
     timeout: 30000,
     headers: {
         Accept: 'application/json',
