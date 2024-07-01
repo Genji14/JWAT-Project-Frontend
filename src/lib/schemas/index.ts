@@ -226,5 +226,7 @@ export const blogSchema = z.object({
     hashTags: z.array(z.string()).optional(),
     media: z.array(
         z.instanceof(File)
-    ),
+    ).max(5, {
+        message: "Can't upload more than 5 media"
+    }),
 });

@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/components/shared/ThemeProvider'
 import { StoreProvider } from '@/components/providers/StoreProvider'
 import { AbilityProvider } from '@/components/providers/AbilityProvider'
 import dynamic from 'next/dynamic'
+import RoleRedirect from '@/components/general/RoleRedirect'
 
 const ExpireAlertDialog = dynamic(() => import('@/components/general/ExpireAlertDialog'), {
     ssr: false
@@ -26,6 +27,7 @@ const Providers: FC<IProvidersProps> = ({ children }) => {
                         {children}
                         <Toaster richColors />
                         <ExpireAlertDialog />
+                        <RoleRedirect />
                     </ThemeProvider>
                 </AbilityProvider>
             </StoreProvider>
