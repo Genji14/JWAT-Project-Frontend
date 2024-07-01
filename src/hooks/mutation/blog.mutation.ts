@@ -93,12 +93,11 @@ export const useUpdateBlog = (blogId: number) => {
             toast.success('Update Blog successfully!!')
             queryClient.invalidateQueries({
                 queryKey: [BLOG_QUERY_KEY.GET_BLOG_LIST],
-            })
-            setTimeout(() => {
-                queryClient.invalidateQueries({
-                    queryKey: [BLOG_QUERY_KEY.GET_BLOG_ITEM, blogId]
-                })
-            }, 1000)
+            });
+            // queryClient.invalidateQueries({
+            //     queryKey: [BLOG_QUERY_KEY.GET_BLOG_ITEM, blogId]
+            // });
+
         }
     })
 
