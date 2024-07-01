@@ -126,7 +126,7 @@ const DocumentNode = ({
                         {node.documents?.map((doc) => {
                             const fileUrl = isInDialog
                                 ? undefined
-                                : `http://backend:3001/api/project/document/file/${doc.url}`
+                                : `http://localhost:3001/api/project/document/file/${doc.url}`
                             return (
                                 <a
                                     key={doc.url}
