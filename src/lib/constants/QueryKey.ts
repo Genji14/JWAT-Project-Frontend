@@ -1,6 +1,7 @@
 export const USER_QUERY_KEY = {
     CURRENT: 'getCurrentUser',
-    FIND_ONE: 'findOneUser'
+    FIND_ONE: 'findOneUser',
+    GET_ALL_WITH_PAGINATION: 'getAllWithPag'
 }
 
 export const PROJECT_QUERY_KEY = {

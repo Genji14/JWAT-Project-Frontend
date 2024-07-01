@@ -17,13 +17,7 @@ const CommentListFetch = ({ blogId }: { blogId: number }) => {
                 <Loader2 className='mx-auto h-8 w-8 animate-spin text-primary' />
             ) : (
                 <>
-                    {!commentsData?.length ? (
-                        <div className='flex items-center justify-center'>
-                            <span>
-                                Let&apos;s send the first comment in this blog
-                            </span>
-                        </div>
-                    ) : (
+                    {!!commentsData?.length && (
                         <div className='flex h-full w-full flex-col gap-4'>
                             {commentsData?.map((comment) => {
                                 return (

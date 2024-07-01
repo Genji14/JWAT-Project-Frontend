@@ -32,7 +32,6 @@ const Header: React.FC = () => {
                     >
                         <Logo />
                     </Link>
-                    {/* <BreadCrumbComponent /> */}
                 </div>
                 <div className='flex items-center gap-2 py-2'>
                     <ModeToggle />

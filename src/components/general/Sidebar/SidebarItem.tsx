@@ -23,7 +23,7 @@ const SidebarItem = ({
 
 
     return (
-        <li className='group relative'>
+        <li className='group relative w-full'>
             <Link
                 href={href}
                 className={cn(
@@ -36,7 +36,7 @@ const SidebarItem = ({
                 <span
                     className={cn(
                         'overflow-hidden text-nowrap text-sm font-bold transition-all',
-                        expanded ? 'ml-3 w-[12.75rem]' : 'w-0'
+                        expanded ? 'ml-3 lg:w-[12.75rem]' : 'w-0'
                     )}
                 >
                     {label}

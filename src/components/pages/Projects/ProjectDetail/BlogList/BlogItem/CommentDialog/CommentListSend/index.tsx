@@ -18,11 +18,11 @@ const CommentListWhileACommnetSend = ({ blogId }: { blogId: number }) => {
         }
     }, [])
     return (
-        <>
+        <div className="space-y-2">
             {commentList?.map((comment) => {
                 return <CommentItemSocket comment={comment} key={comment.id} />
             })}
-        </>
+        </div>
     )
 }
 

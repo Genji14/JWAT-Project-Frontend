@@ -12,7 +12,6 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { IBlogForm } from '@/types/interfaces/Form'
 import { FilePlus2, X } from 'lucide-react'
-import Image from 'next/image'
 import React, { useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 

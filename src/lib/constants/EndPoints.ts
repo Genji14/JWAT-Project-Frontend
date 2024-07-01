@@ -10,6 +10,7 @@ export const USER_ENDPOINTS = {
     UPDATE_PROFILE: `user/update`,
     CHANGE_PASSWORD: `user/change-password`,
     GET_ROLE: `user/get-role`,
+    GET_ALL_USER_PAGINATION: `user/all-user-pag`
 }
 
 export const PROJECT_ENDPOINTS = {

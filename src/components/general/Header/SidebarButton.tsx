@@ -13,6 +13,8 @@ import { Separator } from '@/components/ui/separator'
 import { useStore } from '@/components/providers/StoreProvider'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import SidebarDynamicItems from '../Sidebar/DynamicItem'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 
 const SidebarButton = () => {
@@ -64,7 +66,12 @@ const SidebarButton = () => {
                         Main menu
                     </SheetHeader>
                     <Separator />
-                    <Sidebar />
+                    <ScrollArea className='h-96'>
+                        <ul className='flex h-full w-full flex-col items-start gap-2'>
+                            <SidebarDynamicItems />
+                        </ul>
+                    </ScrollArea>
+
                 </SheetContent>
             </Sheet>
         </div>

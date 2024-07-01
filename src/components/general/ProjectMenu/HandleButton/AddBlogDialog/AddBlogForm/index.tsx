@@ -65,7 +65,7 @@ const AddBlogForm = ({
                 formData.append('files', file)
             })
             values.hashTags?.map((ht) => {
-                formData.append('hashTags', ht)
+                formData.append('hashTags[]', ht)
             })
             await mutateCreateBlog(formData)
             createBlogForm.reset()

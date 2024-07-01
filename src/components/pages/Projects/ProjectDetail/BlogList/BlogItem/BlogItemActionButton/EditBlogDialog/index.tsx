@@ -1,3 +1,4 @@
+import { useStore } from '@/components/providers/StoreProvider'
 import Spinner from '@/components/shared/Spinner'
 import {
     Dialog,
@@ -12,7 +13,8 @@ import { HashTag, Media } from '@/types'
 import { IBlog } from '@/types/interfaces/Blog'
 import { FolderCog } from 'lucide-react'
 import dynamic from 'next/dynamic'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 const EditBlogForm = dynamic(() => import('./EditBlogForm'), {
     ssr: false,
@@ -32,7 +34,29 @@ const EditBlogDialog = ({
     hashTag: HashTag[]
     media: Media[]
 }) => {
-    const [open, setOpen] = useState<boolean>(false)
+
+    const [open, setOpen] = useState<boolean>(false);
+
+    const socket = useStore((state) => state.socket);
+    const clientId = useRef(
+        'unique-client-id-' + Math.random().toString(36).substring(2, 9)
+    )
+
+    useEffect(() => {
+        if (socket) {
+            socket.emit('register', { clientId: clientId.current })
+
+            socket.on('uploadSuccess', (message: any) => {
+                toast.success(message)
+            })
+
+            return () => {
+                socket.off('uploadSuccess')
+            }
+        }
+
+    }, [socket])
+
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -63,6 +87,7 @@ const EditBlogDialog = ({
                         media={media}
                         hashTag={hashTag}
                         setOpen={setOpen}
+                        clientId={clientId.current}
                     />
                 </ScrollArea>
             </DialogContent>

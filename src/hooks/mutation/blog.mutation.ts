@@ -59,17 +59,16 @@ export const useDeleteBlog = () => {
 }
 
 export const useCreateComment = () => {
-    // const queryClient = useQueryClient()
     const { mutateAsync, isPending } = useMutation({
         mutationFn: async (form: ICreateCommentForm) => {
             await blogService.createComment(form)
         },
-        onSuccess: () => {
-            // toast.success('Send Comment successfully!!')
-            // queryClient.invalidateQueries({
-            //     queryKey: [BLOG_QUERY_KEY.GET_COMMENT_BLOG, blogId],
-            // })
-        },
+        // onSuccess: () => {
+        // toast.success('Send Comment successfully!!')
+        // queryClient.invalidateQueries({
+        //     queryKey: [BLOG_QUERY_KEY.GET_COMMENT_BLOG, blogId],
+        // })
+        // },
     })
     return {
         mutateCreateComment: mutateAsync,
@@ -95,10 +94,12 @@ export const useUpdateBlog = (blogId: number) => {
             queryClient.invalidateQueries({
                 queryKey: [BLOG_QUERY_KEY.GET_BLOG_LIST],
             })
-            queryClient.invalidateQueries({
-                queryKey: [BLOG_QUERY_KEY.GET_BLOG_ITEM, blogId],
-            })
-        },
+            setTimeout(() => {
+                queryClient.invalidateQueries({
+                    queryKey: [BLOG_QUERY_KEY.GET_BLOG_ITEM, blogId]
+                })
+            }, 1000)
+        }
     })
 
     return {

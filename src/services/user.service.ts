@@ -4,11 +4,18 @@ import { AxiosResponse } from 'axios'
 import { UserRole } from '@/types/enums'
 import { IUserInfo } from '@/types/interfaces/User'
 import API_INSTANCE from '@/lib/api'
+import { CommonParams, PaginationResponse } from '@/types'
 
 class UserService {
 
     current = (): Promise<AxiosResponse<IUserInfo>> => {
         return API_INSTANCE.get(USER_ENDPOINTS.CURRENT)
+    }
+
+    getAllUsersWithPag = (params: CommonParams): Promise<AxiosResponse<PaginationResponse>> => {
+        return API_INSTANCE.get(USER_ENDPOINTS.GET_ALL_USER_PAGINATION, {
+            params: params
+        })
     }
 
     getRole = (): Promise<AxiosResponse<UserRole>> => {

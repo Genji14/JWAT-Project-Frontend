@@ -16,10 +16,11 @@ import {
 } from '@/components/ui/tooltip'
 import { PencilLineIcon } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
-import { io } from 'socket.io-client'
 import { toast } from 'sonner'
 import AddBlogForm from './AddBlogForm'
 import { useStore } from '@/components/providers/StoreProvider'
+
+
 const AddBlogDialog = () => {
     const [open, setOpen] = useState<boolean>(false)
     const socket = useStore((state) => state.socket)
@@ -28,16 +29,19 @@ const AddBlogDialog = () => {
     )
 
     useEffect(() => {
-        socket.emit('register', { clientId: clientId.current })
+        if (socket) {
+            socket.emit('register', { clientId: clientId.current })
 
-        socket.on('uploadSuccess', (message: any) => {
-            toast.success(message)
-        })
+            socket.on('uploadSuccess', (message: any) => {
+                toast.success(message)
+            })
 
-        return () => {
-            socket.off('uploadSuccess')
+            return () => {
+                socket.off('uploadSuccess')
+            }
         }
-    }, [])
+
+    }, [socket])
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
