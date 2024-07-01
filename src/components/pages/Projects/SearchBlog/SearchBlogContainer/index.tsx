@@ -11,18 +11,18 @@ const SearchBlogContainer = () => {
 
     return (
         <div className='relative'>
-            <div className='absolute top-20'>
+            <div className='absolute top-0'>
                 <Link
                     href={`/projects/${router.query.id}`}
                     legacyBehavior
                     passHref
                 >
                     <Button>
-                        <CircleArrowLeft />
+                        <span>Go back</span>
                     </Button>
                 </Link>
             </div>
-            <div className='mt-5 grid grid-cols-3 gap-4 lg:grid-cols-12'>
+            <div className='mt-4 grid grid-cols-3 gap-4 lg:grid-cols-12'>
                 <div className='col-span-3 flex w-full flex-col gap-2 lg:col-span-7 lg:col-start-2'>
                     <BlogList />
                 </div>

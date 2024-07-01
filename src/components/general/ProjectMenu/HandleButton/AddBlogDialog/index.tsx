@@ -19,10 +19,11 @@ import { useEffect, useRef, useState } from 'react'
 import { io } from 'socket.io-client'
 import { toast } from 'sonner'
 import AddBlogForm from './AddBlogForm'
+const socket = io('http://localhost:3001')
+
 
 const AddBlogDialog = () => {
     const [open, setOpen] = useState<boolean>(false)
-    const socket = io('http://localhost:3001')
     const clientId = useRef(
         'unique-client-id-' + Math.random().toString(36).substring(2, 9)
     )
@@ -37,6 +38,7 @@ const AddBlogDialog = () => {
         socket.on('uploadSuccess', (message) => {
             toast.success(message)
         })
+
         socket.on('disconnect', () => {
             console.log('Disconnected from server')
         })

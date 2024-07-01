@@ -17,12 +17,11 @@ const BlogList = () => {
             fetchNextPage()
         }
     }, [inView, hasNextPage])
-    console.log(data)
 
     return (
-        <div>
-            <div className='text-2xl'>
-                About {data?.pages[0].meta ? data?.pages[0].meta.totalItems : 0}{' '}
+        <div className='space-y-6 mt-1'>
+            <div className='text-2xl text-muted-foreground'>
+                About <span className='text-foreground font-semibold'>{data?.pages[0].meta ? data?.pages[0].meta.totalItems : 0}{' '}</span>
                 results
             </div>
 
@@ -48,7 +47,7 @@ const BlogList = () => {
                             <Skeleton className='aspect-[25/9] w-full bg-accent dark:bg-border' />
                         </div>
                     )}
-                    {!hasNextPage && (
+                    {!data && !hasNextPage && (
                         <div className='my-2 w-full text-center'>
                             <span className='text-sm dark:text-muted-foreground '>
                                 You have read all blogs

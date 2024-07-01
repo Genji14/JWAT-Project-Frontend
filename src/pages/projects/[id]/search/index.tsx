@@ -3,7 +3,6 @@ import SearchBlogContainer from '@/components/pages/Projects/SearchBlog/SearchBl
 import { setContext } from '@/lib/api'
 import { ProjectDetailProvider } from '@/lib/contexts/ProjectDetailProject'
 import { projectService } from '@/services/project.service'
-import { IBlog } from '@/types/interfaces/Blog'
 import { IProject } from '@/types/interfaces/Project'
 import { GetServerSideProps } from 'next'
 import Head from 'next/head'
@@ -11,10 +10,8 @@ import React from 'react'
 
 const SearchBlogPage = ({
     project,
-    blogs,
 }: {
     project: IProject
-    blogs: IBlog
 }) => {
     return (
         <>
