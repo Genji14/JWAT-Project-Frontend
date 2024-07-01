@@ -5,7 +5,7 @@ import { Input, InputProps } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 
 const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
-    ({ className, ...props }, ref) => {
+    ({ className, line, ...props }, ref) => {
         const [showPassword, setShowPassword] = useState(false)
         const disabled = props.value === "" || props.value === undefined || props.disabled
 
@@ -15,6 +15,7 @@ const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
                     type={showPassword ? "text" : "password"}
                     className={cn("hide-password-toggle pr-10", className)}
                     ref={ref}
+                    line={line}
                     {...props}
                 />
                 <Button

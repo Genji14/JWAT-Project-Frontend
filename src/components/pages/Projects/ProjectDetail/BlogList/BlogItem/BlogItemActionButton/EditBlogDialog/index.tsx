@@ -9,12 +9,13 @@ import {
 } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
+import { BLOG_QUERY_KEY } from '@/lib/constants/QueryKey'
 import { HashTag, Media } from '@/types'
 import { IBlog } from '@/types/interfaces/Blog'
+import { useQueryClient } from '@tanstack/react-query'
 import { FolderCog } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
-import { toast } from 'sonner'
 
 const EditBlogForm = dynamic(() => import('./EditBlogForm'), {
     ssr: false,
@@ -38,6 +39,7 @@ const EditBlogDialog = ({
     const [open, setOpen] = useState<boolean>(false);
 
     const socket = useStore((state) => state.socket);
+    const queryClient = useQueryClient();
     const clientId = useRef(
         'unique-client-id-' + Math.random().toString(36).substring(2, 9)
     )
@@ -45,9 +47,11 @@ const EditBlogDialog = ({
     useEffect(() => {
         if (socket) {
             socket.emit('register', { clientId: clientId.current })
-
-            socket.on('uploadSuccess', (message: any) => {
-                toast.success(message)
+            socket.on('uploadSuccess', (blogId: number) => {
+                console.log(blogId)
+                queryClient.invalidateQueries({
+                    queryKey: [BLOG_QUERY_KEY.GET_BLOG_ITEM, blogId]
+                })
             })
 
             return () => {
@@ -56,7 +60,6 @@ const EditBlogDialog = ({
         }
 
     }, [socket])
-
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
