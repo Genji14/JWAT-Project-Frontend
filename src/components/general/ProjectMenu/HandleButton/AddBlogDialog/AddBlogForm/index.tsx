@@ -19,6 +19,7 @@ import { Loader2 } from 'lucide-react'
 import React, { SetStateAction, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import MediaInput from './MediaInput'
+import { toast } from 'sonner'
 
 const AddBlogForm = ({
     setOpen,
@@ -72,8 +73,8 @@ const AddBlogForm = ({
             setTags([])
             setActiveTagIndex(null)
             setOpen(false)
-        } catch (error) {
-            console.error(error)
+        } catch (error: any) {
+            toast.error(error.response.data.message)
         }
     }
 
